@@ -1,51 +1,33 @@
-<template>
-    <view class="content">
-        <image
-            class="logo"
-            src="/static/logo.png"
-        />
-        <view class="text-area">
-            <text class="title">{{ title }}</text>
-        </view>
-        <uni-card
-            title="基础卡片"
-            sub-title="卡片副标题"
-            extra="额外内容"
-        >
-        <text>Test</text>    
-        </uni-card>
-    </view>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue'
-const title = ref('Hello world! ')
+import { onLoad } from '@dcloudio/uni-app';
+import { getHomeBannerAPI } from '@/services/index';
+import { ref } from 'vue';
+import { BannerItem } from '@/types/home';
+import indexNavbar from './components/indexNavbar.vue';
+import indexSwiper from './components/indexSwiper.vue';
+
+const bannerList = ref<BannerItem[]>([]);
+const getHomeBannerData = async () => {
+    const res = await getHomeBannerAPI();
+    console.log(res);
+    bannerList.value = res.result;
+}
+
+onLoad(() => {
+    getHomeBannerData();
+})
 </script>
 
-<style>
-.content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+<template>
+    <!--自定义导航栏-->
+    <index-navbar />
+    <!--自定义轮播图-->
+    <index-swiper :list="bannerList" />
+    <view class="content">COOP攻略（全事件白金...、解禁条件、人格指数上升、优先级推荐）</view>
+    <view class="content">解答猜谜（课堂问答、猜字谜、电视猜谜）</view>
+    <view class="content">人格面具合成范式</view>
+</template>
 
-.logo {
-    height: 200rpx;
-    width: 200rpx;
-    margin-top: 200rpx;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 50rpx;
-}
+<style lang="scss">
 
-.text-area {
-    display: flex;
-    justify-content: center;
-}
-
-.title {
-    font-size: 36rpx;
-    color: #8f8f94;
-}
 </style>

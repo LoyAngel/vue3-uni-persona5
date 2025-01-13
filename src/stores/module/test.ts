@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
+const test2 = ref();
 // 定义 Store
 export const testStore = defineStore("test", () => {
 
