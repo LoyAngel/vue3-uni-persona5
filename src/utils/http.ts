@@ -6,8 +6,9 @@
  */
 
 import { testStore } from "@/stores";
+import { Data } from "@/types/http";
 
-const baseURL = "http://127.0.0.1:4523/m1/5747273-5430083-default/api";
+const baseURL = "https://apifoxmock.com/m1/5747273-5430083-default/api";
 
 // 添加拦截器
 const httpInterceptor = {
@@ -36,11 +37,6 @@ const httpInterceptor = {
 uni.addInterceptor("request", httpInterceptor);
 uni.addInterceptor("uploadFile", httpInterceptor);
 
-interface Data<T>{
-    code: string;
-    msg: string;
-    result: T;
-}
 
 /**
  * 请求函数
