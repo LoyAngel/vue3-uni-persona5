@@ -9,7 +9,7 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
             <!-- logo文字 -->
             <image
                 class="logo-image"
-                src="/static/logo.png"
+                src="@/static/logo.png"
             />
             <text class="logo-text">Persona 5 Royal</text>
         </view>
@@ -25,8 +25,8 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    width: 100vw;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-bottom: 2px solid #fff;
 }
 
 .logo {

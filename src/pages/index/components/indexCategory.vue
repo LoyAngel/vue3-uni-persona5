@@ -1,0 +1,66 @@
+<script setup lang="ts">
+import { TitleItem } from '@/types/home';
+
+// 定义 props 接收
+defineProps<{
+  list: TitleItem[]
+}>()
+
+const navigate = (url: string) => {
+  uni.navigateTo({ url });
+}
+</script>
+
+<template>
+    <transition-group name="fade" tag="div" class="category-list">
+      <view
+        v-for="(item, index) in list"
+        :key="index"
+        class="category-item"
+        @click="navigate(item.url)"
+      >
+        <image :src="item.image" class="category-image" mode="heightFix" />
+      </view>
+    </transition-group>
+</template>
+
+<style scoped>
+.category-list {
+  display: flex;
+  height: 600rpx;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 50rpx;
+}
+
+.category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10rpx;
+  min-width: 200rpx;
+  max-width: 400rpx;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-item:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.category-image {
+  height: 120rpx;
+  border: 2px solid #c00;
+  object-fit: contain;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+</style>

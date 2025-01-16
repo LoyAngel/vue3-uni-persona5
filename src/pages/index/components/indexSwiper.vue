@@ -15,7 +15,7 @@ defineProps<{
 
 <template>
   <view class="carousel">
-    <swiper :circular="true" :autoplay="false" :interval="3000" @change="onChange" class="swiper">
+    <swiper :circular="true" :autoplay="true" :interval="3000" @change="onChange" class="swiper">
       <swiper-item v-for="item in list" :key="item.id">
         <navigator url="/pages/index/index" hover-class="none" class="navigator">
           <image mode="aspectFill" class="image" :src="item.imgUrl"></image>
@@ -36,7 +36,8 @@ defineProps<{
 
 <style lang="scss">
 .carousel {
-  height: 400rpx;
+  height: 500rpx;
+  width: 98vw;
   position: relative;
   overflow: hidden;
   transform: translateY(0);
@@ -47,7 +48,7 @@ defineProps<{
   .swiper{
     border: 2px solid #ff0000;
     border-radius: 10px;
-    height: 80%;
+    height: 85%;
     width: 100%;
   }
   .indicator {
@@ -62,7 +63,7 @@ defineProps<{
       height: 6rpx;
       margin: 0 8rpx;
       border-radius: 6rpx;
-      background-color: #000;
+      background-color: #9f2011;
     }
     .active {
       background-color: #ff0000;

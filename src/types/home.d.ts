@@ -11,3 +11,9 @@ export type BannerItem = {
     /** 跳转类型 */
     type: number;
 };
+
+export type TitleItem = {
+  title: string;
+  url: string;
+  image: string;
+}
