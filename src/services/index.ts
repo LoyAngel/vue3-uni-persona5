@@ -17,24 +17,16 @@ export const getHomeBannerAPI = (distributionSite = 1) => {
     })
 }
 
-export const getTitleListAPI = () => {
-    // return http<TitleItem[]>({
-    //     method: 'GET',
-    //     url: '/home/banner',
-    //     data:{
-    //         // 请求参数
-    //         distributionSite,
-    //     },
-    // })
-    return new Promise<Data<TitleItem[]>>((resolve) => {
-        resolve({
-            code: '200',
-            msg: 'success',
-            result: [
-                { title: 'COOP攻略', url: '/pages/index/index', image: '/static/index_title1.png' },
-                { title: '解答猜谜', url: '/pages/quiz/index', image: '/static/index_title2.png' },
-                { title: '猜谜排行', url: '/pages/rank/index', image: '/static/index_title3.png' },
-            ]
-        })
-    })
-}
+// export const getTitleListAPI = () => {
+//     return new Promise<Data<TitleItem[]>>((resolve) => {
+//         resolve({
+//             code: '200',
+//             msg: 'success',
+//             result: [
+//                 { title: 'COOP攻略', url: '/pages/strategy/strategy?type=coop', image: '/static/index_title1.png' },
+//                 { title: '解答猜谜', url: '/pages/strategy/strategy?type=answer', image: '/static/index_title2.png' },
+//                 { title: '人格指数', url: '/pages/strategy/strategy?type=confidant', image: '/static/index_title3.png' },
+//             ]
+//         })
+//     })
+// }

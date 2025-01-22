@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { getHomeBannerAPI, getTitleListAPI } from '@/services/index';
+import { getHomeBannerAPI } from '@/services/index';
 import { ref } from 'vue';
 import { BannerItem, TitleItem } from '@/types/home';
 import indexNavbar from './components/indexNavbar.vue';
 import indexSwiper from './components/indexSwiper.vue';
 import indexCategory from './components/indexCategory.vue';
-import indexBackground from './components/indexBackground.vue';
 
 const bannerList = ref<BannerItem[]>([]);
 const titleList = ref<TitleItem[]>([]);
@@ -15,15 +14,9 @@ const getHomeBannerData = async () => {
     console.log(res);
     bannerList.value = res.result;
 }
-const getTitleListData = async () => {
-    const res = await getTitleListAPI();
-    console.log(res);
-    titleList.value = res.result;
-}
 
 onLoad(() => {
     getHomeBannerData();
-    getTitleListData();
 })
 </script>
 
@@ -31,15 +24,16 @@ onLoad(() => {
     <!-- 自定义导航栏 -->
     <index-navbar />
     <!-- 自定义动画背景 -->
-    <index-background class="background-animation">
+    <P5rBackground class="background">
         <!-- 自定义轮播图 -->
         <index-swiper :list="bannerList" />
         <!-- 自定义标题 -->
         <index-category :list="titleList" />
-    </index-background>
+    </P5rBackground>
 </template>
 
-<style lang="scss">
+
+<style>
 page {
     display: flex;
     flex-direction: column;
@@ -47,9 +41,11 @@ page {
     justify-content: center;
     height: 100%;
 }
+</style>
 
+<style scoped lang="scss">
 // 新增样式以确保内容在背景之上
-.background-animation {
+.background{
     flex: 1;
     box-sizing: border-box;
 }
