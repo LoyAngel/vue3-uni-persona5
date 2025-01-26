@@ -40,10 +40,11 @@ This is a project that imitates the style of the game Persona5. It contains the 
 2025.1.16
 - Tabbar animation
 - Walkthrough page
-- Data storage
+- Data storage (2025.1.22) √
 ## Credits
 Ideas, logics, data, etc. have been gatherd from:
 - [Persona5 calculator](https://github.com/chinhodado/persona5_calculator)
 - [Persona5 font generator](https://github.com/LzxHahaha/persona5)
+- [Bilibiliwiki Persona5](https://wiki.biligame.com/persona/P5R%E6%94%BB%E7%95%A5%E4%B8%93%E5%8C%BA)
 
 <font size=4>**Any infringement of your rights, please contact me, I will delete it as soon as possible.**</font>
