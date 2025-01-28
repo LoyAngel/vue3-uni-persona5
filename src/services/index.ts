@@ -1,5 +1,5 @@
 import { http } from '@/utils/http'
-import { BannerItem, TitleItem } from '@/types/home'
+import { IndexBannerData, TitleItem } from '@/types'
 import { Data } from '@/types/http'
 /** 
     * @Description: 获取首页banner
@@ -7,7 +7,7 @@ import { Data } from '@/types/http'
     * @return {Promise}
 */
 export const getHomeBannerAPI = (distributionSite = 1) => {
-    return http<BannerItem[]>({
+    return http<IndexBannerData[]>({
         method: 'GET',
         url: '/home/banner',
         data:{

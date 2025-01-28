@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import { TitleItem } from '@/types/home';
-
-// 定义 props 接收
-// defineProps<{
-//   list: TitleItem[]
-// }>()
+import { TitleItem } from '@/types';
 
 const navigate = (url: string) => {
     uni.navigateTo({ url });

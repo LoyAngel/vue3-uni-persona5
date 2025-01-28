@@ -38,6 +38,7 @@
 .line {
     /* 结合外层元素的相对定位 */
     position: absolute;
+    z-index: 10;
 }
 
 .line:nth-child(1) {

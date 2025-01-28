@@ -2,13 +2,12 @@
 import { onLoad } from '@dcloudio/uni-app';
 import { getHomeBannerAPI } from '@/services/index';
 import { ref } from 'vue';
-import { BannerItem, TitleItem } from '@/types/home';
+import { IndexBannerData } from '@/types';
 import indexNavbar from './components/indexNavbar.vue';
 import indexSwiper from './components/indexSwiper.vue';
 import indexCategory from './components/indexCategory.vue';
 
-const bannerList = ref<BannerItem[]>([]);
-const titleList = ref<TitleItem[]>([]);
+const bannerList = ref<IndexBannerData[]>([]);
 const getHomeBannerData = async () => {
     const res = await getHomeBannerAPI();
     console.log(res);
@@ -28,7 +27,7 @@ onLoad(() => {
         <!-- 自定义轮播图 -->
         <index-swiper :list="bannerList" />
         <!-- 自定义标题 -->
-        <index-category :list="titleList" />
+        <index-category/>
     </P5rBackground>
 </template>
 

@@ -1,44 +1,55 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { onLoad } from '@dcloudio/uni-app';
 import strategyTabbar from './components/strategyTabbar.vue';
 import strategyContent from './components/strategyContent.vue';
+import { StrategyMainData } from '@/types/strategy';
+import { getStrategyMainDataAPI } from '@/services/strategy';
 
+// 标记当前选中的标签索引
 const navIndex = ref(0);
-const isCollapsed = ref(true);
-const tabBars = ref<Array<{
-    name: string;
-    id: string;
-    image: string;
-    details: string;
-}>>([
-    { name: 'COOP 介绍', id: 'intro', image: `/static/strategy/strategy_coop_intro.png`, details: 'Introduction details...' },
-    { name: 'COOP 详情', id: 'detail', image: 'path/to/detail.jpg', details: 'Detail information...' },
-    { name: 'COOP 优先级推荐', id: 'recommonad', image: 'path/to/recommonad.jpg', details: 'Priority recommendations...' }
-]);
+// 标记详情是否折叠
+const collapseRecord = ref<boolean[]>([]);
+// 标签栏数据
+const tabBars = ref<StrategyMainData[]>([]);
+// 检查数据接收, 用来防止数据未加载完成时渲染
+const valueRecord = ref(false);
 
 function checkIndex(index: number): void {
     navIndex.value = index;
-    isCollapsed.value = true; // Collapse the details when a new tab is selected
+    collapseRecord.value.fill(false);
+    collapseRecord.value[index] = true;
 }
 
-function toggleCollapse(): void {
-    isCollapsed.value = !isCollapsed.value;
+const getStrategyMainData = async () => {
+    const res = await getStrategyMainDataAPI();
+    tabBars.value = res.result;
+    collapseRecord.value = tabBars.value.map(() => false);
+    collapseRecord.value[navIndex.value] = true;
+
+    valueRecord.value = true;
 }
+onLoad(async () => {
+    await getStrategyMainData();
+})
 </script>
 
 <template>
+    <!--自定义标签栏组件-->
     <strategyTabbar
         :navIndex="navIndex"
         :tabBars="tabBars"
         @checkIndex="checkIndex"
     />
+
     <P5rBackground class="background-animation">
-    <strategyContent
-        :navIndex="navIndex"
-        :tabBars="tabBars"
-        :isCollapsed="isCollapsed"
-        @toggleCollapse="toggleCollapse"
-    />
+        <!--自定义内容组件-->
+        <view v-if="valueRecord">
+        <strategyContent
+            :navIndex="navIndex"
+            :tabBars="tabBars"
+            :collapseRecord="collapseRecord"
+        /></view>
     </P5rBackground>
 </template>
 
@@ -57,7 +68,7 @@ page {
     flex: 1;
 }
 
-.background-animation :deep(.mainbox){
+.background-animation :deep(.mainbox) {
     justify-content: flex-start;
 }
 </style>

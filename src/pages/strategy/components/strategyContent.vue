@@ -5,15 +5,16 @@
             alt="Tab Image"
             class="tab-image"
         />
-        <uni-collapse class="collapsible">
+        <uni-collapse class="collapsible"  v-for="(tabBar, index) in tabBars" :key="index">
             <uni-collapse-item
-                :title="tabBars[navIndex].name"
-                :isCollapsed="isCollapsed"
-                @click="$emit('toggleCollapse')"
+                v-for="item in tabBar.content"
+                v-show="collapseRecord[index]"
+                :key="item.type"
+                :title="item.title"
                 class="collapsible-item"
             >
                 <view class="collapsible-content">
-                    {{ tabBars[navIndex].details }}
+                    {{ item.text }}
                 </view>
             </uni-collapse-item>
         </uni-collapse>
@@ -29,18 +30,14 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { StrategyMainData } from '@/types/strategy';
 import { defineProps } from 'vue';
-interface TabBarItem {
-    name: string;
-    id: string;
-    image: string;
-    details: string;
-}
 const props = defineProps<{
     navIndex: number;
-    tabBars: TabBarItem[];
-    isCollapsed: boolean;
+    tabBars: StrategyMainData[];
+    collapseRecord: boolean[];
 }>();
+console.log(props.collapseRecord)
 </script>
 
 
@@ -77,7 +74,7 @@ const props = defineProps<{
             border-bottom: #ff1111 1px solid;
         }
         :deep(.uni-collapse-item__wrap-content.uni-collapse-item--border){
-            border-bottom: none
+            border-bottom: none;
         }
     }
 }
@@ -88,5 +85,6 @@ const props = defineProps<{
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ff0000;
+    white-space: pre-wrap;
 }
 </style>

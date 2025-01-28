@@ -1,7 +1,7 @@
 /**
  * 首页-Banner数据类型
  */
-export type BannerItem = {
+export type IndexBannerData = {
     /** 跳转链接 */
     hrefUrl: string;
     /** 图片地址 */

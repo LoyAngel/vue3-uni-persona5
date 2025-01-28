@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BannerItem } from '@/types/home';
+import { IndexBannerData } from '@/types';
 import { ref } from 'vue'
 const activeIndex = ref(0)
 
@@ -9,7 +9,7 @@ const onChange: UniHelper.SwiperOnChange = (ev) => {
 }
 // 定义 props 接收
 defineProps<{
-  list: BannerItem[]
+  list: IndexBannerData[]
 }>()
 </script>
 

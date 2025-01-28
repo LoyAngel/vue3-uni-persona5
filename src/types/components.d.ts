@@ -1,5 +1,5 @@
-import P5rTestCom from './P5rTestCom.vue'
-import P5rBackground from './P5rBackground.vue'
+import P5rTestCom from '@/components/P5rTestCom.vue'
+import P5rBackground from '@/components/P5rBackground.vue'
 
 
 declare module 'vue'{

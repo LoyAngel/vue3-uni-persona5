@@ -3,26 +3,21 @@
         <view
             class="view-item"
             v-for="(tab, index) in tabBars"
-            :key="tab.id"
+            :key="tab.type"
             :class="navIndex === index ? 'active' : ''"
             @click="$emit('checkIndex', index)"
         >
-            {{ tab.name }}
+            {{ tab.title }}
         </view>
     </view>
 </template>
 
 <script setup lang="ts">
+import { StrategyMainData } from '@/types/strategy';
 import { defineProps } from 'vue';
-interface TabBarItem {
-    name: string;
-    id: string;
-    image: string;
-    details: string;
-}
 const props = defineProps<{
     navIndex: number;
-    tabBars: TabBarItem[];
+    tabBars: StrategyMainData[];
 }>();
 </script>
 
