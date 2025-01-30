@@ -50,7 +50,7 @@ export const getStrategyMainDataAPI = () => {
             image: "/static/strategy/strategy_coop_intro.png",
             content: [
                 {
-                    text: `
+                    table: `
           RANK	解锁	简介
 2	不良少年交涉	在和敌人的对话交涉决裂时,假如敌人性格『开朗』,就可重新再交涉。
 3	追击	在主人公的攻击未能使敌人倒地的情况下,进行追击。
@@ -63,9 +63,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "坂本龙司",
                     type: "bbls",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	解锁	简介
 2	女子交涉	在和敌人的对话交涉决裂时,假如敌人性别为女性,就可重新再交涉。
 3	追击	在主人公的攻击未能使敌人倒地的情况下,进行追击。
@@ -78,9 +79,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "高卷杏",
                     type: "gjx",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	解锁	简介	
 1	潜入道具的配方★	潜入道具的初期配方已开放,可以开始制作潜入道具。
 3	追击	在主人公的攻击未能使敌人倒地的情况下,进行追击。
@@ -95,9 +97,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "摩尔加纳",
                     type: "mejn",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	解锁	效果
 1	卡片复制★	可进行技能卡的复制。
 3	追击	在主人公的攻击未能使敌人倒地的情况下,进行追击。
@@ -111,9 +114,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "喜多川祐介",
                     type: "xdcyj",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	解锁	效果
 1	阴影微积分★	在分析画面中可以显示敌人拥有的技能以及掉落道具了。
 3	黑带交涉	在和敌人的对话交涉决裂时,假如敌人会使用武术,就可重新再交涉。
@@ -127,9 +131,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "新岛真",
                     type: "xdz",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	解锁	效果
 1	士气支援★	有时会发动卡加系或全体恢复等情报支援类辅助。
 2	印象空间搜寻★	在印象空间执行地图切换时,有特定机率让这个楼层的地图全部开放。
@@ -142,9 +147,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "佐仓双叶",
                     type: "zcsy",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	解锁	简介
 1	栽培蔬菜★	可以和春一起在顶楼的花盆中栽种蔬菜了。
 3	追击	在主人公的攻击未能使敌人倒地的情况下,进行追击。
@@ -158,9 +164,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "奥村春",
                     type: "acc",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	解锁	效果
 2	侦探的具眼	战斗开始时,有机会得知1名敌人的其中一项属性耐性。
 3	超凡交涉	在和敌人的对话交涉决裂时,假如敌人具有神格,就可重新再交涉。
@@ -172,9 +179,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "明智吾郎",
                     type: "mzwl",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	解锁	效果
 2	单跳	在殿堂时,可回避危机遇敌。
 4	锁链勾绳	可以在殿堂里,在敌人的背后使用勾绳,从较远的位置先制遇敌。
@@ -188,9 +196,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "芳泽霞",
                     type: "fzx",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK		效果
 1	不羁交涉	HOLD UP时选择对话,和阴影进行对话交涉。
 阿尔卡那爆发	进行人格面具合体的时候,可以根据每种阿尔卡那各自的协助级别获得对应的经验值。
@@ -203,9 +212,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "伊格尔",
                     type: "yge",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	习得	效果
 1	集体断头台★	将3个以上的人格面具合体,制造强力的人格面具。
 3	隔离监禁★	在天鹅绒房间入狱一定天数后,人格面具将学会耐性技能。
@@ -214,9 +224,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "双子",
                     type: "sz",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	习得	效果
 1	初级枪械改造★	进行枪械改造,可以强化性能。
 3	迷彩枪械改造★	可进行附加异常状态的『迷彩改造』。
@@ -228,9 +239,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "岩井宗久",
                     type: "yjzj",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	习得	效果
 2	咖喱小知识	可以制作为我方1名伙伴恢复少量SP的咖啡。
 4	卢布朗咖喱的食谱	可以制作制作在非战斗情况下恢复队伍所有人少量 20SP的咖喱。
@@ -239,9 +251,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "佐仓惣治郎",
                     type: "zczzl",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	习得	效果
 1	自制速愈药★	贩售的恢复类药品种类增加了。
 3	自制灭菌药★	贩售的恢复类药品中,追加了辅助效果药品。
@@ -250,9 +263,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "武见妙",
                     type: "wjm",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	习得	效果
 1	运子帷幄★	主人公行动时,可将待命队员与战斗队员替换。
 3	打入	可以在主人公使敌人倒地的时候,让待命队员进行追击。
@@ -262,9 +276,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "东乡一二三",
                     type: "dxyes",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	习得	效果
 2	交涉术★	在对话交涉中,要求金钱与道具时有机会可以再追加要求。
 3	募集经费★	在对话交涉中,有特定几率可以要求更多的金钱。
@@ -273,9 +288,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "吉田寅之助",
                     type: "jtyzz",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	习得	效果
 1	混水摸鱼★	可在川上上课时不专心听讲,把时间用来磨炼自我。
 具体时间为 6.3、7.2、9.23、10.5、11.5的上课期间
@@ -288,9 +304,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "川上贞代",
                     type: "cszd",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	习得	效果
 1	开运占卜★	5000块 当日限定 可进行提高指定的人格指数1.5倍加算率的占卜 。
 3	财运占卜★	5000块 当日限定 可进行再战斗中透过总攻击获胜时,2倍报酬金额提升的占卜。
@@ -302,9 +319,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "御船千早",
                     type: "ycqz",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	习得	效果
 1	三岛的加油★	在待命的队员也能得到70%经验值。
 3	三岛的真心加油	提高所获得的经验值。一般5%
@@ -313,9 +331,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "三岛由辉",
                     type: "sdyh",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	习得	效果
 1	一枪倒地★	每次潜入时,可发动仅有一次的特殊射击让一只敌人倒地。
 2	随意开火★	在先制遇敌时,有特定机率用枪进行总攻击。
@@ -328,9 +347,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "织田信也",
                     type: "ztxy",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	习得	效果
 1	传闻的独家★	每次找到新的安全小屋警戒度就会降低。
 3	冲击的独家★	警戒度比较不容易上升,在不被敌人发现下遇敌还胜利的话可以降低更多的警戒度。
@@ -339,9 +359,10 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "大宅一子",
                     type: "dzyz",
+                    text: "",
                 },
                 {
-                    text: `
+                    table: `
           RANK	习得	效果
 2	心灵排毒·X	当主人公陷入异常状态,有机会可以立即恢复正常。
 3	莲心镜	战斗开始时,主人公有机会获得蓄力及专心致志的效果。
@@ -351,6 +372,7 @@ export const getStrategyMainDataAPI = () => {
         `,
                     title: "丸喜拓人",
                     type: "wxtr",
+                    text: "",
                 },
             ],
         },

@@ -5,6 +5,7 @@ import strategyTabbar from './components/strategyTabbar.vue';
 import strategyContent from './components/strategyContent.vue';
 import { StrategyMainData } from '@/types/strategy';
 import { getStrategyMainDataAPI } from '@/services/strategy';
+import StrategyTable from './components/strategyTable.vue';
 
 // 标记当前选中的标签索引
 const navIndex = ref(0);
@@ -45,11 +46,14 @@ onLoad(async () => {
     <P5rBackground class="background-animation">
         <!--自定义内容组件-->
         <view v-if="valueRecord">
-        <strategyContent
-            :navIndex="navIndex"
-            :tabBars="tabBars"
-            :collapseRecord="collapseRecord"
-        /></view>
+            <strategyContent
+                :navIndex="navIndex"
+                :tabBars="tabBars"
+                :collapseRecord="collapseRecord"
+            />
+        </view>
+
+        <StrategyTable />
     </P5rBackground>
 </template>
 

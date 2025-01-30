@@ -22,4 +22,6 @@ export type StrategyContentData = {
     title: string;
     /** 类型, 唯一 */
     type: string;
+    /** 表格 */
+    table?: string;
 }
