@@ -1,59 +1,35 @@
 <template>
-  <view>
-    <uni-collapse v-model="activeNames" @change="handleChange">
-      <uni-collapse-item 
-        v-for="(item, index) in collapseItems" 
-        :key="index"
-        :name="item.name"
-        :title="item.title"
-      >
-        <!-- 动态渲染内部内容 -->
-        <view v-if="isActive(item.name)" class="collapse-content">
-          {{ item.content }}
-        </view>
-      </uni-collapse-item>
-    </uni-collapse>
-  </view>
+                    <view class="title-box">
+                        <image
+                            src="https://patchwiki.biligame.com/images/persona/thumb/e/e8/hfxp38a3n3pqt8vzll93ou1u7koajpr.png/100px-P5R_%E9%9B%A8%E5%AE%AB%E8%8E%B2%E5%A4%B4%E5%83%8F.png"
+                            class="title-image"
+                            mode="aspectFit"
+                        />
+                        <view class="title-text">test title</view>
+                    </view>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-
-// 数据
-const activeNames = ref([]); // 当前展开的面板
-const collapseItems = ref([
-  {
-    name: '0',
-    title: '面板 1',
-    content: '这是面板 1 的内容，点击会动态渲染'
-  },
-  {
-    name: '1',
-    title: '面板 2',
-    content: '这是面板 2 的内容，点击会动态渲染'
-  },
-  {
-    name: '2',
-    title: '面板 3',
-    content: '这是面板 3 的内容，点击会动态渲染'
-  }
-]);
-
-// 方法：判断面板是否展开
-const isActive = (name) => {
-  return activeNames.value.includes(name);
-};
-
-// 事件：面板切换时触发
-const handleChange = (names) => {
-  activeNames.value = names;
-  console.log('当前展开的面板：', names);
-};
-</script>
+<script setup></script>
 
 <style scoped>
-.collapse-content {
-  padding: 20px;
-  color: #666;
+.title-box {
+    height: 7vh;
+  display: flex;
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: flex-start; /* 水平左对齐 */
+  background-color: #000; /* 背景颜色为黑色 */
+}
+
+.title-image {
+  width: 13vw; /* 图片宽度为屏幕宽度的 10% */
+  max-width: 6vh;
+  padding: 25rpx;
+}
+
+.title-content {
+  color: #ff0000; /* 标题文字颜色为红色 */
+  font-weight: bold; /* 加粗文字 */
+  font-size: 1rem; /* 设置文字大小 */
+  margin: auto;
 }
 </style>

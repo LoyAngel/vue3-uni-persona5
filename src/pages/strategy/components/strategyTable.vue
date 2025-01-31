@@ -3,15 +3,15 @@
         <uni-table stripe>
             <uni-tr>
                 <uni-th
-                    width="15"
+                    width="20"
                     align="center"
                 >RANK</uni-th>
                 <uni-th
-                    width="25"
+                    width="10"
                     align="center"
                 >解锁技能名称</uni-th>
                 <uni-th
-                    width="60"
+                    width="70"
                     align="center"
                 >简介</uni-th>
             </uni-tr>
@@ -44,7 +44,6 @@ import { defineProps } from 'vue';
 const props = defineProps<{
     tableText: string;
 }>();
-
 const tableData = props.tableText
     .trim()
     .split('\n')
@@ -58,7 +57,7 @@ const tableData = props.tableText
 <style scoped lang="scss">
 .container {
     width: 95%;
-    margin: 10rpx auto;
+    margin: 0 auto;
 
     :deep(.uni-table) {
         background-color: #000; // 修改背景色为黑色
