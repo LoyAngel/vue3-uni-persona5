@@ -42,6 +42,7 @@ onLoad(async () => {
         :navIndex="navIndex"
         :tabBars="tabBars"
         @checkIndex="checkIndex"
+        class="tabbar"
     />
 
     <P5rBackground class="background-animation">
@@ -52,7 +53,6 @@ onLoad(async () => {
                 :tabBars="tabBars"
             />
         </view>
-        <!--自定义表格组件-->
     </P5rBackground>
 </template>
 
@@ -63,14 +63,27 @@ page {
     justify-content: flex-start;
     align-items: center;
     height: 100vh;
+    position: relative;
 }
+
 </style>
 
 <style scoped>
-.background-animation {
-    flex: 1;
+/* 固定标签栏 */
+.tabbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    height: 50rpx;
 }
 
+.background-animation {
+    flex: 1;
+    margin-top: 50rpx;
+}
+
+/* 穿透样式，使内部组件不居中排版 */
 .background-animation :deep(.mainbox) {
     justify-content: flex-start;
 }

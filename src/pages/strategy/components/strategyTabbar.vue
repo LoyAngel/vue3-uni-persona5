@@ -6,6 +6,7 @@
             :key="tab.type"
             :class="navIndex === index ? 'active' : ''"
             @click="$emit('checkIndex', index)"
+            style="font-size: 0.9rem;"
         >
             {{ tab.title }}
         </view>
@@ -42,7 +43,7 @@ const props = defineProps<{
 }
 
 .view-item {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     padding: 10px;
     text-align: center;
     transition: color 0.3s;

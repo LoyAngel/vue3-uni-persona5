@@ -21,8 +21,13 @@ This is a project that imitates the style of the game Persona5. It contains the 
 ## TODO
 2025.1.16
 - Tabbar animation
-- Walkthrough page
+- Strategy page (2025.2.1) √
 - Data storage (2025.1.22) √
+2025.2.1
+- Persona list page
+- Persona detail page
+- Persona calculator page
+
 ## Credits
 Ideas, logics, data, etc. have been gatherd from:
 - [Persona5 calculator](https://github.com/chinhodado/persona5_calculator)

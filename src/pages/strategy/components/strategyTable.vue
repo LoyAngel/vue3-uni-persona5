@@ -1,30 +1,26 @@
 <template>
     <view class="container">
         <uni-table stripe>
+            <!-- 表头列循环 -->
             <uni-tr>
                 <uni-th
+                    v-for="(header, index) in fieldData"
+                    :key="index"
                     width="20"
                     align="center"
-                >RANK</uni-th>
-                <uni-th
-                    width="10"
-                    align="center"
-                >解锁技能名称</uni-th>
-                <uni-th
-                    width="70"
-                    align="center"
-                >简介</uni-th>
+                >{{ header }}</uni-th>
             </uni-tr>
+            <!-- 表体数据循环 -->
             <uni-tr
                 v-for="(item, index) in tableData"
                 :key="index"
             >
-                <uni-td align="center">{{ item.rank
-                    }}</uni-td>
-                <uni-td align="center">{{ item.skill
-                    }}</uni-td>
-                <uni-td align="center">{{ item.description
-                    }}</uni-td>
+                <uni-td
+                    v-for="(value, key) in item"
+                    :key="key"
+                    align="center"
+                    class="table-td"
+                >{{ value }}</uni-td>
             </uni-tr>
         </uni-table>
     </view>
@@ -44,13 +40,22 @@ import { defineProps } from 'vue';
 const props = defineProps<{
     tableText: string;
 }>();
+// 解析表头数据
+const fieldData = props.tableText
+    .trim()
+    .split('\n')[0]
+    .split('\t');
+// 解析表体数据
 const tableData = props.tableText
     .trim()
     .split('\n')
     .slice(1)
     .map((line) => {
-        const [rank, skill, description] = line.split('\t');
-        return { rank, skill, description };
+        const obj:Record<string, string> = {};
+        line.split('\t').forEach((item, index) => {
+            obj[fieldData[index]] = item.replaceAll('\\seq', '\n');
+        });
+        return obj;
     });
 </script>
 
@@ -58,6 +63,7 @@ const tableData = props.tableText
 .container {
     width: 95%;
     margin: 0 auto;
+    white-space: pre-wrap;
 
     :deep(.uni-table) {
         background-color: #000; // 修改背景色为黑色
@@ -82,9 +88,8 @@ const tableData = props.tableText
         .uni-table-td {
             border-bottom: 1px solid #ff0000; // 修改分割线颜色为红色
             border-top: 1px solid #ff0000; // 修改分割线颜色为红色
-            border-left: 1px solid #fff;
-            border-right: 1px solid #fff;
-
+            // border-left: 1px solid #fff; 
+            // border-right: 1px solid #fff;
         }
 
 

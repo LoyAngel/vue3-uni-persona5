@@ -1,28 +1,61 @@
-src_text = ""
-src_arr = src_text.split("\n");
-name_text = ""
-name_arr = name_text.split("\n");
+const text_data = `要素·行动	人格指数提升	备注
+Coop「太阳」等级提升剧情	3	Rank 2、4、5、7\\seq5Rank8、10
+Coop「恶魔」等级提升剧情	3	Rank 1、2、3、4、7、8
+在课堂上正确回答问题	2	指名杏 4.25、6.20、7.7
+泡澡堂：通常	3、5	通常3，周日或者雨天5
+读书：艳丽的舞娘	读完后5	图书馆借书
+读书：灰姑娘童话	读完后5	图书馆借书 ※10.4
+读书：魅惑的交谈术	读完后5	涩谷太平堂书店
+读书：美男蛮勇录	读完后7	神保町书店 ※｢剑豪武勇谈｣读完后
+DVD鉴赏：飞跃彼此利	3	每次观看都增加
+DVD鉴赏：饿女贝蒂	3	6.1之后
+DVD鉴赏：激情师奶	3	8.1之后
+游玩电视游戏：招摇撞骗的五右卫门	2、3	失败加2，成功加3
+游玩电视游戏：神拳de痛击	3	每次游玩都增加秋叶原怀旧游戏店・超男爵・9.1以后
+涩谷·电影鉴赏	5、7 ※3	7月 ※3 初次基础5点，之后基础2点
+读了震撼人心的摄影技巧额外加2点
+涩谷·电影鉴赏	5、7 ※3	1月~最后 ※3 初次基础5点，之后基础2点
+读了震撼人心的摄影技巧额外加2点
+在咖啡店里泡咖啡	2	教皇Rank2之后
+上课躲粉笔	3	成功率根据灵巧值而发生变动
+定期考试	3、5	中等偏上 +3\\seq年级前10或第一 +5
+假日活动：和祐介在自己房间里看书	5	7.27
+假日活动：和祐介在自己房间里看DVD	5	8.8、8.11
+假日活动：和龙司在自己房间里看DVD	5	8.3
+在便利店打工	3	7月1日之后
+在便利店打工并发生事件且成功	5	日期里带有7的日子
+在女仆咖啡厅点东西	3、5	通常3，特别菜单5
+做梦	2	
+在家庭餐厅店气泡水果茶	2	7月1日之后
+新宿的酒吧·在特别的日子打工在	3	和穿着晚礼服的女性对话
+成功完成宇宙汉堡的大爆炸挑战	彗星级：2\\seq力级：3\\seq宙塔级：5	
+饮用美肤青汁	2	仅在周日出售
+`;
 
-const to_be_added = [];
-for (let i = 0; i < src_arr.length; i++) {
-    to_be_added.push({
-        title: name_arr[i],
-        src: src_arr[i]
-    });
+// const to_be_added = [];
+// for (let i = 0; i < src_arr.length; i++) {
+//     to_be_added.push({
+//         title: name_arr[i],
+//         src: src_arr[i]
+//     });
+// }
+
+// const to_be_handled = [];
+
+// // 合并to_be_added 和 to_be_handled 对象
+// const res = to_be_handled.map((item) => {
+//     const obj = to_be_added.find((i) => i.title === item.title);
+//     if (obj) {
+//         return {
+//             ...item,
+//             image: obj.src
+//         };
+//     }
+// })
+
+res = {
+    data: text_data
 }
-
-const to_be_handled = [];
-
-// 合并to_be_added 和 to_be_handled 对象
-const res = to_be_handled.map((item) => {
-    const obj = to_be_added.find((i) => i.title === item.title);
-    if (obj) {
-        return {
-            ...item,
-            image: obj.src
-        };
-    }
-})
 
 // 写出到文件
 const fs = require('fs');
