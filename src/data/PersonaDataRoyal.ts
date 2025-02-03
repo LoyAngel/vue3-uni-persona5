@@ -1,3 +1,5 @@
+import { PersonaMap } from "@/types/data";
+
 export const personaMapRoyal: PersonaMap = {
     "Abaddon": {
         "inherits": "Curse",

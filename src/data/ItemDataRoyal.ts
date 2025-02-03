@@ -1,3 +1,5 @@
+import { ItemMap } from "@/types/data";
+
 const itemMapRoyal: ItemMap = {
     "Aid Charm": {
         "type": "Accessory",

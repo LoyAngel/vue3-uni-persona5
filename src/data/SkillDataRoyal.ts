@@ -1,3 +1,5 @@
+import { SkillMap } from "@/types/data";
+
 export const skillMapRoyal: SkillMap = {
     "Absorb Bless": {
         "effect": "Absorb Bless attacks.",

@@ -21,6 +21,7 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 100vw;
   .search {
     display: flex;
     align-items: center;

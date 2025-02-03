@@ -1,19 +1,20 @@
 // items, personas, skills, tranlations
-interface ItemMap {
+export interface ItemMap {
     [index: string]: ItemData;
 }
-interface ItemData {
+export interface ItemData {
     name?: string;
     description?: string;
     type?: string;
 }
 
 
-interface PersonaMap {
+export interface PersonaMap {
     [index: string]: PersonaData;
 }
-interface PersonaData {
+export interface PersonaData {
     name?: string; // only for when converted to list
+    c_name?: string; 
     arcana: string;
     level: number;
     stats: number[];
@@ -70,10 +71,10 @@ interface PersonaData {
     floor?: string; //path level
 }
 
-interface SkillMap {
+export interface SkillMap {
     [index: string]: SkillData;
 }
-interface SkillData {
+export interface SkillData {
     name?: string;
     cost?: number;
     effect: string;
@@ -97,6 +98,6 @@ interface SkillData {
     fuseDisplay?: string;
 }
 
-interface TranslationMap {
+export interface TranslationMap {
     [index: string]: string;
 }
