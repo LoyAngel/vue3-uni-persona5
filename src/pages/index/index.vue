@@ -3,9 +3,9 @@ import { onLoad } from '@dcloudio/uni-app';
 import { getHomeBannerAPI } from '@/services/index';
 import { ref } from 'vue';
 import { IndexBannerData } from '@/types';
-import indexNavbar from './components/indexNavbar.vue';
 import indexSwiper from './components/indexSwiper.vue';
 import indexCategory from './components/indexCategory.vue';
+import P5rNavbar from '@/components/P5rNavbar.vue';
 
 const bannerList = ref<IndexBannerData[]>([]);
 const getHomeBannerData = async () => {
@@ -21,7 +21,7 @@ onLoad(() => {
 
 <template>
     <!-- 自定义导航栏 -->
-    <index-navbar />
+    <P5rNavbar />
     <!-- 自定义动画背景 -->
     <P5rBackground class="background">
         <!-- 自定义轮播图 -->
