@@ -12,7 +12,7 @@ export const getStrategyMainDataAPI = (type: string) => {
         {
             title: "COOP 介绍",
             type: "coopintro",
-            image: "/static/strategy/strategy_coop_intro.png",
+            image: "http://littlering.cn/persona5/static/strategy/strategy_coop_intro.png",
             content: [
                 {
                     text: `         
@@ -47,7 +47,7 @@ export const getStrategyMainDataAPI = (type: string) => {
         {
             title: "COOP 人物详情",
             type: "coopdetail",
-            image: "/static/strategy/strategy_coop_intro.png",
+            image: "http://littlering.cn/persona5/static/strategy/strategy_coop_intro.png",
             content: [
                 {
                     table: "\n          RANK\t解锁技能名称\t简介\n2\t不良少年交涉\t在和敌人的对话交涉决裂时,假如敌人性格『开朗』,就可重新再交涉。\n3\t追击\t在主人公的攻击未能使敌人倒地的情况下,进行追击。\n4\t隐形冲刺★\t就算在异世界奔跑也不容易被敌人发现\n6\t纸扇恢复★\t有机会让状态异常的伙伴恢复正常。\n7\t瞬杀\t在异世界奔跑接近敌人时,能立刻消灭等级比自己低超过9级的阴影。\n8\t强忍\t即便受到超过剩余HP的伤害,也不会进入无法战斗的状态,HP变成1。\n9\t掩护\t在主人公即将遭遇会造成无法战斗的攻击时,跑到身前替其承受伤害。\n10\t觉醒\t拥有的人格面具获得最终进化,诞生为神话的诡骗师。学会：极・疾风识破,\n11\t二觉\t解锁人格面具蚩尤\n        ",
@@ -208,7 +208,7 @@ export const getStrategyMainDataAPI = (type: string) => {
         {
             title: "COOP 优先级推荐",
             type: "cooprecommonad",
-            image: "/static/strategy/strategy_coop_intro.png",
+            image: "http://littlering.cn/persona5/static/strategy/strategy_coop_intro.png",
             content: [
                 {
                     text: `
@@ -303,7 +303,7 @@ export const getStrategyMainDataAPI = (type: string) => {
         {
             title: "解答猜谜",
             type: "answer",
-            image: "/static/strategy/strategy_coop_intro.png",
+            image: "http://littlering.cn/persona5/static/strategy/strategy_coop_intro.png",
             content: [
                 {
                     table: "日期\t正确答案\n4月12日\t坏人\n4月19日\t两边一样长\n4月23日\t全部\n4月25日\t确实是错误还发起行动/确信是正确的而采取行动\n4月27日\t四色定理\n4月30日\t人/才能/优秀的人\n5月7日\t命运之女\n5月10日\t平安时代\n5月11日考试\t源义经/源赖朝/赖朝赢了/弱者\n5月12日考试\t认知/两个都是\n5月13日考试\t恶魔辞典/致命女郎\n5月16日\t安慰剂效应\n5月19日\t葛饰北斋\n5月21日\t1:1.414\n5月23日\t共同的/感觉/联觉\n5月26日\t柯南·道尔\n5月31日\t约翰·席尔瓦\n6月4日\t晕轮效应\n6月7日\t脚的数量\n6月8日\t20世纪\n6月13日\t绿色\n6月15日\t硬币\n6月20日\t智能手机\n6月23日\t教皇\n6月27日\t狗\n6月29日\t金\n7月1日\t蛮头\n7月4日\t尤里乌斯和奥古斯都\n7月7日\t银河/素面\n7月9日\t三角形\n7月11日\t能长期记住的记忆/近乎无限/不会遗忘\n7月12日\t偷窃\n7月13日考试\t64度/诸葛亮/人头/人头的替代品\n7月14日考试\t堪察加拟石蟹·石蟹科/经济混乱\n7月15日考试\t下猫下狗/鬼的肠子\n9月3日\t繁荣\n9月6日\t停表错觉\n9月14日\t租赁店\n9月17日\t有能力的老鹰都会藏起自己的爪子\n9月21日\t正中央\n9月24日\t白20面,黑12面\n9月28日\tPhantom/Vibration/Syndrome\n9月29日\t宫内厅\n10月3日\t星星\n10月6日\t约瑟夫·吉约丹\n10月11日\t波巴\n10月17日考试\t32面/以前只有一种颜色/以前是黑白的\n10月18日考试\t夏尔·亨利·桑松/因为是世袭制\n10月19日考试\t强制劳动/欧洲大陆的3只蜜蜂\n10月22日\t15\n10月24日\t主观认定\n11月2日\t江户时代\n11月4日\t剑\n11月8日\t几岁都可以\n11月10日\t因为很难看到它的眼睛\n11月12日\t因为声音是合成的\n11月14日\t因为海拔很高\n11月15日\t斩首示众\n11月17日\t蜗牛线\n12月20日考试\tD/10亿以上/斩首并游街示众/是一种表演\n12月21日考试\t红心/旁听\n12月22日考试\t日本/『无畏』号战列舰\n1月11日\t八百万/YAOYOROZU\n1月14日\t岩手县\n1月18日\t准备就绪\n1月21日\t蛇\n1月24日\t我的手机/用光/我的手机没电了\n1月27日\t可以传给朋友的朋友的朋友\n",
@@ -330,7 +330,7 @@ export const getStrategyMainDataAPI = (type: string) => {
         {
             title: "人格指数指南介绍",
             type: "cftintro",
-            image: "/static/strategy/strategy_coop_personality.png",
+            image: "http://littlering.cn/persona5/static/strategy/strategy_coop_personality.png",
             content: [
                 {
                     title: "五维人格指数简介",
@@ -370,7 +370,7 @@ export const getStrategyMainDataAPI = (type: string) => {
         {
             title: "人格指数提升细则",
             type: "cftupdetail",
-            image: "/static/strategy/strategy_coop_personality.png",
+            image: "http://littlering.cn/persona5/static/strategy/strategy_coop_personality.png",
             content: [
                 {
                     title: "知识",

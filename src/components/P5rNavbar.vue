@@ -10,7 +10,7 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
             <!-- logo文字 -->
             <image
                 class="logo-image"
-                src="@/static/logo.png"
+                src="http://littlering.cn/persona5/static/logo.png"
             />
             <text class="logo-text">Persona 5 Royal</text>
         </view>
