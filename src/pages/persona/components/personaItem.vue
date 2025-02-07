@@ -6,10 +6,14 @@ const props = defineProps<{
     persona: PersonaData;
     img: string;
 }>();
+
+const navigate = () => {
+    uni.navigateTo({ url: `/pages/detail/personaDetail?persona_name=${props.persona.name}` });
+}
 </script>
 
 <template>
-    <view class="persona-card">
+    <view class="persona-card" @click="navigate()">
         <view class="persona-image-container">
             <image 
                 :src="img" 

@@ -1,6 +1,6 @@
 import { ItemMap } from "@/types/data";
 
-const itemMapRoyal: ItemMap = {
+export const itemMapRoyal: ItemMap = {
     "Aid Charm": {
         "type": "Accessory",
         "description": "+Dia (Small HP recovery for 1 ally)"

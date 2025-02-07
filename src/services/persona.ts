@@ -18,26 +18,20 @@ export const getPersonaMap = (): Promise<Data<PersonaMap>> => {
                 name: key,
                 c_name: translationFunc(key, "Persona"),
                 arcana: translationFunc(value.arcana, "Arcana") || "",
+                img_url: translationFunc(key, "PersonaImg") || "",
+                elems: value.elems.map((elem) => translationFunc(elem, "Elem") || ""),
+                skills: Object.fromEntries(
+                    Object.entries(value.skills).map(([key, value]) => [
+                        translationFunc(key, "Skill") || "",
+                        value,
+                    ])
+                ),
+                item: translationFunc(value.item, "Item") || "",
+                itemr: translationFunc(value.itemr, "Item") || "",
             },
         ])
     );
     return new Promise<Data<PersonaMap>>((resolve) => {
-        resolve({
-            code: "200",
-            msg: "success",
-            result: res,
-        });
-    });
-};
-
-export const getPersonaImgMap = (): Promise<Data<TranslationMap>> => {
-    let res = Object.fromEntries(
-        Object.entries(personaMapRoyal).map(([key, value]) => [
-            key,
-            translationFunc(key, "PersonaImg") || "",
-        ])
-    );
-    return new Promise<Data<TranslationMap>>((resolve) => {
         resolve({
             code: "200",
             msg: "success",

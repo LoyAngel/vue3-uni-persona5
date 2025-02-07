@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
 import PersonaItem from './components/personaItem.vue';
 import personaSearchbar from './components/personaSearchbar.vue';
 import personaSidebar from './components/personaSidebar.vue';
-import { PersonaMap, TranslationMap } from '@/types/data';
-import { getPersonaImgMap, getPersonaMap } from '@/services/persona';
+
+import { ref, computed } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
-import P5rNavbar from '@/components/P5rNavbar.vue';
+import { personaStore } from '@/stores';
+import { PersonaMap } from '@/types/data';
+import { getPersonaMap } from '@/services/persona';
 
 // 使用示例数据
 // const test_persona_map: PersonaMap = {
@@ -49,15 +50,17 @@ import P5rNavbar from '@/components/P5rNavbar.vue';
 //     },
 // }
 
+const persona_store = personaStore();
 const persona_map = ref<PersonaMap>({});
-const img_map = ref<TranslationMap>({});
+
 const search_value = ref('');
-const selectedCategory = ref('全部');
-const filteredPersonas = computed(() => {
+const selected_category = ref('全部');
+
+const filtered_personas = computed(() => {
     return Object.values(persona_map.value).filter(persona => {
-        const matchesSearch = persona?.c_name?.includes(search_value.value);
-        const matchesCategory = selectedCategory.value === '全部' || persona?.arcana === selectedCategory.value;
-        return matchesSearch && matchesCategory;
+        const matches_search = persona?.c_name?.includes(search_value.value);
+        const matches_category = selected_category.value === '全部' || persona?.arcana === selected_category.value;
+        return matches_search && matches_category;
     });
 });
 
@@ -65,17 +68,11 @@ const getPersonaMapData = async () => {
     // 获取数据
     const res = await getPersonaMap();
     persona_map.value = res.result;
-}
-
-const getPersonaImgMapData = async () => {
-    // 获取数据
-    const res = await getPersonaImgMap();
-    img_map.value = res.result;
+    persona_store.setPersonaMap(res.result);
 }
 
 onLoad(async () => {
     await getPersonaMapData();
-    await getPersonaImgMapData();
 })
 </script>
 
@@ -85,7 +82,7 @@ onLoad(async () => {
         v-model:search_query="search_value" />
     <view class="main-content">
         <persona-sidebar
-            v-model:selected_category="selectedCategory"
+            v-model:selected_category="selected_category"
         />
         <scroll-view
             class="content"
@@ -93,17 +90,17 @@ onLoad(async () => {
             :show-scrollbar="false"
         >
             <view
-                v-if="filteredPersonas.length === 0"
+                v-if="filtered_personas.length === 0"
                 class="empty-view"
             >
                 无搜索结果
             </view>
             <persona-item
                 v-else
-                v-for="persona_item in filteredPersonas"
+                v-for="persona_item in filtered_personas"
                 :key="persona_item.name"
                 :persona="persona_item"
-                :img="persona_item.name ? img_map[persona_item.name] : ''"
+                :img="persona_item.img_url ? persona_item.img_url : ''"
             />
         </scroll-view>
     </view>

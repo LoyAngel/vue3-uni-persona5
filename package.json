@@ -60,6 +60,7 @@
     "@dcloudio/uni-mp-xhs": "3.0.0-alpha-3081220230802001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3081220230802001",
     "@dcloudio/uni-ui": "^1.5.7",
+    "@qiun/ucharts": "2.5.0-20230101",
     "@typescript-eslint/eslint-plugin": "^8.19.1",
     "@vue/server-renderer": "^3.2.47",
     "vue": "^3.2.47",

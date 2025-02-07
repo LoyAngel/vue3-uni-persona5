@@ -11,3 +11,4 @@ export default pinia
 
 // 模块统一导出
 export * from './module/test'
+export * from './module/person'

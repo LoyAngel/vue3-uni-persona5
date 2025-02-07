@@ -43,7 +43,13 @@
 			"style": {
 				"navigationBarTitleText": "攻略详情"
 			}
-		}
+		},
+        {
+            "path": "pages/detail/personaDetail",
+            "style": {
+                "navigationBarTitleText": "人格面具详情"
+            }
+        }
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

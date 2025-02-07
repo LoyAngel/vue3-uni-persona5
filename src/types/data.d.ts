@@ -15,6 +15,7 @@ export interface PersonaMap {
 export interface PersonaData {
     name?: string; // only for when converted to list
     c_name?: string; 
+    img_url?: string;
     arcana: string;
     level: number;
     stats: number[];
