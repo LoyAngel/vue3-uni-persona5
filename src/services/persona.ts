@@ -28,6 +28,7 @@ export const getPersonaMap = (): Promise<Data<PersonaMap>> => {
                 ),
                 item: translationFunc(value.item, "Item") || "",
                 itemr: translationFunc(value.itemr, "Item") || "",
+                trait: translationFunc(value.trait, "Skill") || "",
             },
         ])
     );

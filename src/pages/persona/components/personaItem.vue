@@ -56,7 +56,7 @@ const navigate = () => {
     overflow: hidden;
     margin-right: 20rpx;
 }
-.persona-image {
+.header-right {
     width: 100%;
     height: 100%;
     object-fit: cover;
