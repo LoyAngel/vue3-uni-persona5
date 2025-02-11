@@ -2,9 +2,19 @@
 import { ref } from 'vue'
 import mySection from './components/mySection.vue'
 
-const updatedData = ref('当前版本：测试版。\n以下为更新日志:\n2025.2.x 发布测试版')
-const toupdateData = ref('下个版本计划功能：\n1.更新装备、技能数据\n2.优化persona展示ui')
-const otherContent = ref('页面开发，数据整理，服务器维护都由本人独自完成，工作量较大，如果有发现疏忽不足的地方或者有功能界面建议，欢迎留言，感谢支持！')
+const updatedData = ref(`当前版本：v0.2.0。
+以下为更新日志:
+2025.2.8 发布v0.2.0 `)
+const toupdateData = ref(`下个版本计划功能：
+1.更新装备、技能数据
+2.优化persona展示ui`)
+const otherContent = ref(`页面开发，数据整理，服务器维护都由本人独自完成，工作量较大，如果有发现疏忽不足的地方或者有功能界面建议，欢迎留言，感谢支持！ye(･ω･)ﾉ.
+数据来源: 
+https://wiki.biligame.com/persona
+https://megamitensei.fandom.com/wiki/Persona_(Series)
+https://github.com/chinhodado/persona5_calculator
+
+本小程序仅供学习交流使用，不用于商业用途，如有侵权请联系删除。`)
 </script>
 
 <template>
@@ -47,13 +57,11 @@ const otherContent = ref('页面开发，数据整理，服务器维护都由本
         <my-section
             title="其他"
             :section_data_string="otherContent"
+            :fontsize=24
         >
-            <view class="button-group" v-if="false">
-                <button class="action-button">
-                    <text class="button-text">💬 联系客服</text>
-                </button>
-                <button class="action-button">
-                    <text class="button-text">🌸 评价打分</text>
+            <view class="button-group" >
+                <button class="action-button" openType="feedback">
+                    <text class="button-text" >🌸 有何建议欢迎反馈！Thanks♪(･ω･)ﾉ</text>
                 </button>
             </view>
         </my-section>
@@ -126,7 +134,7 @@ const otherContent = ref('页面开发，数据整理，服务器维护都由本
         background-color: #f5f5f5;
         border: none;
         border-radius: 16rpx;
-        width: 200rpx;
+        width: 500rpx;
         height: 100rpx;
 
         .button-text {

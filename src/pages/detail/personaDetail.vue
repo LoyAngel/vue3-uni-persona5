@@ -129,29 +129,29 @@ const props = defineProps<{
     persona_name: string
 }>()
 
-//   const persona = ref<PersonaData>(personaStore().persona_map[props.persona_name])
-const persona = ref({
-    "inherits": "Curse",
-    "item": "百万吨腰带",
-    "itemr": "神手腰带",
-    "level": 75,
-    "arcana": "审判",
-    "elems": ["吸", "吸", "-", "-", "-", "-", "-", "-", "耐", "吸"],
-    "skills": {
-        "玛哈布芙达因": 0,
-        "百万吨袭击": 0,
-        "不屈斗志": 0,
-        "闪光炸弹": 78,
-        "异常状态成功率UP": 79,
-        "物理吸收": 80,
-        "巨人之战": 81
-    },
-    "stats": [51, 42, 58, 38, 43],
-    "trait": "Mouth of Savoring",
-    "name": "Abaddon",
-    "c_name": "阿巴顿",
-    "img_url": "https://patchwiki.biligame.com/images/persona/thumb/6/6b/i2cg4qrtyst7ahmep0l200tfhhvi9bv.png/60px-P5R_%E9%98%BF%E5%B7%B4%E9%A1%BF%E5%A4%B4%E5%83%8F.png"
-})
+const persona = ref<PersonaData>(personaStore().persona_map[props.persona_name])
+// const persona = ref({
+//     "inherits": "Curse",
+//     "item": "百万吨腰带",
+//     "itemr": "神手腰带",
+//     "level": 75,
+//     "arcana": "审判",
+//     "elems": ["吸", "吸", "-", "-", "-", "-", "-", "-", "耐", "吸"],
+//     "skills": {
+//         "玛哈布芙达因": 0,
+//         "百万吨袭击": 0,
+//         "不屈斗志": 0,
+//         "闪光炸弹": 78,
+//         "异常状态成功率UP": 79,
+//         "物理吸收": 80,
+//         "巨人之战": 81
+//     },
+//     "stats": [51, 42, 58, 38, 43],
+//     "trait": "Mouth of Savoring",
+//     "name": "Abaddon",
+//     "c_name": "阿巴顿",
+//     "img_url": "https://patchwiki.biligame.com/images/persona/thumb/6/6b/i2cg4qrtyst7ahmep0l200tfhhvi9bv.png/60px-P5R_%E9%98%BF%E5%B7%B4%E9%A1%BF%E5%A4%B4%E5%83%8F.png"
+// })
 // const elementTypes = ['物', '枪', '火', '冰', '电', '风', '念', '核', '祝', '咒']
 const elementTypes = {
     '物': '#EF9710',
@@ -213,13 +213,16 @@ page {
                 color: #ff0000;
                 text-align: center;
                 animation: blink 4s infinite linear;
+
                 @keyframes blink {
                     0% {
                         opacity: 1;
                     }
+
                     50% {
                         opacity: 0.3;
                     }
+
                     100% {
                         opacity: 1;
                     }
@@ -268,6 +271,7 @@ page {
         border: 2px solid #ff0000;
         box-shadow: 0 4px 8px rgba(204, 89, 89, 0.848);
         background: linear-gradient(145deg, #d54242, #880303);
+
         .persona-image {
             width: 30vw;
             border-radius: 8px;

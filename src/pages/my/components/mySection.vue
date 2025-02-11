@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import { defineProps, computed } from 'vue'
-const props = defineProps({
-    title: String,
-    section_data_string: String
-})
+import { defineProps, computed, withDefaults } from 'vue'
+const props = withDefaults(
+    defineProps<{
+        title: string,
+        section_data_string: string,
+        fontsize?: number
+    }>(),
+    {
+        fontsize: 24
+    }
+);
+
 const section_data = computed(() => {
     return props.section_data_string
         ?.split('\n')
@@ -26,6 +33,7 @@ const section_data = computed(() => {
                 v-for="item in section_data"
                 :key="item.id"
                 class="section-item"
+                :style="{ fontSize: `${fontsize}rpx` }"
             >
                 <text>{{ item.text }}</text>
             </view>
@@ -65,7 +73,7 @@ const section_data = computed(() => {
 }
 
 .section-item {
-    font-size: 28rpx;
+    word-break: break-all;
     color: #666;
     line-height: 1.5;
 }
