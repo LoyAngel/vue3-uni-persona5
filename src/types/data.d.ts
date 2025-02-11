@@ -14,7 +14,7 @@ export interface PersonaMap {
 }
 export interface PersonaData {
     name?: string; // only for when converted to list
-    c_name?: string; 
+    c_name?: string; // for display
     img_url?: string;
     arcana: string;
     level: number;
@@ -32,8 +32,10 @@ export interface PersonaData {
 
     // from new data for p5r
     inherits?: string;
+    inherit_elems?: string[]; // for display
     item?: string;
     itemr?: string;
+    item_type?: string; // for display
     skillCard?: boolean; //determines if this persona's itemization results in a skill card
     trait?: string;
 

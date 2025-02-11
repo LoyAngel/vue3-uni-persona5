@@ -1,4 +1,4 @@
-const rarePersonaeRoyal = [
+export const rarePersonaeRoyal = [
     "Crystal Skull",
     "Koh-i-Noor",
     "Queen's Necklace",
@@ -10,7 +10,7 @@ const rarePersonaeRoyal = [
     "Orichalcum"
 ];
 
-const rareCombosRoyal = {
+export const rareCombosRoyal = {
     "Fool":       [+2, +1, +1, -1, -1, -1, -1, +1, +1],
     "Magician":   [+1, -1, -1, +1, +2, +1, +1, +1, -2],
     "Priestess":  [+1, +2, +1, -1, -1, +1, -1, +1, +1],
@@ -37,7 +37,7 @@ const rareCombosRoyal = {
     "World":      [+1, +1, +1, +1, +1, +1, +1, +1, +1]
 };
 
-const arcana2CombosRoyal = [
+export const arcana2CombosRoyal = [
     {'source': ['Fool',       'Fool'        ], 'result': 'Fool'        },
     {'source': ['Fool',       'Magician'    ], 'result': 'Death'       },
     {'source': ['Fool',       'Priestess'   ], 'result': 'Moon'        },
@@ -313,7 +313,7 @@ const arcana2CombosRoyal = [
     {'source': ['World',      'World'       ], 'result': 'World'       },
 ];
 
-const specialCombosRoyal = [
+export const specialCombosRoyal = [
     {result: 'Alice', sources: ["Belial", "Nebiros"]},
     {result: 'Ardha', sources: ["Shiva", "Parvati"]},
     {result: 'Asura', sources: ["Jikokuten", "Zouchouten", "Koumokuten", "Bishamonten"]},
@@ -340,7 +340,7 @@ const specialCombosRoyal = [
     {result: 'Yoshitsune', sources: ["Shiki-Ouji", "Arahabaki", "Okuninushi", "Yatagarasu", "Futsunushi"]},
 ];
 
-const dlcPersonaRoyal = [
+export const dlcPersonaRoyal = [
     ["Izanagi", "Izanagi Picaro"],
     ["Orpheus", "Orpheus Picaro"],
     ["Ariadne", "Ariadne Picaro"],
@@ -356,7 +356,7 @@ const dlcPersonaRoyal = [
     ["Raoul"]
 ];
 
-const inheritanceChartRoyal = {
+export const inheritanceChartRoyal = {
     //['physical', 'gun', 'fire', 'ice', 'electric', 'wind', 'psychic', 'nuclear', 'bless', 'curse', 'healing','ailment','almighty']
     "Physical": ["✓","✓","✘","✘","✘","✘","✘","✘","✘","✘","✓","✓"],
     "Fire":     ["✓","✓","✓","✘","✓","✓","✓","✓","✓","✓","✓","✓"],

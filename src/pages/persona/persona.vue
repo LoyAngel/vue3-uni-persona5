@@ -6,52 +6,15 @@ import personaSidebar from './components/personaSidebar.vue';
 import { ref, computed } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
 import { personaStore } from '@/stores';
+import { arcanaStore } from '@/stores';
 import { PersonaMap } from '@/types/data';
 import { getPersonaMap } from '@/services/persona';
 
 // 使用示例数据
-// const test_persona_map: PersonaMap = {
-//     "Abaddon": {
-//         "name": "Abaddon",
-//         "inherits": "Curse",
-//         "item": "Megaton Raid Belt",
-//         "itemr": "God's Hand Belt",
-//         "level": 75,
-//         "arcana": "Judgement",
-//         "elems": ["ab", "ab", "-", "-", "-", "-", "-", "-", "rs", "ab"],
-//         "skills": {
-//             "Mabufudyne": 0,
-//             "Megaton Raid": 0,
-//             "Enduring Soul": 0,
-//             "Flash Bomb": 78,
-//             "Ailment Boost": 79,
-//             "Absorb Phys": 80,
-//             "Gigantomachia": 81
-//         },
-//         "stats": [51, 42, 58, 38, 43],
-//         "trait": "Mouth of Savoring",
-//         "area": "Da'at",
-//         "floor": "All"
-//     },
-//     "Agathion": {
-//         "name": "Agathion",
-//         "inherits": "Electric",
-//         "item": "Zio",
-//         "itemr": "Mazio",
-//         "skillCard": true,
-//         "level": 3,
-//         "arcana": "Chariot",
-//         "elems": ["-", "rs", "-", "-", "rs", "wk", "-", "-", "-", "-"],
-//         "skills": {"Dia": 0, "Baisudi": 0, "Lunge": 4, "Rakukaja": 6, "Zio": 7, "Dodge Elec": 8},
-//         "stats": [3, 4, 5, 7, 3],
-//         "trait": "Rare Antibody",
-//         "area": "Aiyatsbus",
-//         "floor": "L1"
-//     },
-// }
-
 const persona_store = personaStore();
 const persona_map = ref<PersonaMap>({});
+const arcana_store = arcanaStore();
+const arcana_map = arcana_store.arcana_map;
 
 const search_value = ref('');
 const selected_category = ref('全部');
@@ -65,11 +28,28 @@ const filtered_personas = computed(() => {
 });
 
 const getPersonaMapData = async () => {
-    // 获取数据
-    const res = await getPersonaMap();
-    persona_map.value = res.result;
-    persona_store.setPersonaMap(res.result);
-}
+    const{ result } = await getPersonaMap();
+    const personaList = Object.values(result); // 转换为数组
+
+    // 先按level排序
+    personaList.sort((a, b) => a.level - b.level);
+
+    // 再按arcana_map顺序排序
+    personaList.sort((a, b) => {
+        const arcanaA = arcana_map.findIndex(item => item.arcana_name === a.arcana);
+        const arcanaB = arcana_map.findIndex(item => item.arcana_name === b.arcana);
+        return arcanaA - arcanaB;
+    });
+
+    // 回归到PersonaMap格式
+    const sortedPersonaMap: PersonaMap = {};
+    personaList.forEach(p => {
+        sortedPersonaMap[p.name || ''] = p;
+    });
+
+    persona_map.value = sortedPersonaMap;
+    persona_store.setPersonaMap(sortedPersonaMap);
+};
 
 onLoad(async () => {
     await getPersonaMapData();

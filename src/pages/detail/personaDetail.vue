@@ -16,10 +16,15 @@
                         <text class="persona-arcana">[{{
                             persona.arcana }}]</text>
                     </view>
-                    <view class="trait-group">
-                        <text class="trait-label">特性:</text>
-                        <text class="trait-value">{{
+                    <view class="gen-group">
+                        <text class="gen-label">特性:</text>
+                        <text class="gen-value">{{
                             persona.trait }}</text>
+                    </view>
+                    <view class="gen-group" v-if="persona.area">
+                        <text class="gen-label"> 位置:</text>
+                        <text class="gen-value">{{
+                            persona.area }}</text>
                     </view>
                 </view>
                 <view class="header-right">
@@ -61,6 +66,11 @@
                 <view class="section-title">道具化</view>
                 <view class="items-content">
                     <view class="item-row">
+                        <text class="item-label">道具类型:</text>
+                        <text class="item-value">{{
+                            persona.item_type}}</text>
+                    </view>
+                    <view class="item-row">
                         <text class="item-label">普通:</text>
                         <text class="item-value">{{
                             persona.item }}</text>
@@ -73,13 +83,13 @@
                 </view>
             </view>
 
-            <!-- Elemental Table -->
+            <!-- Elem Table -->
             <view class="elemental-table">
                 <view class="section-title">属性克制表</view>
                 <view class="table-grid">
                     <view class="table-header">
                         <view
-                            v-for="(color, elem) in elementTypes"
+                            v-for="(color, elem) in elemTypes"
                             :key="elem"
                             class="elem-cell"
                             :style="{ color: color }"
@@ -94,6 +104,32 @@
                             class="elem-cell"
                         >
                             {{ resistance }}
+                        </view>
+                    </view>
+                </view>
+            </view>
+            
+            <!-- Inherit Table -->
+            <view class="inherit-table">
+                <view class="section-title">技能继承表</view>
+                <view class="table-grid">
+                    <view class="table-header">
+                        <view
+                            v-for="(color, elem) in inheritTypes"
+                            :key="elem"
+                            class="elem-cell"
+                            :style="{ color: color }"
+                        >
+                            {{ elem }}
+                        </view>
+                    </view>
+                    <view class="table-row">
+                        <view
+                            v-for="(is_inherit, index) in persona.inherit_elems"
+                            :key="index"
+                            class="elem-cell"
+                        >
+                            {{ is_inherit }}
                         </view>
                     </view>
                 </view>
@@ -153,7 +189,7 @@ const persona = ref<PersonaData>(personaStore().persona_map[props.persona_name])
 //     "img_url": "https://patchwiki.biligame.com/images/persona/thumb/6/6b/i2cg4qrtyst7ahmep0l200tfhhvi9bv.png/60px-P5R_%E9%98%BF%E5%B7%B4%E9%A1%BF%E5%A4%B4%E5%83%8F.png"
 // })
 // const elementTypes = ['物', '枪', '火', '冰', '电', '风', '念', '核', '祝', '咒']
-const elementTypes = {
+const elemTypes = {
     '物': '#EF9710',
     '枪': '#EF9710',
     '火': '#ED1F21',
@@ -165,11 +201,17 @@ const elementTypes = {
     '祝': '#F4F7AF',
     '咒': '#E3002F',
 }
+const inheritTypes = {
+    ...elemTypes,
+    '异': '#A92EEE',
+    '复': '#13EF8F',
+}
 
 const getStatLabel = (index: number) => {
     const labels = ['力量', '魔力', '耐力', '敏捷', '幸运']
     return labels[index]
 }
+console.log(persona.value)
 </script>
 
 <style>
@@ -200,15 +242,15 @@ page {
         justify-items: center;
         /* Align items to the bottom */
         width: 50vw;
-        height: 15vh;
         gap: 8rpx;
 
         .name-group {
-            align-items: end;
-            gap: 8rpx;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
 
             .persona-c-name {
-                font-size: 24px;
+                font-size: 1.5em;
                 font-weight: bold;
                 color: #ff0000;
                 text-align: center;
@@ -229,7 +271,7 @@ page {
                 }
             }
 
-            .persona-name {
+            .persona-label-box {
                 font-size: 16px;
                 color: #cccccc;
                 text-align: center;
@@ -237,9 +279,12 @@ page {
         }
 
         .level-arcana-group {
-            gap: 8px;
-
+            margin-top: 10rpx;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             .persona-level {
+                width: 120rpx;
                 font-size: 20px;
                 color: #ffffff;
             }
@@ -250,16 +295,18 @@ page {
             }
         }
 
-        .trait-group {
+        .gen-group {
             flex: 1;
-            gap: 8px;
-
-            .trait-label {
+            margin-top: 10rpx;
+            display: flex;
+            justify-content: center;
+            .gen-label {
+                width: 80rpx;
                 font-size: 16px;
                 color: #cccccc;
             }
 
-            .trait-value {
+            .gen-value {
                 font-size: 16px;
                 color: #ffffff;
             }
@@ -271,6 +318,8 @@ page {
         border: 2px solid #ff0000;
         box-shadow: 0 4px 8px rgba(204, 89, 89, 0.848);
         background: linear-gradient(145deg, #d54242, #880303);
+        align-self: center;
+        max-height: 30vw;
 
         .persona-image {
             width: 30vw;
@@ -343,7 +392,8 @@ page {
         gap: 12px;
 
         .item-label {
-            width: 60px;
+            text-align: center;
+            width: 80px;
             color: #cccccc;
         }
 
@@ -355,7 +405,6 @@ page {
 
 .elemental-table {
     .table-grid {
-        border: 1px solid #3a3a3a;
         border-radius: 4px;
     }
 
@@ -367,6 +416,24 @@ page {
 
     .elem-cell {
         padding: 8px;
+        text-align: center;
+        border: 1px solid #3a3a3a;
+    }
+}
+
+.inherit-table {
+    .table-grid {
+        border-radius: 4px;
+    }
+
+    .table-header,
+    .table-row {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+    }
+
+    .elem-cell {
+        padding: 3px;
         text-align: center;
         border: 1px solid #3a3a3a;
     }
