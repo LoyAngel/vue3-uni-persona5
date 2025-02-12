@@ -5,12 +5,14 @@ This is a project that imitates the style of the game Persona5. It contains the 
 ## Project structure
 ```
 > src
-  > components (Contains the components of the project)
+  > components (Contains the common components of the project)
   > pages (Contains the pages of the project)
+    > detail (Folder for the persona, item, skill detail page)
     > index (Folder for the home page)
     > login (Folder for the login page)
     > my (Folder for the personal center page)
     > persona (Folder for the Persona page)
+    > strategy (Folder for the strategy page)
   > services (Contains the services of the project)
   > stores (Contains the state management of the project)
     > module (Contains specific state modules)
@@ -24,9 +26,12 @@ This is a project that imitates the style of the game Persona5. It contains the 
 - Strategy page (2025.2.1) √
 - Data storage (2025.1.22) √
 2025.2.1
-- Persona list page
-- Persona detail page
+- Persona list page (2025.2.3) √
+- Persona detail page (2025.2.8) √
 - Persona calculator page
+2025.2.12
+- Item list page, detail page
+- Skill list page, detail page
 
 ## Credits
 Ideas, logics, data, etc. have been gatherd from:

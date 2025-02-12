@@ -8,6 +8,8 @@ const list = <TitleItem[]>[
     { title: 'COOP攻略', url: '/pages/strategy/strategy?type=coop', image: '/static/index_title1.png' },
     { title: '解答猜谜', url: '/pages/strategy/strategy?type=answer', image: '/static/index_title2.png' },
     { title: '人格指数', url: '/pages/strategy/strategy?type=confidant', image: '/static/index_title3.png' },
+    { title: '十艘跳', url:'/pages/strategy/strategy?type=dating', image: '/static/index_title4.png' },
+    { title: '街区指南', url: '/pages/strategy/strategy?type=area', image: '/static/index_title5.png' },
 ]
 </script>
 
@@ -35,12 +37,12 @@ const list = <TitleItem[]>[
 <style scoped>
 .category-list {
     display: flex;
-    height: 600rpx;
+    height: 725rpx;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    padding: 50rpx;
+    padding: 20rpx;
 }
 
 .category-item {
@@ -49,8 +51,8 @@ const list = <TitleItem[]>[
     align-items: center;
     justify-content: center;
     margin: 10rpx;
-    min-width: 200rpx;
-    max-width: 400rpx;
+    min-width: 100rpx;
+    max-width: 300rpx;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -60,7 +62,7 @@ const list = <TitleItem[]>[
 }
 
 .category-image {
-    height: 120rpx;
+    height: 100rpx;
     border: 2px solid #c00;
     object-fit: contain;
 }
