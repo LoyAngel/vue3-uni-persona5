@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import mySection from './components/mySection.vue'
+import test from './components/test.vue'
 
-const updatedData = ref(`当前版本：v0.2.0。
+const updatedData = ref(`当前版本：v0.2.2。
 以下为更新日志:
-2025.2.8 发布v0.2.0 `)
-const toupdateData = ref(`下个版本计划功能：
-1.更新装备、技能数据
-2.优化persona展示ui`)
+2025.2.12 v0.2.2
+1. 更新了persona图鉴部分数据（继承、出现地点、装备类型、翻译优化）；
+2. 更新了十艘跳和街区指南。
+2025.2.8 v0.2.1
+小程序发布，包含攻略查询、persona图鉴查询等功能。`)
+const toupdateData = ref(`1.更新装备、技能数据；
+2.优化persona展示ui。`)
 const otherContent = ref(`页面开发，数据整理，服务器维护都由本人独自完成，工作量较大，如果有发现疏忽不足的地方或者有功能界面建议，欢迎留言，感谢支持！ye(･ω･)ﾉ.
 数据来源: 
 https://wiki.biligame.com/persona
@@ -15,6 +19,7 @@ https://megamitensei.fandom.com/wiki/Persona_(Series)
 https://github.com/chinhodado/persona5_calculator
 
 本小程序仅供学习交流使用，不用于商业用途，如有侵权请联系删除。`)
+const count = ref(0);
 </script>
 
 <template>
@@ -66,6 +71,8 @@ https://github.com/chinhodado/persona5_calculator
             </view>
         </my-section>
     </view>
+
+    <test v-model:count="count" />
 </template>
 
 <style>

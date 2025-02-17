@@ -23,7 +23,7 @@ export const getPersonaMap = (): Promise<Data<PersonaMap>> => {
                 arcana: translationFunc(value.arcana, "Arcana"),
                 img_url: translationFunc(key, "PersonaImg"),
                 elems: value.elems.map((elem) => translationFunc(elem, "Elem")),
-                inherit_elems: value.inherits ? inheritanceChartRoyal[value.inherits as keyof typeof inheritanceChartRoyal] : [],
+                inherit_elems: value.inherits ? inheritanceChartRoyal[value.inherits] : [],
                 skills: Object.fromEntries(
                     Object.entries(value.skills).map(([key, value]) => [
                         translationFunc(key, "Skill"),

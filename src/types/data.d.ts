@@ -1,4 +1,5 @@
 // items, personas, skills, tranlations
+export type InheritElemsType = 'Physical' | 'Fire' | 'Ice' | 'Electric' | 'Wind' | 'Psy' | 'Nuclear' | 'Bless' | 'Curse' | 'Healing' | 'Ailment' | 'Almighty';
 export interface ItemMap {
     [index: string]: ItemData;
 }
@@ -12,6 +13,7 @@ export interface ItemData {
 export interface PersonaMap {
     [index: string]: PersonaData;
 }
+
 export interface PersonaData {
     name?: string; // only for when converted to list
     c_name?: string; // for display
@@ -31,7 +33,7 @@ export interface PersonaData {
     rare?: boolean;
 
     // from new data for p5r
-    inherits?: string;
+    inherits?: InheritElemsType;
     inherit_elems?: string[]; // for display
     item?: string;
     itemr?: string;
