@@ -138,7 +138,8 @@ const handleChange = (names: string[]) => {
 .title-image {
   width: 13vw; /* 图片宽度为屏幕宽度的 10% */
   max-width: 6vh;
-  padding: 25rpx;
+  max-height: 100%;
+  padding: 0 25rpx;
 }
 
 .title-content {
