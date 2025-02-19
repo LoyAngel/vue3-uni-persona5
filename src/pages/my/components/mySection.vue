@@ -4,7 +4,8 @@ const props = withDefaults(
     defineProps<{
         title: string,
         section_data_string: string,
-        fontsize?: number
+        fontsize?: number,
+        scroll_view_height?: number
     }>(),
     {
         fontsize: 24
@@ -25,10 +26,11 @@ const section_data = computed(() => {
     <view class="section">
         <view class="section-header">
             <text class="section-title">{{ title }}</text>
-            <!-- 若需要在标题右侧增加其他元素，可通过插槽实现 -->
+            <!-- 额外头部插槽 -->
             <slot name="extraHeader"></slot>
         </view>
-        <view class="section-list">
+
+        <scroll-view class="section-list" scroll-y :style= "scroll_view_height ? { height: `${scroll_view_height}rpx` } : {}">
             <view
                 v-for="item in section_data"
                 :key="item.id"
@@ -37,7 +39,8 @@ const section_data = computed(() => {
             >
                 <text>{{ item.text }}</text>
             </view>
-        </view>
+        </scroll-view>
+
         <!-- 主要内容插槽 -->
         <slot />
     </view>
@@ -45,7 +48,7 @@ const section_data = computed(() => {
 
 <style scoped>
 .section {
-    margin: 20rpx 30rpx;
+    margin: 10rpx 30rpx;
     background-color: #ffffff;
     border-radius: 24rpx;
     padding: 24rpx;
@@ -74,6 +77,7 @@ const section_data = computed(() => {
 
 .section-item {
     word-break: break-all;
+    white-space: pre-wrap;
     color: #666;
     line-height: 1.5;
 }
