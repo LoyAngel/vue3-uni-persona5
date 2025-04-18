@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import mySection from './components/mySection.vue'
-import test from './components/test.vue'
+import testCom from './components/testComponent.vue'
 
 const updatedContent = ref(`当前版本：v0.2.3。
 更新计划：
@@ -91,6 +91,7 @@ const onSupport = () => {
     >
     </my-section>
 
+    <testCom />
 </template>
 
 <style>

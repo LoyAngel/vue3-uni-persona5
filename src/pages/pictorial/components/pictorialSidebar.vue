@@ -4,7 +4,7 @@ import { arcanaStore } from '@/stores';
 const props = defineProps<{ selected_category: string }>();
 const emit = defineEmits(['update:selected_category']);
 
-const menuItems = arcanaStore().arcana_map;
+const menuEntries = arcanaStore().arcana_map;
 const selected_category_ref = ref(props.selected_category);
 
 const handleFilter = (category: string) => {
@@ -19,14 +19,14 @@ const handleFilter = (category: string) => {
         scroll-y
     >
         <view
-            v-for="item in menuItems"
-            :key="item.id"
-            class="menu-item"
-            :class="{ 'menu-item-selected': selected_category_ref === item.arcana_name }"
-            @click="handleFilter(item.arcana_name)"
+            v-for="entry in menuEntries"
+            :key="entry.id"
+            class="menu-entry"
+            :class="{ 'menu-entry-selected': selected_category_ref === entry.arcana_name }"
+            @click="handleFilter(entry.arcana_name)"
         >
-            <text class="icon">{{ item.icon }}</text>
-            <text class="text">{{ item.arcana_name }}</text>
+            <text class="icon">{{ entry.icon }}</text>
+            <text class="text">{{ entry.arcana_name }}</text>
         </view>
     </scroll-view>
 </template>
@@ -39,7 +39,7 @@ const handleFilter = (category: string) => {
     height: 100%;
 }
 
-.menu-item {
+.menu-entry {
     display: flex;
     align-items: center;
     padding: 30rpx 20rpx;
@@ -48,7 +48,7 @@ const handleFilter = (category: string) => {
     transition: all 0.3s ease;
 }
 
-.menu-item-selected {
+.menu-entry-selected {
     background-color: #FF0000;
 }
 

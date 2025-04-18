@@ -1,31 +1,3 @@
-<template>
-    <view class="container">
-        <uni-table stripe>
-            <!-- 表头列循环 -->
-            <uni-tr>
-                <uni-th
-                    v-for="(header, index) in fieldData"
-                    :key="index"
-                    width="20"
-                    align="center"
-                >{{ header }}</uni-th>
-            </uni-tr>
-            <!-- 表体数据循环 -->
-            <uni-tr
-                v-for="(item, index) in tableData"
-                :key="index"
-            >
-                <uni-td
-                    v-for="(value, key) in item"
-                    :key="key"
-                    align="center"
-                    class="table-td"
-                >{{ value }}</uni-td>
-            </uni-tr>
-        </uni-table>
-    </view>
-</template>
-
 <script lang='ts'>
 export default {
     options: {
@@ -58,6 +30,34 @@ const tableData = props.tableText
         return obj;
     });
 </script>
+
+<template>
+    <view class="container">
+        <uni-table stripe>
+            <!-- 表头列循环 -->
+            <uni-tr>
+                <uni-th
+                    v-for="(header, index) in fieldData"
+                    :key="index"
+                    width="20"
+                    align="center"
+                >{{ header }}</uni-th>
+            </uni-tr>
+            <!-- 表体数据循环 -->
+            <uni-tr
+                v-for="(item, index) in tableData"
+                :key="index"
+            >
+                <uni-td
+                    v-for="(value, key) in item"
+                    :key="key"
+                    align="center"
+                    class="table-td"
+                >{{ value }}</uni-td>
+            </uni-tr>
+        </uni-table>
+    </view>
+</template>
 
 <style scoped lang="scss">
 .container {
