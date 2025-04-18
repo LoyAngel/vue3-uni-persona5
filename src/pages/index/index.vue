@@ -1,21 +1,26 @@
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { getHomeBannerAPI } from '@/services/index';
+import { getIndexBannerAPI, getIndexTitleListAPI } from '@/services/index';
 import { ref } from 'vue';
-import { IndexBannerData } from '@/types';
+import { IndexBannerData, IndexTitleData } from '@/types/index';
 import indexSwiper from './components/indexSwiper.vue';
 import indexCategory from './components/indexCategory.vue';
 import P5rNavbar from '@/components/P5rNavbar.vue';
 
 const bannerList = ref<IndexBannerData[]>([]);
-const getHomeBannerData = async () => {
-    const res = await getHomeBannerAPI();
-    console.log(res);
-    bannerList.value = res.result;
+const indexList = ref<IndexTitleData[]>([]);
+const getIndexBannerData = async () => {
+    const res = await getIndexBannerAPI();
+    bannerList.value = res.result
+}
+const getIndexListData = async () => {
+    const res = await getIndexTitleListAPI();
+    indexList.value = res.result
 }
 
 onLoad(() => {
-    getHomeBannerData();
+    getIndexBannerData();
+    getIndexListData();
 })
 </script>
 
@@ -27,7 +32,7 @@ onLoad(() => {
         <!-- 自定义轮播图 -->
         <index-swiper :list="bannerList" />
         <!-- 自定义标题 -->
-        <index-category/>
+        <index-category :list="indexList" />
     </P5rBackground>
 </template>
 

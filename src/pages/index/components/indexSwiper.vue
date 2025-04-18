@@ -8,7 +8,7 @@ const onChange: UniHelper.SwiperOnChange = (ev) => {
   activeIndex.value = ev.detail.current
 }
 // 定义 props 接收
-defineProps<{
+const props = defineProps<{
   list: IndexBannerData[]
 }>()
 </script>

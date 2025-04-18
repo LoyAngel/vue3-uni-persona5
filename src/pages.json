@@ -31,7 +31,7 @@
 			}
 		},
 		{
-			"path": "pages/persona/persona",
+			"path": "pages/pictorial/pictorial",
 			"style": {
 				"navigationStyle": "custom",
 				"navigationBarTextStyle": "white",
@@ -48,6 +48,24 @@
             "path": "pages/detail/personaDetail",
             "style": {
                 "navigationBarTitleText": "人格面具详情"
+            }
+        },
+        {
+            "path": "pages/detail/skillDetail",
+            "style": {
+                "navigationBarTitleText": "技能详情"
+            }
+        },
+        {
+            "path": "pages/detail/itemDetail",
+            "style": {
+                "navigationBarTitleText": "装备详情"
+            }
+        },
+        {
+            "path": "pages/my/test2",
+            "style": {
+                "navigationBarTitleText": "测试2"
             }
         }
 	],
@@ -70,7 +88,7 @@
 				"text": "攻略"
 			},
 			{
-				"pagePath": "pages/persona/persona",
+				"pagePath": "pages/pictorial/pictorial",
 				"iconPath": "static/icon/icon_persona.png",
 				"selectedIconPath": "static/icon/icon_persona_active.png",
 				"text": "人格面具"

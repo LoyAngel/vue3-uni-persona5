@@ -1,15 +1,10 @@
 <script setup lang="ts">
-import { TitleItem } from '@/types';
+import { IndexTitleData } from '@/types';
 
+const props = defineProps<{ list: IndexTitleData[] }>();
 const navigate = (url: string) => {
     uni.navigateTo({ url });
 }
-const list = <TitleItem[]>[
-    { title: 'COOP攻略', url: '/pages/strategy/strategy?type=coop', image: '/static/index_title1.png' },
-    { title: '解答猜谜', url: '/pages/strategy/strategy?type=answer', image: '/static/index_title2.png' },
-    { title: '人格指数', url: '/pages/strategy/strategy?type=confidant', image: '/static/index_title3.png' },
-    { title: '街区指南', url: '/pages/strategy/strategy?type=area', image: '/static/index_title5.png' },
-]
 </script>
 
 <template>

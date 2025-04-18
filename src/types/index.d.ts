@@ -10,7 +10,7 @@ export type IndexBannerData = {
     type: number;
 };
 
-export type TitleItem = {
+export type IndexTitleData = {
   title: string;
   url: string;
   image: string;

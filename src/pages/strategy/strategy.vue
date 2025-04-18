@@ -71,16 +71,11 @@ page {
 <style scoped>
 /* 固定标签栏 */
 .tabbar {
-    position: fixed;
-    top: 0;
     width: 100%;
-    z-index: 100;
-    height: 50rpx;
 }
 
 .background-animation {
     flex: 1;
-    margin-top: 50rpx;
 }
 
 /* 穿透样式，使内部组件不居中排版 */
