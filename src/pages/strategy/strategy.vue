@@ -3,7 +3,7 @@ import { ref, defineProps } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
 import { StrategyMainData } from '@/types/strategy';
 import { getStrategyMainDataAPI } from '@/services/strategy';
-import strategyTabbar from './components/strategyTabbar.vue';
+import strategyTabBar from './components/strategyTabBar.vue';
 import strategyContent from './components/strategyContent.vue';
 
 // 定义组件接收的参数
@@ -38,11 +38,11 @@ onLoad(async () => {
 
 <template>
     <!--自定义标签栏组件-->
-    <strategy-tabbar
+    <strategyTabBar
         :navIndex="navIndex"
         :tabBars="tabBars"
         @checkIndex="checkIndex"
-        class="tabbar"
+        class="tab-bar"
     />
 
     <P5rBackground class="background-animation">
@@ -70,7 +70,7 @@ page {
 
 <style scoped>
 /* 固定标签栏 */
-.tabbar {
+.tab-bar {
     width: 100%;
 }
 

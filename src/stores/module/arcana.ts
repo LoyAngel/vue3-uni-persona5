@@ -1,10 +1,11 @@
+import { ArcanaMapItem } from "@/types/pictorial";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const arcanaStore = defineStore(
     "arcanaMap",
     () => {
-        const arcana_map = ref([
+        const arcana_map = ref<ArcanaMapItem[]>([
             { id: 1, arcana_name: "全部", icon: "🔍" },
             { id: 2, arcana_name: "愚者", icon: "🤪" },
             { id: 3, arcana_name: "魔术师", icon: "🎩" },

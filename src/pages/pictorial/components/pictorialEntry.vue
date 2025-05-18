@@ -1,107 +1,190 @@
 <script setup lang="ts">
-import { PersonaData } from '@/types/data';
-
+import { ecolorStore } from '@/stores';
+import { PersonaData, SkillData } from '@/types/data';
+import { computed, ref } from 'vue';
 
 const props = defineProps<{
-    persona: PersonaData;
-    img: string;
+    current_tab_type: string;
+    data: PersonaData | SkillData;
+    img?: string;
 }>();
 
+// 类型缩窄
+const persona_data = computed(() => {
+    return props.data as PersonaData;
+});
+const skill_data = computed(() => {
+    return props.data as SkillData;
+});
+
+const cost_show = computed(() => {
+    if(skill_data.value?.cost)
+        if (skill_data.value.cost > 1000) return `${skill_data.value.cost / 1000} SP`
+        else return  `${skill_data.value.cost} HP`
+    else return "被动"
+})
+
 const navigate = () => {
-    uni.navigateTo({ url: `/pages/detail/personaDetail?persona_name=${props.persona.name}` });
+    if(props.current_tab_type === "persona") uni.navigateTo({ url: `/pages/detail/personaDetail?persona_name=${props.data?.name}` });
+    // 其他类型的导航也可以在这里添加
 }
 </script>
 
 <template>
     <view
-        class="persona-card"
+        class="entry-card"
+        :class="current_tab_type"
         @click="navigate()"
     >
-        <view class="persona-image-container">
-            <image
-                :src="img"
-                mode="aspectFit"
-            />
-        </view>
-        <view class="persona-info">
-            <view class="arcana-name">{{ persona.arcana }}
+        <!-- Persona卡片内容 -->
+        <template v-if="current_tab_type === 'persona'">
+            <view class="entry-image-container">
+                <image
+                    :src="img"
+                    mode="aspectFit"
+                />
             </view>
-            <view class="persona-label-box">
-                <view class="persona-level">Lv.{{
-                    persona.level }}</view>
-                <view class="persona-name">{{ persona.c_name
-                    }}</view>
+            <view class="entry-info">
+                <view class="entry-category">{{ persona_data.arcana }}</view>
+                <view class="entry-label-box">
+                    <view class="entry-level">Lv.{{ persona_data.level }}</view>
+                    <view class="entry-name">{{ persona_data.c_name }}</view>
+                </view>
             </view>
-        </view>
+        </template>
+
+        <!-- Skill卡片内容 -->
+        <template v-else-if="current_tab_type === 'skill'">
+            <view class="entry-info">
+                <view class="entry-name">{{ skill_data.name }}</view>
+                <view class="entry-details">
+                    <view class="entry-element">{{ skill_data.element }}</view>
+                    <view class="entry-cost">{{ cost_show }}</view>
+                </view>
+            </view>
+        </template>
     </view>
 </template>
 
 <style scoped lang="scss">
-.persona-card {
+// 提取的公共颜色变量
+$persona-primary: #FF0000;
+$persona-shadow: rgba(255, 0, 0, 0.5);
+
+$skill-primary: #0066FF; 
+$skill-shadow: rgba(0, 102, 255, 0.5);
+
+$bg-color: #1a1a1a;
+$text-color: #FFFFFF;
+$text-secondary: #cccccc;
+
+// 基础卡片样式
+.entry-card {
     display: flex;
     width: 60vw;
     flex-direction: row;
     align-items: center;
     margin: 5rpx;
     padding: 20rpx;
-    background: #1a1a1a;
+    background: $bg-color;
     border-radius: 12rpx;
-    border-left: 8rpx solid #FF0000;
     transition: transform 0.3s ease;
 
-    .persona-image-container {
-        width: 100rpx;
-        height: 100rpx;
-        background: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8rpx;
-        overflow: hidden;
-        margin-right: 20rpx;
+    // Persona卡片特定样式
+    &.persona {
+        border-left: 8rpx solid $persona-primary;
+
+        .entry-image-container {
+            width: 100rpx;
+            height: 100rpx;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8rpx;
+            overflow: hidden;
+            margin-right: 20rpx;
+        }
+
+        .entry-category {
+            text-align: center;
+            font-size: 24rpx;
+            color: $persona-primary;
+            margin-bottom: 8rpx;
+            font-weight: bold;
+        }
+
+        &:hover {
+            transform: translateY(-4rpx);
+            box-shadow: 0 8rpx 16rpx $persona-shadow;
+        }
     }
 
-    .persona-info {
+    // Skill卡片特定样式
+    &.skill {
+        border-left: 8rpx solid $skill-primary;
+
+        .entry-element {
+            font-size: 24rpx;
+            color: $skill-primary;
+            font-weight: bold;
+            padding: 4rpx 16rpx;
+            border-radius: 20rpx;
+            background-color: rgba(0, 102, 255, 0.15);
+        }
+
+        &:hover {
+            transform: translateY(-4rpx);
+            box-shadow: 0 8rpx 16rpx $skill-shadow;
+        }
+    }
+
+    // 公共信息容器样式
+    .entry-info {
         display: flex;
         flex: 1;
         flex-direction: column;
         justify-content: center;
 
-        .arcana-name {
-            text-align: center;
-            font-size: 24rpx;
-            color: #FF0000;
-            margin-bottom: 8rpx;
-            font-weight: bold;
-        }
-
-        .persona-label-box {
+        .entry-label-box {
             display: flex;
             flex-direction: flex-start;
             justify-content: center;
             align-items: center;
+        }
 
-            .persona-name {
-                flex: 1;
-                text-align: center;
-                font-size: 40rpx;
-                color: #FFFFFF;
-                font-weight: bold;
-            }
+        .entry-name {
+            flex: 1;
+            text-align: center;
+            font-size: 36rpx;
+            color: $text-color;
+            font-weight: bold;
+            padding: 0 20rpx;
+            margin-bottom: 10rpx;
+        }
 
-            .persona-level {
-                text-align: center;
-                font-size: 40rpx;
-                color: #FFFFFF;
+        .entry-level {
+            text-align: center;
+            font-size: 40rpx;
+            color: $text-color;
+            font-weight: bold;
+        }
+
+        .entry-details {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+
+            .entry-cost {
+                font-size: 24rpx;
+                color: $text-color;
                 font-weight: bold;
+                padding: 4rpx 16rpx;
+                border-radius: 20rpx;
+                background-color: rgba(255, 255, 255, 0.2);
             }
         }
     }
-
-}
-
-.persona-card:hover {
-    transform: translateY(-4rpx);
-    box-shadow: 0 8rpx 16rpx rgba(255, 0, 0, 0.5);
 }
 </style>

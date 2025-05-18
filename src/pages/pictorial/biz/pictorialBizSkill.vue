@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, defineProps, ref } from 'vue';
 import { SkillData } from '@/types/data';
-import SkillItem from './components/SkillItem.vue';
-import PictorialSidebar from './components/pictorialSidebar.vue';
+import PictorialEntry from '../components/pictorialEntry.vue';
+import PictorialSidebar from '../components/pictorialSideBar.vue';
 
 const props = defineProps<{
     filtered_skills: SkillData[];
@@ -19,6 +19,7 @@ const selected_category_computed = computed({
 
 <template>
     <PictorialSidebar
+        current_tab_type="skill"
         v-model:selected_category="selected_category_computed"
     />
     <scroll-view
@@ -32,11 +33,12 @@ const selected_category_computed = computed({
         >
             无搜索结果
         </view>
-        <SkillItem
+        <PictorialEntry
             v-else
             v-for="skill_entry in filtered_skills"
             :key="skill_entry.name"
-            :skill="skill_entry"
+            current_tab_type="skill"
+            :data="skill_entry"
             :img="''"
         />
     </scroll-view>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, defineProps, ref } from 'vue';
 import { PersonaData } from '@/types/data';
-import PictorialEntry from './components/pictorialEntry.vue';
-import PictorialSidebar from './components/pictorialSidebar.vue';
+import PictorialEntry from '../components/pictorialEntry.vue';
+import PictorialSideBar from '../components/pictorialSideBar.vue';
 
 const props = defineProps<{
     filtered_personas: PersonaData[];
@@ -18,8 +18,9 @@ const selected_category_computed = computed({
 </script>
 
 <template>
-    <PictorialSidebar
+    <PictorialSideBar
         v-model:selected_category="selected_category_computed"
+        current_tab_type="persona"
     />
     <scroll-view
         class="content"
@@ -36,8 +37,9 @@ const selected_category_computed = computed({
             v-else
             v-for="persona_entry in filtered_personas"
             :key="persona_entry.name"
-            :persona="persona_entry"
+            :data="persona_entry"
             :img="persona_entry.img_url ? persona_entry.img_url : ''"
+            current_tab_type="persona"
         />
     </scroll-view>
 </template>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import PictorialSearchbar from './components/pictorialSearchbar.vue';
-import Persona from './persona.vue';
 import PictorialTabBar from './components/pictorialTabBar.vue';
-// import Skill from './skill.vue';
-// import Item from './item.vue';
+import BizPersona from './biz/pictorialBizPersona.vue';
+import BizSkill from './biz/pictorialBizSkill.vue'
+import BizItem from './biz/pictorialBizItem.vue'
 
 import { ref, computed } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
@@ -18,7 +18,8 @@ const persona_store = personaStore();
 const persona_map = ref<PersonaMap>({});
 const arcana_store = arcanaStore();
 const arcana_map = arcana_store.arcana_map;
-// const skill_map = ref<SkillMap>({});
+// 为测试添加，可替换为实际数据获取
+const skill_map = ref<SkillMap>({});
 // const item_map = ref<ItemMap>({});
 
 const search_value = ref('');
@@ -32,12 +33,12 @@ const filtered_personas = computed(() => {
     });
 });
 
-// const filtered_skills = computed(() => {
-//     return Object.values(skill_map.value).filter(skill => {
-//         const matches_search = skill?.name?.includes(search_value.value);
-//         return matches_search;
-//     });
-// });
+const filtered_skills = computed(() => {
+    return Object.values(skill_map.value).filter(skill => {
+        const matches_search = skill?.name?.includes(search_value.value);
+        return matches_search;
+    });
+});
 
 // const filtered_items = computed(() => {
 //     return Object.values(item_map.value).filter(item => {
@@ -46,6 +47,7 @@ const filtered_personas = computed(() => {
 //     });
 // });
 
+// 异步获取数据
 const getPersonaMapData = async () => {
     const { result } = await getPersonaMap();
     const personaList = Object.values(result) as PersonaData[]; // 明确类型
@@ -69,25 +71,74 @@ const getPersonaMapData = async () => {
     persona_map.value = sortedPersonaMap;
     persona_store.setPersonaMap(sortedPersonaMap);
 };
+const getSkillMapData = async () => {
+    // const { result } = await getSkillMap();
+    // skill_map.value = result;
+    // persona_store.setSkillMap(result);
+    skill_map.value = {
+        "Absorb Bless": {
+            "name": "Absorb Bless",
+            "effect": "Absorb Bless attacks.",
+            "element": "passive",
+            "personas": { "Cybele": 87, "Vohu Manah": 82 }
+        },
+        "Absorb Curse": {
+            "name": "Absorb Curse",
+            "effect": "Absorb Curse attacks.",
+            "element": "passive",
+            "fuse": ["Attis"],
+            "personas": { "Attis": 86, "Loa": 73, "Lucifer": 0, "Tsukiyomi": 0, "Tsukiyomi Picaro": 0 }
+        },
+        "Absorb Fire": {
+            "name": "Absorb Fire",
+            "card": "Full Moon ???",
+            "effect": "Absorb Fire attacks.",
+            "element": "passive",
+            "fuse": ["Chimera"],
+            "personas": { "Moloch": 64 }
+        },
+    }
+};
 
 const tab_bars_index = ref(0);
 const checkTabBarsIndex = (index: number) => {
-    console.log(index)
+    console.log(index);
+    // 切换标签时清空搜索值
+    if (tab_bars_index.value !== index) {
+        search_value.value = '';
+        // 如果需要，也可以在这里重置选择的分类
+        // selected_category.value = '全部';
+        console.log(search_value.value);
+    }
     tab_bars_index.value = index;
 };
 
-
-onLoad(async () => {
-    await getPersonaMapData();
-    // await getSkillMapData();
-    // await getItemMapData();
-})
-
-const test_tab_bars:PortraitTabBarType[] = [
+const test_tab_bars: PortraitTabBarType[] = [
     { type: 'persona', title: '面具' },
     { type: 'skill', title: '技能' },
     { type: 'item', title: '道具' },
 ]
+
+// 动态计算当前选中的标签类型
+const current_tab_type = computed(() => {
+    return test_tab_bars[tab_bars_index.value].type;
+});
+
+// 动态计算搜索框的提示文本
+const search_placeholder = computed(() => {
+    const placeholders = {
+        persona: '搜索面具',
+        skill: '搜索技能',
+        item: '搜索道具'
+    };
+    return placeholders[current_tab_type.value as keyof typeof placeholders] || '搜索';
+});
+
+onLoad(async () => {
+    await getPersonaMapData();
+    await getSkillMapData();
+    // await getItemMapData();
+})
 </script>
 
 <template>
@@ -99,12 +150,34 @@ const test_tab_bars:PortraitTabBarType[] = [
         @checkIndex="checkTabBarsIndex"
     />
     <PictorialSearchbar
-        v-model:search_query="search_value" />
-    <Persona
-        :filtered_personas="filtered_personas"
-        v-model:selected_category="selected_category"
-        class="main-content"
+        v-model:search_query="search_value"
+        :search_placeholder="search_placeholder"
     />
+
+    <!-- 根据当前选中的标签类型动态显示对应组件 -->
+    <template v-if="current_tab_type === 'persona'">
+        <BizPersona
+            :filtered_personas="filtered_personas"
+            v-model:selected_category="selected_category"
+            class="main-content"
+        />
+    </template>
+
+    <template v-else-if="current_tab_type === 'skill'">
+        <BizSkill
+            :filtered_skills="filtered_skills"
+            v-model:selected_category="selected_category"
+            class="main-content"
+        />
+    </template>
+
+    <!-- <template v-else-if="current_tab_type === 'item'">
+        <BizItem
+            :filtered_items="filtered_items"
+            v-model:selected_category="selected_category"
+            class="main-content"
+        />
+    </template> -->
 </template>
 
 <style>

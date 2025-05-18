@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { personaStore } from '@/stores'
+import { personaStore, ecolorStore } from '@/stores'
 import { PersonaData } from '@/types/data'
 import DetailContainer from './components/detailContainer.vue'
 import DetailCard from './components/detailCard.vue'
@@ -10,23 +10,7 @@ const props = defineProps<{
 }>()
 
 const persona = ref<PersonaData>(personaStore().persona_map[props.persona_name])
-const elemTypes = {
-    '物': '#EF9710',
-    '枪': '#EF9710',
-    '火': '#ED1F21',
-    '冰': '#1E90FF',
-    '电': '#FFD700',
-    '风': '#00FF7F',
-    '念': '#FF69B4',
-    '核': '#3CE2DA',
-    '祝': '#F4F7AF',
-    '咒': '#E3002F',
-}
-const inheritTypes = {
-    ...elemTypes,
-    '异': '#A92EEE',
-    '复': '#13EF8F',
-}
+const { elem_map: elemTypes, inherit_map: inheritTypes } = ecolorStore()
 
 // 为DetailContainer组件准备数据
 const badges = computed(() => [
@@ -128,12 +112,12 @@ const getStatLabel = (index: number) => {
                             class="table-header elemental-grid"
                         >
                             <view
-                                v-for="(color, elem) in elemTypes"
-                                :key="elem"
+                                v-for="{id, elem_name, color} in elemTypes"
+                                :key="id"
                                 class="elem-cell"
                                 :style="{ color }"
                             >
-                                {{ elem }}
+                                {{ elem_name }}
                             </view>
                         </view>
                         <view
@@ -213,12 +197,12 @@ const getStatLabel = (index: number) => {
                             class="table-header inherit-grid"
                         >
                             <view
-                                v-for="(color, elem) in inheritTypes"
-                                :key="elem"
+                                v-for="{id, inherit_name, color} in inheritTypes"
+                                :key="id"
                                 class="elem-cell"
                                 :style="{ color }"
                             >
-                                {{ elem }}
+                                {{ inherit_name }}
                             </view>
                         </view>
                         <view

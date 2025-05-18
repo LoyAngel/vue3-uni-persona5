@@ -7,8 +7,7 @@ import { itemMapRoyal } from "@/data/ItemDataRoyal";
 import translationFunc from "@/data/TranslationFunc";
 
 /**
- * @Description: 获取首页banner
- * @param {number} distributionSite - banner位置（投放位置，1为首页） 默认为1
+ * @Description: 获得人格面具图鉴
  * @return {Promise}
  */
 export const getPersonaMap = (): Promise<Data<PersonaMap>> => {

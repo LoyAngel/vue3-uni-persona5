@@ -13,3 +13,4 @@ export default pinia
 export * from './module/test'
 export * from './module/person'
 export * from './module/arcana'
+export * from './module/ecolor'

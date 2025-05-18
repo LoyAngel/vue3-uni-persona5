@@ -1,26 +1,27 @@
 <script setup lang="ts">
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref, defineProps, defineEmits, computed } from 'vue';
 
 // 新增定义的 props 和 emits
-const props = defineProps<{ search_query: string }>();
+const props = defineProps<{ search_query: string, search_placeholder: string }>();
 const emit = defineEmits<
     {(e: 'update:search_query', value: string): void;}
 >();
 
-const search_query_ref = ref('');
+const handleSearch = computed({
+    get: () => props.search_query,
+    set: (value) => {
+        emit('update:search_query', value);
+    }
+});
 
-const handleSearch = (value:any) => {
-    emit('update:search_query', value);
-};
 </script>
 
 <template>
     <view class="navbar">
         <!-- 搜索条 -->
         <uni-search-bar
-            v-model="search_query_ref"
-            @input="handleSearch"
-            placeholder="搜索面具"
+            v-model="handleSearch"
+            :placeholder="props.search_placeholder"
             :radius="32"
             :bg-color="'#ff8080'"
             :text-color="'#000'"
