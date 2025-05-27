@@ -2,41 +2,46 @@
 import PictorialSearchbar from './components/pictorialSearchbar.vue';
 import PictorialTabBar from './components/pictorialTabBar.vue';
 import BizPersona from './biz/pictorialBizPersona.vue';
-import BizSkill from './biz/pictorialBizSkill.vue'
-import BizItem from './biz/pictorialBizItem.vue'
+import BizSkill from './biz/pictorialBizSkill.vue';
+import BizItem from './biz/pictorialBizItem.vue';
 
 import { ref, computed } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
-import { personaStore } from '@/stores';
+import { pictorialStore } from '@/stores';
 import { arcanaStore } from '@/stores';
-import { PersonaMap, SkillMap, ItemMap, PersonaData } from '@/types/data';
+import type { PersonaMap, SkillMap, ItemMap, PersonaData, SkillData } from '@/types/data';
+import type { PortraitTabBarType } from '@/types/portrait';
 import { getPersonaMap } from '@/services/persona';
-import { PortraitTabBarType } from '@/types/portrait';
+import { getSkillMap } from '@/services/skill';
+import { EXTRA_COLOR } from '@/contants';
 
 // 使用示例数据
-const persona_store = personaStore();
+const pictorial_store = pictorialStore();
 const persona_map = ref<PersonaMap>({});
 const arcana_store = arcanaStore();
 const arcana_map = arcana_store.arcana_map;
-// 为测试添加，可替换为实际数据获取
 const skill_map = ref<SkillMap>({});
+// 为测试添加，可替换为实际数据获取
 // const item_map = ref<ItemMap>({});
 
 const search_value = ref('');
 const selected_category = ref('全部');
 
 const filtered_personas = computed(() => {
-    return Object.values(persona_map.value).filter(persona => {
+    return Object.values(persona_map.value).filter((persona) => {
         const matches_search = persona?.c_name?.includes(search_value.value);
-        const matches_category = selected_category.value === '全部' || persona?.arcana === selected_category.value;
+        const matches_category =
+            selected_category.value === '全部' || persona?.arcana === selected_category.value;
         return matches_search && matches_category;
     });
 });
 
 const filtered_skills = computed(() => {
-    return Object.values(skill_map.value).filter(skill => {
-        const matches_search = skill?.name?.includes(search_value.value);
-        return matches_search;
+    return Object.values(skill_map.value).filter((skill) => {
+        const matches_search = skill?.c_name?.includes(search_value.value);
+        const matches_category =
+            selected_category.value === '全部' || skill?.c_element === selected_category.value;
+        return matches_search && matches_category;
     });
 });
 
@@ -57,8 +62,8 @@ const getPersonaMapData = async () => {
 
     // 再按arcana_map顺序排序
     personaList.sort((a: PersonaData, b: PersonaData) => {
-        const arcanaA = arcana_map.findIndex(entry => entry.arcana_name === a.arcana);
-        const arcanaB = arcana_map.findIndex(entry => entry.arcana_name === b.arcana);
+        const arcanaA = arcana_map.findIndex((entry) => entry.arcana_name === a.arcana);
+        const arcanaB = arcana_map.findIndex((entry) => entry.arcana_name === b.arcana);
         return arcanaA - arcanaB;
     });
 
@@ -69,45 +74,40 @@ const getPersonaMapData = async () => {
     });
 
     persona_map.value = sortedPersonaMap;
-    persona_store.setPersonaMap(sortedPersonaMap);
+    pictorial_store.setPersonaMap(sortedPersonaMap);
 };
+
 const getSkillMapData = async () => {
-    // const { result } = await getSkillMap();
-    // skill_map.value = result;
-    // persona_store.setSkillMap(result);
-    skill_map.value = {
-        "Absorb Bless": {
-            "name": "Absorb Bless",
-            "effect": "Absorb Bless attacks.",
-            "element": "passive",
-            "personas": { "Cybele": 87, "Vohu Manah": 82 }
-        },
-        "Absorb Curse": {
-            "name": "Absorb Curse",
-            "effect": "Absorb Curse attacks.",
-            "element": "passive",
-            "fuse": ["Attis"],
-            "personas": { "Attis": 86, "Loa": 73, "Lucifer": 0, "Tsukiyomi": 0, "Tsukiyomi Picaro": 0 }
-        },
-        "Absorb Fire": {
-            "name": "Absorb Fire",
-            "card": "Full Moon ???",
-            "effect": "Absorb Fire attacks.",
-            "element": "passive",
-            "fuse": ["Chimera"],
-            "personas": { "Moloch": 64 }
-        },
-    }
+    const { result } = await getSkillMap();
+    const skillList = Object.values(result) as SkillData[]; // 明确类型
+
+    // 先按cost排序
+    skillList.sort((a: SkillData, b: SkillData) => (a.cost ? a.cost : 0) - (b.cost ? b.cost : 0));
+
+    // 再按element排序
+    skillList.sort((a: SkillData, b: SkillData) => {
+        const elementA = EXTRA_COLOR.findIndex((entry) => entry.elem_name === a.c_element);
+        const elementB = EXTRA_COLOR.findIndex((entry) => entry.elem_name === b.c_element);
+        return elementA - elementB;
+    });
+
+    // 回归到SkillMap格式
+    const sortedSkillMap: SkillMap = {};
+    skillList.forEach((s: SkillData) => {
+        sortedSkillMap[s.name || ''] = s;
+    });
+    skill_map.value = sortedSkillMap;
+
+    pictorial_store.setSkillMap(sortedSkillMap);
 };
 
 const tab_bars_index = ref(0);
 const checkTabBarsIndex = (index: number) => {
-    console.log(index);
     // 切换标签时清空搜索值
     if (tab_bars_index.value !== index) {
+        // 清空搜索值, 并且重置选择的分类
         search_value.value = '';
-        // 如果需要，也可以在这里重置选择的分类
-        // selected_category.value = '全部';
+        selected_category.value = '全部';
         console.log(search_value.value);
     }
     tab_bars_index.value = index;
@@ -116,8 +116,8 @@ const checkTabBarsIndex = (index: number) => {
 const test_tab_bars: PortraitTabBarType[] = [
     { type: 'persona', title: '面具' },
     { type: 'skill', title: '技能' },
-    { type: 'item', title: '道具' },
-]
+    { type: 'item', title: '道具' }
+];
 
 // 动态计算当前选中的标签类型
 const current_tab_type = computed(() => {
@@ -138,7 +138,7 @@ onLoad(async () => {
     await getPersonaMapData();
     await getSkillMapData();
     // await getItemMapData();
-})
+});
 </script>
 
 <template>

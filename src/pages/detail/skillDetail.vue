@@ -1,47 +1,39 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import DetailContainer from './components/detailContainer.vue';
+import type { SkillData } from '@/types/data';
+import { pictorialStore } from '@/stores';
 
-// 定义技能数据类型
-interface SkillData {
-    name?: string;   // 技能名
-    cost?: number;   // 商店购买价格
-    effect: string;  // 技能效果
-    element: "phys" | "gun" | "fire" | "ice" | "electric" | "wind" | "psy" | "nuclear" | "bless" | "curse" |
-    "almighty" | "ailment" | "support" | "passive" | "healing" | "trait";  // 技能属性
-    personas?: {
-        [name: string]: number; // [persona名称]: 获得技能等级
-    };
-    talk?: string; // 可通过交涉获得的persona
-    fuse?: string | string[]; // 可通过道具化获得的persona
-    card?: string // 其他获得方式
-    unique?: string; // 唯一获得方式
-}
 
-const skill = ref<SkillData>({
-    "name": "Mabufudyne",
-    "cost": 2200,
-    "effect": "Deal heavy Ice damage to all foes.",
-    "element": "ice",
-    "fuse": ["Baphomet"],
-    "personas": {
-        "Abaddon": 0,
-        "Alilat": 82,
-        "Black Frost": 0,
-        "Chimera": 78,
-        "Crystal Skull": 0,
-        "Gabriel": 0,
-        "King Frost": 64,
-        "Lilith": 0,
-        "Michael": 0,
-        "Mother Harlot": 0,
-        "Scathach": 0,
-        "Seiryu": 65,
-        "Skadi": 56,
-        "Yamata-no-Orochi": 0
-    },
-    "talk": "The Shadowed One (Scathach)"
-})
+// const skill = ref<SkillData>({
+//     "name": "Mabufudyne",
+//     "cost": 2200,
+//     "effect": "Deal heavy Ice damage to all foes.",
+//     "element": "ice",
+//     "fuse": ["Baphomet"],
+//     "personas": {
+//         "Abaddon": 0,
+//         "Alilat": 82,
+//         "Black Frost": 0,
+//         "Chimera": 78,
+//         "Crystal Skull": 0,
+//         "Gabriel": 0,
+//         "King Frost": 64,
+//         "Lilith": 0,
+//         "Michael": 0,
+//         "Mother Harlot": 0,
+//         "Scathach": 0,
+//         "Seiryu": 65,
+//         "Skadi": 56,
+//         "Yamata-no-Orochi": 0
+//     },
+//     "talk": "The Shadowed One",
+//     "talkPersona": "Scathach",
+// })
+const props = defineProps<{ 
+    skill_name: string; // 技能名称
+}>();
+const skill = ref<SkillData>(pictorialStore().skill_map[props.skill_name])  
 
 const getElementColor = (element: string) => {
     const colors: { [key: string]: string } = {
@@ -116,7 +108,7 @@ const badges = [
 
 <template>
     <DetailContainer
-        :title="skill.name || ''"
+        :title="skill.c_name || ''"
         :badges="badges"
         :tabs="tabs"
     >
@@ -173,7 +165,7 @@ const badges = [
                         <view class="method-title">交涉获得
                         </view>
                         <view class="method-value">
-                            {{ skill.talk }}
+                            {{ skill.talkPersonas }}
                         </view>
                     </view>
                 </view>

@@ -1,9 +1,9 @@
-import { http } from "@/utils/http";
-import { Data } from "@/types/http";
-import { SkillMap, SkillData, TranslationMap } from "@/types/data";
-import { skillMapRoyal } from "@/data/SkillDataRoyal";
-import { itemMapRoyal } from "@/data/ItemDataRoyal";
-import translationFunc from "@/data/TranslationFunc";
+import { http } from '@/utils/http';
+import type { Data } from '@/types/http';
+import type { SkillMap, SkillData, TranslationMap } from '@/types/data';
+import { skillMapRoyal } from '@/data/SkillDataRoyal';
+import { itemMapRoyal } from '@/data/ItemDataRoyal';
+import translationFunc from '@/data/TranslationFunc';
 
 /**
  * @Description: 获得技能图鉴
@@ -16,19 +16,34 @@ export const getSkillMap = (): Promise<Data<SkillMap>> => {
             <SkillData>{
                 ...value,
                 name: key,
-                c_name: translationFunc(key, "Skill"),
-                elem: translationFunc(value.elem, "Elem"),
-                item: translationFunc(value.item, value.skillCard ? "Skill" : "Item"),
-                itemr: translationFunc(value.itemr, value.skillCard ? "Skill" : "Item"),
-                item_type: value.skillCard ? "技能卡" : translationFunc(itemMapRoyal[value.item as keyof typeof itemMapRoyal].type, "ItemType"),
-            },
+                c_name: translationFunc(key, 'Skill'),
+                c_element: translationFunc(value.element, 'Elem'),
+                effect: translationFunc(key, 'SkillEfc'),
+                personas: value?.personas
+                    ? Object.fromEntries(
+                          Object.entries(value.personas).map(([key, value]) => [translationFunc(key, 'Persona'), value])
+                      )
+                    : {},
+                // 展开语法，避免无对象情况还会添加空对象
+                ...(value.talk ? {
+                    talk:  value.talk.match(/\(.*?\)/) ? value.talk.match(/\((.*?)\)/)![1] : '',
+                } : {}),
+                ...(value.fuse
+                    ? {
+                          fuse: (Array.isArray(value.fuse) ? value.fuse : value.fuse.split(',')).map((item) =>
+                              translationFunc(item, 'Persona')
+                          )
+                      }
+                    : {})
+            }
         ])
     );
+    console.log(res);
     return new Promise<Data<SkillMap>>((resolve) => {
         resolve({
-            code: "200",
-            msg: "success",
-            result: res,
+            code: '200',
+            msg: 'success',
+            result: res
         });
     });
 };

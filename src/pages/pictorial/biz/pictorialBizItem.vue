@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, defineProps, ref } from 'vue';
-import { ItemData } from '@/types/data';
+import type { ItemData } from '@/types/data';
 import PictorialItem from './components/pictorialEntry.vue';
 import PictorialSidebar from './components/pictorialSidebar.vue';
 import ItemCard from './components/ItemCard.vue';

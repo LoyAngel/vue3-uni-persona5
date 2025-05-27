@@ -1,4 +1,4 @@
-import { PersonaMap } from "@/types/data";
+import type { PersonaMap } from "@/types/data";
 
 export const personaMapRoyal: PersonaMap = {
     "Abaddon": {

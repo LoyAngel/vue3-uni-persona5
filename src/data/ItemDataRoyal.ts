@@ -1,4 +1,4 @@
-import { ItemMap } from "@/types/data";
+import type { ItemMap } from "@/types/data";
 
 export const itemMapRoyal: ItemMap = {
     "Aid Charm": {

@@ -1,4 +1,4 @@
-import { InheritElemsType } from "@/types/data";
+import type { InheritElemsType } from "@/types/data";
 
 export const rarePersonaeRoyal = [
     "Crystal Skull",

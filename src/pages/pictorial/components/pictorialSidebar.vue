@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { defineProps, defineEmits, ref, computed } from 'vue';
 import { arcanaStore } from '@/stores';
-import { ecolorStore } from '@/stores';
-import { ArcanaMapItem, InheritMapItem } from '@/types/pictorial';
+import { EXTRA_COLOR } from '@/contants';
+import type { ArcanaMapItem, ElemMapItem } from '@/types/pictorial';
 
 const props = defineProps<{
     selected_category: string,
@@ -16,17 +16,17 @@ const menuEntries = computed(() => {
     if (props.current_tab_type === 'persona') {
         return arcanaStore().arcana_map;
     } else if (props.current_tab_type === 'skill') {
-        const all_skill_type: InheritMapItem = {id: 0, inherit_name: '全部', color: '#ffffff'};
-        return [all_skill_type, ...ecolorStore().inherit_map];
+        const all_skill_type: ElemMapItem = {id: 0, elem_name: '全部', color: '#ffffff'};
+        return [all_skill_type, ...EXTRA_COLOR];
     }
     return [];
 });
 
-const getName = (entry: ArcanaMapItem | InheritMapItem) => {
+const getName = (entry: ArcanaMapItem | ElemMapItem) => {
     if (props.current_tab_type === 'persona') {
         return (entry as ArcanaMapItem).arcana_name;
     } else if (props.current_tab_type === 'skill') {
-        return (entry as InheritMapItem).inherit_name
+        return (entry as ElemMapItem).elem_name
     }
 
     return '';

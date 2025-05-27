@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { personaStore, ecolorStore } from '@/stores'
-import { PersonaData } from '@/types/data'
+import { pictorialStore, ecolorStore } from '@/stores'
+import { ELEM_COLOR, INHERIT_COLOR } from '@/contants'
+import type { PersonaData } from '@/types/data'
 import DetailContainer from './components/detailContainer.vue'
 import DetailCard from './components/detailCard.vue'
 
@@ -9,8 +10,7 @@ const props = defineProps<{
     persona_name: string
 }>()
 
-const persona = ref<PersonaData>(personaStore().persona_map[props.persona_name])
-const { elem_map: elemTypes, inherit_map: inheritTypes } = ecolorStore()
+const persona = ref<PersonaData>(pictorialStore().persona_map[props.persona_name])
 
 // 为DetailContainer组件准备数据
 const badges = computed(() => [
@@ -112,7 +112,7 @@ const getStatLabel = (index: number) => {
                             class="table-header elemental-grid"
                         >
                             <view
-                                v-for="{id, elem_name, color} in elemTypes"
+                                v-for="{id, elem_name, color} in ELEM_COLOR"
                                 :key="id"
                                 class="elem-cell"
                                 :style="{ color }"
@@ -197,12 +197,12 @@ const getStatLabel = (index: number) => {
                             class="table-header inherit-grid"
                         >
                             <view
-                                v-for="{id, inherit_name, color} in inheritTypes"
+                                v-for="{id, elem_name, color} in INHERIT_COLOR"
                                 :key="id"
                                 class="elem-cell"
                                 :style="{ color }"
                             >
-                                {{ inherit_name }}
+                                {{ elem_name }}
                             </view>
                         </view>
                         <view

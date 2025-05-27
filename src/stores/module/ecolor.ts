@@ -1,4 +1,4 @@
-import { ElemMapItem, InheritMapItem } from "@/types/pictorial";
+import type { ElemMapItem, ElemMapItem } from "@/types/pictorial";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -18,7 +18,7 @@ export const ecolorStore = defineStore(
             { id: 10, elem_name: "咒", color: "#E3002F" },
         ]);
 
-        const inherit_map = ref<InheritMapItem[]>([
+        const inherit_map = ref<ElemMapItem[]>([
             { id: 1, inherit_name: "物", color: "#EF9710" },
             { id: 2, inherit_name: "枪", color: "#EF9710" },
             { id: 3, inherit_name: "火", color: "#ED1F21" },
@@ -32,9 +32,18 @@ export const ecolorStore = defineStore(
             { id: 11, inherit_name: "异", color: "#A92EEE" },
             { id: 12, inherit_name: "复", color: "#13EF8F" },
         ]);
+
+        const extra_map = ref<ElemMapItem[]>([
+            { id: 13, elem_name: "万能", color: "#8A2BE2" },    // 新颜色
+            { id: 14, elem_name: "被", color: "#808080" },      // 灰色表示被动
+            { id: 15, elem_name: "辅", color: "#FFA500" },      // 橙色
+            { id: 16, elem_name: "特", color: "#00BFFF" },       // 深天蓝
+        ])
+
         return {
             elem_map,
-            inherit_map
+            inherit_map,
+            extra_map
         };
     },
     {

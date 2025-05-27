@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ecolorStore } from '@/stores';
-import { PersonaData, SkillData } from '@/types/data';
+import type { PersonaData, SkillData } from '@/types/data';
 import { computed, ref } from 'vue';
+import { EXTRA_COLOR } from '@/contants';
 
 const props = defineProps<{
     current_tab_type: string;
@@ -18,16 +18,26 @@ const skill_data = computed(() => {
 });
 
 const cost_show = computed(() => {
-    if(skill_data.value?.cost)
-        if (skill_data.value.cost > 1000) return `${skill_data.value.cost / 1000} SP`
-        else return  `${skill_data.value.cost} HP`
-    else return "被动"
-})
+    if (skill_data.value?.cost)
+        if (skill_data.value.cost > 100) return `${skill_data.value.cost / 100} SP`;
+        else return `${skill_data.value.cost} HP`;
+    else return '被动';
+});
+
+const show_color = computed(() => {
+    if (props.current_tab_type === 'persona') return '#FF0000';
+    else if (props.current_tab_type === 'skill')
+        return EXTRA_COLOR.find((item) => item.elem_name === skill_data.value?.c_element)?.color;
+    else return '#ffffff';
+});
 
 const navigate = () => {
-    if(props.current_tab_type === "persona") uni.navigateTo({ url: `/pages/detail/personaDetail?persona_name=${props.data?.name}` });
+    if (props.current_tab_type === 'persona')
+        uni.navigateTo({ url: `/pages/detail/personaDetail?persona_name=${props.data?.name}` });
+    else if (props.current_tab_type === 'skill')
+        uni.navigateTo({ url: `/pages/detail/skillDetail?skill_name=${props.data?.name}` });
     // 其他类型的导航也可以在这里添加
-}
+};
 </script>
 
 <template>
@@ -35,17 +45,15 @@ const navigate = () => {
         class="entry-card"
         :class="current_tab_type"
         @click="navigate()"
+        :style="{ 'border-left': `8rpx solid ${show_color}` }"
     >
         <!-- Persona卡片内容 -->
         <template v-if="current_tab_type === 'persona'">
             <view class="entry-image-container">
-                <image
-                    :src="img"
-                    mode="aspectFit"
-                />
+                <image :src="img" mode="aspectFit" />
             </view>
             <view class="entry-info">
-                <view class="entry-category">{{ persona_data.arcana }}</view>
+                <view class="entry-category" :style="{ color: show_color }">{{ persona_data.arcana }}</view>
                 <view class="entry-label-box">
                     <view class="entry-level">Lv.{{ persona_data.level }}</view>
                     <view class="entry-name">{{ persona_data.c_name }}</view>
@@ -56,9 +64,9 @@ const navigate = () => {
         <!-- Skill卡片内容 -->
         <template v-else-if="current_tab_type === 'skill'">
             <view class="entry-info">
-                <view class="entry-name">{{ skill_data.name }}</view>
+                <view class="entry-name">{{ skill_data.c_name }}</view>
                 <view class="entry-details">
-                    <view class="entry-element">{{ skill_data.element }}</view>
+                    <view class="entry-element" :style="{ color: show_color }">{{ skill_data.c_element }}</view>
                     <view class="entry-cost">{{ cost_show }}</view>
                 </view>
             </view>
@@ -68,14 +76,12 @@ const navigate = () => {
 
 <style scoped lang="scss">
 // 提取的公共颜色变量
-$persona-primary: #FF0000;
 $persona-shadow: rgba(255, 0, 0, 0.5);
 
-$skill-primary: #0066FF; 
 $skill-shadow: rgba(0, 102, 255, 0.5);
 
 $bg-color: #1a1a1a;
-$text-color: #FFFFFF;
+$text-color: #ffffff;
 $text-secondary: #cccccc;
 
 // 基础卡片样式
@@ -92,8 +98,6 @@ $text-secondary: #cccccc;
 
     // Persona卡片特定样式
     &.persona {
-        border-left: 8rpx solid $persona-primary;
-
         .entry-image-container {
             width: 100rpx;
             height: 100rpx;
@@ -109,7 +113,6 @@ $text-secondary: #cccccc;
         .entry-category {
             text-align: center;
             font-size: 24rpx;
-            color: $persona-primary;
             margin-bottom: 8rpx;
             font-weight: bold;
         }
@@ -122,11 +125,8 @@ $text-secondary: #cccccc;
 
     // Skill卡片特定样式
     &.skill {
-        border-left: 8rpx solid $skill-primary;
-
         .entry-element {
             font-size: 24rpx;
-            color: $skill-primary;
             font-weight: bold;
             padding: 4rpx 16rpx;
             border-radius: 20rpx;

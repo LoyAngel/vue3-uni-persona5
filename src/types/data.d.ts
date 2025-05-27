@@ -81,14 +81,17 @@ export interface SkillMap {
 }
 export interface SkillData {
     name?: string;
+    c_name?: string;
     cost?: number;
     effect: string;
     element: "phys" | "gun" | "fire" | "ice" | "electric" | "wind" | "psy" | "nuclear" | "bless" | "curse" |
         "almighty" | "ailment" | "support" | "passive" | "healing" | "trait";
+    c_element?: string;
     personas?: {
         [name: string]: number;
     };
     talk?: string;
+    talkPersonas?: string;
     fuse?: string | string[];
     card?: string
     unique?: string;

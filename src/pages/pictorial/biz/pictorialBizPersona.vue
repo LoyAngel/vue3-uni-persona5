@@ -1,47 +1,49 @@
 <script setup lang="ts">
-import { computed, defineProps, ref } from 'vue';
-import { PersonaData } from '@/types/data';
-import PictorialEntry from '../components/pictorialEntry.vue';
-import PictorialSideBar from '../components/pictorialSideBar.vue';
+import { computed, ref } from "vue";
+import type { PersonaData } from "@/types/data";
+import PictorialEntry from "../components/pictorialEntry.vue";
+import PictorialSideBar from "../components/pictorialSideBar.vue";
 
 const props = defineProps<{
     filtered_personas: PersonaData[];
     selected_category: string;
 }>();
-const emit = defineEmits(['update:selected_category']);
+const emit = defineEmits(["update:selected_category"]);
 const selected_category_computed = computed({
     get: () => props.selected_category,
     set: (value: string) => {
-        emit('update:selected_category', value);
-    }
+        emit("update:selected_category", value);
+    },
 });
 </script>
 
 <template>
-    <PictorialSideBar
-        v-model:selected_category="selected_category_computed"
-        current_tab_type="persona"
-    />
-    <scroll-view
-        class="content"
-        scroll-y
-        :show-scrollbar="false"
-    >
-        <view
-            v-if="filtered_personas.length === 0"
-            class="empty-view"
-        >
-            无搜索结果
-        </view>
-        <PictorialEntry
-            v-else
-            v-for="persona_entry in filtered_personas"
-            :key="persona_entry.name"
-            :data="persona_entry"
-            :img="persona_entry.img_url ? persona_entry.img_url : ''"
+    <view>
+        <PictorialSideBar
+            v-model:selected_category="selected_category_computed"
             current_tab_type="persona"
         />
-    </scroll-view>
+        <scroll-view
+            class="content"
+            scroll-y
+            :show-scrollbar="false"
+        >
+            <view
+                v-if="filtered_personas.length === 0"
+                class="empty-view"
+            >
+                无搜索结果
+            </view>
+            <PictorialEntry
+                v-else
+                v-for="persona_entry in filtered_personas"
+                :key="persona_entry.name"
+                :data="persona_entry"
+                :img="persona_entry.img_url ? persona_entry.img_url : ''"
+                current_tab_type="persona"
+            />
+        </scroll-view>
+    </view>
 </template>
 
 <style scoped lang="scss">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PortraitTabBarType } from '@/types/portrait';
+import type { PortraitTabBarType } from '@/types/portrait';
 import { defineProps } from 'vue';
 const props = defineProps<{
     nav_index: number;

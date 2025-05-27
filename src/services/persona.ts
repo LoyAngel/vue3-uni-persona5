@@ -1,6 +1,6 @@
 import { http } from "@/utils/http";
-import { Data } from "@/types/http";
-import { PersonaData, PersonaMap, TranslationMap } from "@/types/data";
+import type { Data } from "@/types/http";
+import type { PersonaData, PersonaMap, TranslationMap } from "@/types/data";
 import { personaMapRoyal } from "@/data/PersonaDataRoyal";
 import { inheritanceChartRoyal } from "@/data/Data5Royal";
 import { itemMapRoyal } from "@/data/ItemDataRoyal";
@@ -21,7 +21,7 @@ export const getPersonaMap = (): Promise<Data<PersonaMap>> => {
                 c_name: translationFunc(key, "Persona"),
                 arcana: translationFunc(value.arcana, "Arcana"),
                 img_url: translationFunc(key, "PersonaImg"),
-                elems: value.elems.map((elem) => translationFunc(elem, "Elem")),
+                elems: value.elems.map((elem) => translationFunc(elem, "ElemEfc")),
                 inherit_elems: value.inherits ? inheritanceChartRoyal[value.inherits] : [],
                 skills: Object.fromEntries(
                     Object.entries(value.skills).map(([key, value]) => [

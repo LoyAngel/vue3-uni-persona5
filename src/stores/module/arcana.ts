@@ -1,4 +1,4 @@
-import { ArcanaMapItem } from "@/types/pictorial";
+import type { ArcanaMapItem } from "@/types/pictorial";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 

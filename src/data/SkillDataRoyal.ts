@@ -1,4 +1,4 @@
-import { SkillMap } from "@/types/data";
+import type { SkillMap } from "@/types/data";
 
 export const skillMapRoyal: SkillMap = {
     "Absorb Bless": {

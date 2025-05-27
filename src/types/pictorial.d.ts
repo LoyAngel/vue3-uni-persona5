@@ -10,8 +10,14 @@ export type ElemMapItem = {
     color: string;
 }
 
-export type InheritMapItem = {
+export type ElemMapItem = {
     id: number;
-    inherit_name: string;
+    elem_name: string;
+    color: string;
+}
+
+export type ElemMapItem = {
+    id: number;
+    elem_name: string;
     color: string;
 }

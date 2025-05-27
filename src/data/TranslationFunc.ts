@@ -1,6 +1,5 @@
 import {skillMapRoyal} from "@/data/SkillDataRoyal"
-import { TranslationMap } from "@/types/data"
-
+import type { TranslationMap } from "@/types/data"
 
 const personaTranslationData: TranslationMap = {
     "Zorro": "佐罗",
@@ -1041,7 +1040,7 @@ const skillTranslationData: TranslationMap = {
     "Resist Rage": "耐愤怒",
     "Resist Shock": "耐电击",
 }
-const skillDespTranslationData: TranslationMap = {
+const skillEfcTranslationData: TranslationMap = {
     "Lucky Punch": "对1名敌人造成高暴击率的物理属性极小伤害",
     "Ayamur": "对1个敌人造成中等伤害，3次命中，高命中率",
     "Hassou Tobi": "对所有敌人造成8次小幅物理属性伤害",
@@ -1532,13 +1531,33 @@ const skillDespTranslationData: TranslationMap = {
     "Tag Team": "接受换手后，使用消耗道具不会减少数量",
     "Proud Presence": "战斗中我方使用的恢复技能效果增加"
 }
-const elemTranslationData: TranslationMap = {
+const elemEfcTranslationData: TranslationMap = {
     "ab": "吸",
     "wk": "弱",
     "rs": "耐",
     "rp": "反",
     "nu": "无",
 }
+
+const elemTranslationData: TranslationMap = {
+    'ailment': '异',
+    'almighty': '万能',
+    'bless': '祝',
+    'curse': '咒',
+    'electric': '电',
+    'fire': '火',
+    'gun': '枪',
+    'healing': '复',
+    'ice': '冰',
+    'nuclear': '核',
+    'passive': '被',
+    'phys': '物',
+    'psy': '念',
+    'support': '辅',
+    'trait': '特',
+    'wind': '风'
+}
+
 const itemTranslationData: TranslationMap = {
     'Aid Charm': '疗愈吊饰',
     'Amrita Charm': '甘露吊饰',
@@ -1806,14 +1825,17 @@ export default (key: string | undefined, translation_type: string): string => {
         case "Arcana":
             translation_data = arcanaTranslationData;
             break;
-        case "SkillDesp":
-            translation_data = skillDespTranslationData;
+        case "SkillEfc":
+            translation_data = skillEfcTranslationData;
             break;
         case "PersonaImg":
             translation_data = personaImgData;
             break;
         case "Elem":
             translation_data = elemTranslationData;
+            break;
+        case "ElemEfc":
+            translation_data = elemEfcTranslationData;
             break;
         case "Item":
             translation_data = itemTranslationData;
