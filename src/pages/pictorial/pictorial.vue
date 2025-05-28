@@ -9,10 +9,11 @@ import { ref, computed } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
 import { pictorialStore } from '@/stores';
 import { arcanaStore } from '@/stores';
-import type { PersonaMap, SkillMap, ItemMap, PersonaData, SkillData } from '@/types/data';
+import type { PersonaMap, SkillMap, ItemMap, PersonaData, SkillData, ItemData } from '@/types/data';
 import type { PortraitTabBarType } from '@/types/portrait';
 import { getPersonaMap } from '@/services/persona';
 import { getSkillMap } from '@/services/skill';
+import { getItemMap } from '@/services/item';
 import { EXTRA_COLOR } from '@/contants';
 
 // 使用示例数据
@@ -21,8 +22,7 @@ const persona_map = ref<PersonaMap>({});
 const arcana_store = arcanaStore();
 const arcana_map = arcana_store.arcana_map;
 const skill_map = ref<SkillMap>({});
-// 为测试添加，可替换为实际数据获取
-// const item_map = ref<ItemMap>({});
+const item_map = ref<ItemMap>({});
 
 const search_value = ref('');
 const selected_category = ref('全部');
@@ -45,12 +45,15 @@ const filtered_skills = computed(() => {
     });
 });
 
-// const filtered_items = computed(() => {
-//     return Object.values(item_map.value).filter(item => {
-//         const matches_search = item?.name?.includes(search_value.value);
-//         return matches_search;
-//     });
-// });
+const filtered_items = computed(() => {
+    return Object.values(item_map.value).filter(item => {
+        const matches_search = item?.c_name?.includes(search_value.value);
+        const matches_category = 
+            selected_category.value === '全部' || 
+            item?.category === selected_category.value;
+        return matches_search && matches_category;
+    });
+});
 
 // 异步获取数据
 const getPersonaMapData = async () => {
@@ -101,6 +104,27 @@ const getSkillMapData = async () => {
     pictorial_store.setSkillMap(sortedSkillMap);
 };
 
+const getItemMapData = async () => {
+    const { result } = await getItemMap();
+    const itemList = Object.values(result) as ItemData[];
+    
+    // 排序逻辑
+    itemList.sort((a: ItemData, b: ItemData) => {
+        // 按类别和稀有度排序
+        if (a.category !== b.category) {
+            return (a.category || '').localeCompare(b.category || '');
+        }
+        return (b.rarity || 0) - (a.rarity || 0);
+    });
+
+    const sortedItemMap: ItemMap = {};
+    itemList.forEach((item: ItemData) => {
+        sortedItemMap[item.name || ''] = item;
+    });
+    item_map.value = sortedItemMap;
+    pictorial_store.setItemMap(sortedItemMap);
+};
+
 const tab_bars_index = ref(0);
 const checkTabBarsIndex = (index: number) => {
     // 切换标签时清空搜索值
@@ -137,7 +161,7 @@ const search_placeholder = computed(() => {
 onLoad(async () => {
     await getPersonaMapData();
     await getSkillMapData();
-    // await getItemMapData();
+    await getItemMapData();
 });
 </script>
 
@@ -171,13 +195,13 @@ onLoad(async () => {
         />
     </template>
 
-    <!-- <template v-else-if="current_tab_type === 'item'">
+    <template v-else-if="current_tab_type === 'item'">
         <BizItem
             :filtered_items="filtered_items"
             v-model:selected_category="selected_category"
             class="main-content"
         />
-    </template> -->
+    </template>
 </template>
 
 <style>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import P5rBackground from '@/components/P5rBackground.vue';
+import { pictorialStore } from '@/stores/module/pictorial';
 
 // 定义物品数据类型
 interface ItemData {
@@ -11,11 +12,10 @@ interface ItemData {
     imageUrl?: string; // 物品图片
 }
 
-const item = ref<ItemData>({
-    name: "摩尔迦纳特制匕首",
-    description: "摩尔迦纳特制的匕首，锋利无比，能够对暗影造成额外伤害。",
-    type: "武器",
-})
+const props = defineProps<{ 
+    item_name: string;
+}>();
+const item = ref<ItemData>(pictorialStore().item_map[props.item_name]);
 </script>
 
 <template>

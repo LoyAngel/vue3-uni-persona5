@@ -2,7 +2,7 @@
 import { defineProps, defineEmits, ref, computed } from 'vue';
 import { arcanaStore } from '@/stores';
 import { EXTRA_COLOR } from '@/contants';
-import type { ArcanaMapItem, ElemMapItem } from '@/types/pictorial';
+import type { ArcanaMapItem, CategoryItem, ElemMapItem } from '@/types/pictorial';
 
 const props = defineProps<{
     selected_category: string,
@@ -18,15 +18,27 @@ const menuEntries = computed(() => {
     } else if (props.current_tab_type === 'skill') {
         const all_skill_type: ElemMapItem = {id: 0, elem_name: '全部', color: '#ffffff'};
         return [all_skill_type, ...EXTRA_COLOR];
+    } else if (props.current_tab_type === 'item') {
+        const all_item_type: CategoryItem = {id: 0, category_name: '全部', color: '#ffffff'};
+        const item_categories = [
+            {id: 1, category_name: '近战武器', color: '#ff4444'},
+            {id: 2, category_name: '远程武器', color: '#4444ff'},
+            {id: 3, category_name: '防具', color: '#44ff44'},
+            {id: 4, category_name: '配件', color: '#ffff44'},
+            {id: 5, category_name: '消耗品', color: '#ff44ff'},
+        ];
+        return [all_item_type, ...item_categories];
     }
     return [];
 });
 
-const getName = (entry: ArcanaMapItem | ElemMapItem) => {
+const getName = (entry: ArcanaMapItem | ElemMapItem | CategoryItem) => {
     if (props.current_tab_type === 'persona') {
         return (entry as ArcanaMapItem).arcana_name;
     } else if (props.current_tab_type === 'skill') {
-        return (entry as ElemMapItem).elem_name
+        return (entry as ElemMapItem).elem_name;
+    } else if (props.current_tab_type === 'item') {
+        return (entry as CategoryItem).category_name;
     }
 
     return '';

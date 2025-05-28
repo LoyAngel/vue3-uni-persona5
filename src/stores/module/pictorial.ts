@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import type { TranslationMap, PersonaMap, SkillMap } from "@/types/data";
+import type { TranslationMap, PersonaMap, SkillMap, ItemMap } from "@/types/data";
 
 export const pictorialStore = defineStore(
     "pictorialStore",
@@ -29,6 +29,18 @@ export const pictorialStore = defineStore(
             skill_map.value = {};
         };
 
+        const item_map = ref<ItemMap>({});
+
+        // 更新 item_map 数据
+        const setItemMap = (data: ItemMap) => {
+            item_map.value = data;
+        };
+
+        // 清空 item_map 数据
+        const clearItemMap = () => {
+            item_map.value = {};
+        };
+
         return {
             persona_map,
             setPersonaMap,
@@ -37,6 +49,10 @@ export const pictorialStore = defineStore(
             skill_map,
             setSkillMap,
             clearSkillMap,
+
+            item_map,
+            setItemMap,
+            clearItemMap,
         };
     },
     // 持久化配置，参照 test.ts

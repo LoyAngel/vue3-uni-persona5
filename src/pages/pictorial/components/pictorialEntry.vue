@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PersonaData, SkillData } from '@/types/data';
+import type { ItemData, PersonaData, SkillData } from '@/types/data';
 import { computed, ref } from 'vue';
 import { EXTRA_COLOR } from '@/contants';
 
@@ -71,6 +71,17 @@ const navigate = () => {
                 </view>
             </view>
         </template>
+
+        <!-- 在template中添加item的条件渲染 -->
+        <template v-else-if="current_tab_type === 'item'">
+            <view class="entry-info">
+                <view class="entry-name">{{ (data as ItemData).c_name }}</view>
+                <view class="entry-details">
+                    <view class="entry-category">{{ (data as ItemData).category }}</view>
+                    <view class="entry-type">{{ (data as ItemData).type }}</view>
+                </view>
+            </view>
+</template>
     </view>
 </template>
 

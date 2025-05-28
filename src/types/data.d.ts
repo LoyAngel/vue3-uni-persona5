@@ -5,8 +5,16 @@ export interface ItemMap {
 }
 export interface ItemData {
     name?: string;
+    c_name?: string; // 中文名称，与PersonaData、SkillData保持一致
     description?: string;
     type?: string;
+    rarity?: number; // 稀有度
+    attack?: number; // 攻击力
+    accuracy?: number; // 命中率
+    effect?: string; // 特殊效果
+    price?: number; // 价格
+    category?: string; // 武器类别（近战、远程、防具等）
+    img_url?: string; // 图片URL
 }
 
 

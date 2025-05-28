@@ -38,7 +38,6 @@ export const getSkillMap = (): Promise<Data<SkillMap>> => {
             }
         ])
     );
-    console.log(res);
     return new Promise<Data<SkillMap>>((resolve) => {
         resolve({
             code: '200',
