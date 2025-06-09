@@ -16,7 +16,11 @@ const persona_data = computed(() => {
 const skill_data = computed(() => {
     return props.data as SkillData;
 });
+const item_data = computed(() => {
+    return props.data as ItemData; 
+})
 
+// skill的cost计算
 const cost_show = computed(() => {
     if (skill_data.value?.cost)
         if (skill_data.value.cost > 100) return `${skill_data.value.cost / 100} SP`;
@@ -24,6 +28,7 @@ const cost_show = computed(() => {
     else return '被动';
 });
 
+// 根据current_tab_type动态计算颜色
 const show_color = computed(() => {
     if (props.current_tab_type === 'persona') return '#FF0000';
     else if (props.current_tab_type === 'skill')
@@ -31,11 +36,14 @@ const show_color = computed(() => {
     else return '#ffffff';
 });
 
+// 导航到详情页
 const navigate = () => {
     if (props.current_tab_type === 'persona')
         uni.navigateTo({ url: `/pages/detail/personaDetail?persona_name=${props.data?.name}` });
     else if (props.current_tab_type === 'skill')
         uni.navigateTo({ url: `/pages/detail/skillDetail?skill_name=${props.data?.name}` });
+    else if (props.current_tab_type === 'item')
+        uni.navigateTo({ url: `/pages/detail/itemDetail?item_name=${props.data?.name}` });
     // 其他类型的导航也可以在这里添加
 };
 </script>
@@ -53,10 +61,14 @@ const navigate = () => {
                 <image :src="img" mode="aspectFit" />
             </view>
             <view class="entry-info">
-                <view class="entry-category" :style="{ color: show_color }">{{ persona_data.arcana }}</view>
+                <view class="entry-category" :style="{ color: show_color }">
+                    {{ persona_data.arcana }}
+                </view>
                 <view class="entry-label-box">
                     <view class="entry-level">Lv.{{ persona_data.level }}</view>
-                    <view class="entry-name">{{ persona_data.c_name }}</view>
+                    <view class="entry-name">
+                        {{ persona_data.c_name }}
+                    </view>
                 </view>
             </view>
         </template>
@@ -66,22 +78,23 @@ const navigate = () => {
             <view class="entry-info">
                 <view class="entry-name">{{ skill_data.c_name }}</view>
                 <view class="entry-details">
-                    <view class="entry-element" :style="{ color: show_color }">{{ skill_data.c_element }}</view>
+                    <view class="entry-element" :style="{ color: show_color }">
+                        {{ skill_data.c_element }}
+                    </view>
                     <view class="entry-cost">{{ cost_show }}</view>
                 </view>
             </view>
         </template>
 
-        <!-- 在template中添加item的条件渲染 -->
+        <!-- Item卡片内容 -->
         <template v-else-if="current_tab_type === 'item'">
             <view class="entry-info">
-                <view class="entry-name">{{ (data as ItemData).c_name }}</view>
-                <view class="entry-details">
-                    <view class="entry-category">{{ (data as ItemData).category }}</view>
-                    <view class="entry-type">{{ (data as ItemData).type }}</view>
+                <view class="entry-name">{{ item_data.name }}</view>
+                <view class="entry-type" :style="{ color: show_color }">
+                    {{ item_data.type }}
                 </view>
             </view>
-</template>
+        </template>
     </view>
 </template>
 
@@ -121,6 +134,20 @@ $text-secondary: #cccccc;
             margin-right: 20rpx;
         }
 
+        .entry-label-box {
+            display: flex;
+            flex-direction: flex-start;
+            justify-content: center;
+            align-items: center;
+
+            .entry-level {
+                text-align: center;
+                font-size: 40rpx;
+                color: $text-color;
+                font-weight: bold;
+            }
+        }
+
         .entry-category {
             text-align: center;
             font-size: 24rpx;
@@ -144,43 +171,6 @@ $text-secondary: #cccccc;
             background-color: rgba(0, 102, 255, 0.15);
         }
 
-        &:hover {
-            transform: translateY(-4rpx);
-            box-shadow: 0 8rpx 16rpx $skill-shadow;
-        }
-    }
-
-    // 公共信息容器样式
-    .entry-info {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        justify-content: center;
-
-        .entry-label-box {
-            display: flex;
-            flex-direction: flex-start;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .entry-name {
-            flex: 1;
-            text-align: center;
-            font-size: 36rpx;
-            color: $text-color;
-            font-weight: bold;
-            padding: 0 20rpx;
-            margin-bottom: 10rpx;
-        }
-
-        .entry-level {
-            text-align: center;
-            font-size: 40rpx;
-            color: $text-color;
-            font-weight: bold;
-        }
-
         .entry-details {
             display: flex;
             flex-direction: row;
@@ -196,6 +186,46 @@ $text-secondary: #cccccc;
                 background-color: rgba(255, 255, 255, 0.2);
             }
         }
+
+        &:hover {
+            transform: translateY(-4rpx);
+            box-shadow: 0 8rpx 16rpx $skill-shadow;
+        }
+    }
+
+    // Item卡片特定样式
+    &.item {
+        .entry-type {
+            font-size: 24rpx;
+            font-weight: bold;
+            padding: 4rpx 16rpx;
+            border-radius: 20rpx;
+            background-color: rgba(0, 255, 0, 0.15);
+        }
+
+        &:hover {
+            transform: translateY(-4rpx);
+            box-shadow: 0 8rpx 16rpx rgba(0, 255, 0, 0.5);
+        }
+    }
+
+    // 公共信息容器样式
+    .entry-info {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+
+        .entry-name {
+            flex: 1;
+            text-align: center;
+            font-size: 36rpx;
+            color: $text-color;
+            font-weight: bold;
+            padding: 0 20rpx;
+            margin-bottom: 10rpx;
+        }
+
     }
 }
 </style>

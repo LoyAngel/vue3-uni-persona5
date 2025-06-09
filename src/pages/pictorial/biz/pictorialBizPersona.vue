@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import type { PersonaData } from "@/types/data";
-import PictorialEntry from "../components/pictorialEntry.vue";
-import PictorialSideBar from "../components/pictorialSideBar.vue";
+import { computed } from 'vue';
+import type { PersonaData } from '@/types/data';
+import PictorialEntry from '../components/pictorialEntry.vue';
+import PictorialSideBar from '../components/pictorialSideBar.vue';
 
 const props = defineProps<{
     filtered_personas: PersonaData[];
     selected_category: string;
 }>();
-const emit = defineEmits(["update:selected_category"]);
+const emit = defineEmits(['update:selected_category']);
 const selected_category_computed = computed({
     get: () => props.selected_category,
     set: (value: string) => {
-        emit("update:selected_category", value);
-    },
+        emit('update:selected_category', value);
+    }
 });
 </script>
 
@@ -23,17 +23,8 @@ const selected_category_computed = computed({
             v-model:selected_category="selected_category_computed"
             current_tab_type="persona"
         />
-        <scroll-view
-            class="content"
-            scroll-y
-            :show-scrollbar="false"
-        >
-            <view
-                v-if="filtered_personas.length === 0"
-                class="empty-view"
-            >
-                无搜索结果
-            </view>
+        <scroll-view class="content" scroll-y :show-scrollbar="false">
+            <view v-if="filtered_personas.length === 0" class="empty-view">无搜索结果</view>
             <PictorialEntry
                 v-else
                 v-for="persona_entry in filtered_personas"

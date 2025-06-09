@@ -1538,7 +1538,6 @@ const elemEfcTranslationData: TranslationMap = {
     "rp": "反",
     "nu": "无",
 }
-
 const elemTranslationData: TranslationMap = {
     'ailment': '异',
     'almighty': '万能',
@@ -1557,7 +1556,6 @@ const elemTranslationData: TranslationMap = {
     'trait': '特',
     'wind': '风'
 }
-
 const itemTranslationData: TranslationMap = {
     'Aid Charm': '疗愈吊饰',
     'Amrita Charm': '甘露吊饰',

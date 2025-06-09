@@ -23,6 +23,8 @@ const arcana_store = arcanaStore();
 const arcana_map = arcana_store.arcana_map;
 const skill_map = ref<SkillMap>({});
 const item_map = ref<ItemMap>({});
+// 为测试添加，可替换为实际数据获取
+// const item_map = ref<ItemMap>({});
 
 const search_value = ref('');
 const selected_category = ref('全部');
@@ -104,27 +106,40 @@ const getSkillMapData = async () => {
     pictorial_store.setSkillMap(sortedSkillMap);
 };
 
-const getItemMapData = async () => {
-    const { result } = await getItemMap();
-    const itemList = Object.values(result) as ItemData[];
-    
-    // 排序逻辑
-    itemList.sort((a: ItemData, b: ItemData) => {
-        // 按类别和稀有度排序
-        if (a.category !== b.category) {
-            return (a.category || '').localeCompare(b.category || '');
-        }
-        return (b.rarity || 0) - (a.rarity || 0);
-    });
 
-    const sortedItemMap: ItemMap = {};
-    itemList.forEach((item: ItemData) => {
-        sortedItemMap[item.name || ''] = item;
-    });
-    item_map.value = sortedItemMap;
-    pictorial_store.setItemMap(sortedItemMap);
+const getItemMapData = async () => {
+    // const { result } = await getItemMap();
+    // item_map.value = result;
+    // pictorial_store.setItemMap(result);
+    item_map.value = {
+        'Aid Charm': {
+            type: 'Accessory',
+            description: '+Dia (Small HP recovery for 1 ally)'
+        },
+        'Amrita Charm': {
+            type: 'Accessory',
+            description: '+Amrita Drop (Cure all non-special ailments of 1 ally)'
+        },
+        'Ancient Day': {
+            type: 'Gun - Akechi only',
+            description: 'Atk 350 / Acc 85 / Rounds 5 / All stats +6'
+        },
+        'Archangel Bra': {
+            type: 'Protector - Women only',
+            description: 'Def 300 / Ev 18 / +Reduce Elec dmg (high)'
+        },
+        "Arsène's Cane": {
+            type: 'Weapon - Joker only',
+            description: 'Atk 130 / Acc 92 / +Random ailment (low)'
+        },
+        'Assault Belt': {
+            type: 'Accessory',
+            description: '+Assault Dive (Heavy Phys dmg to 1 foe)'
+        }
+    };
 };
 
+// 清空与重制
 const tab_bars_index = ref(0);
 const checkTabBarsIndex = (index: number) => {
     // 切换标签时清空搜索值
