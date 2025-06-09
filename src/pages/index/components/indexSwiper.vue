@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IndexBannerData } from '@/types';
+import type { IndexBannerData } from '@/types';
 import { ref } from 'vue'
 const activeIndex = ref(0)
 

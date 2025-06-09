@@ -1,7 +1,7 @@
 # Persona5 Sytle Uniapp Project
 
 ## Project introduction
-This is a project that imitates the style of the game Persona5. It contains the walkthrough of the game and persona caculator functions. The project is developed using the uniapp framework.
+This is a project that imitates the style of the game Persona5. It contains the walkthrough of the game and persona calculator functions. The project is developed using the uniapp framework.
 ## Project structure
 ```
 > src
@@ -21,17 +21,18 @@ This is a project that imitates the style of the game Persona5. It contains the 
   > utils (Contains the utility functions of the project)
 ```
 ## TODO
-2025.1.16
+### 2025.1.16
 - Tabbar animation
 - Strategy page (2025.2.1) √
 - Data storage (2025.1.22) √
-2025.2.1
+### 2025.2.1
 - Persona list page (2025.2.3) √
 - Persona detail page (2025.2.8) √
 - Persona calculator page
-2025.2.12
-- Item list page, detail page
-- Skill list page, detail page
+### 2025.2.12
+- Item list page, detail page (2025.5.25)
+- Skill list page, detail page (2025.6.12)
+
 
 ## Credits
 Ideas, logics, data, etc. have been gatherd from:

@@ -1,17 +1,24 @@
-export type ArcanaMapItem = {
+export type ArcanaMapEntry = {
     id: number;
     arcana_name: string;
     icon: string;
 }
 
-export type ElemMapItem = {
+export type ElemMapEntry = {
     id: number;
     elem_name: string;
     color: string;
+    icon: string;
 }
 
-export type CategoryItem = {
+export type ItemTypeEntry = {
     id: number;
-    category_name: string;
-    color: string;
+    type_name: string;
+    icon: string;
+}
+
+export type ItemOwnerEntry = {
+    id: number;
+    owner_name: string;
+    img: string;
 }

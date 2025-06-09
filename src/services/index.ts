@@ -1,6 +1,6 @@
 import { http } from "@/utils/http";
-import { IndexBannerData, IndexTitleData } from "@/types";
-import { Data } from "@/types/http";
+import type { IndexBannerData, IndexTitleData } from "@/types";
+import type { Data } from "@/types/http";
 /**
  * @Description: 获取首页banner
  * @param {number} distributionSite - banner位置（投放位置，1为首页） 默认为1

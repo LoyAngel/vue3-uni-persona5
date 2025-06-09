@@ -1,5 +1,17 @@
 import type { SkillMap } from "@/types/data";
 
+/**
+ * untitled
+ * 'Kuzunoha\'s Order' 
+'Reverse Rub' 
+'Samurai\'s Ruling' 
+'Self-Destruct' 
+'Soul Touch' 
+'Spirit Leech' 
+'Stealth' 
+'Stomach Blow' 
+'Summon'
+ */
 export const skillMapRoyal: SkillMap = {
     "Absorb Bless": {
         "effect": "Absorb Bless attacks.",

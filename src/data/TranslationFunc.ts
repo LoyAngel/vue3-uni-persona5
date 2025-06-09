@@ -1,4 +1,3 @@
-import {skillMapRoyal} from "@/data/SkillDataRoyal"
 import type { TranslationMap } from "@/types/data"
 
 const personaTranslationData: TranslationMap = {
@@ -1024,7 +1023,7 @@ const skillTranslationData: TranslationMap = {
     "Null Burn": "火焰无效",
     "Null Despair": "绝望无效",
     "Null Fear": "恐惧无效",
-    "Null Freeze": "冰冻无效", 
+    "Null Freeze": "冰冻无效",
     "Null Hunger": "饥饿无效",
     "Null Mortal": "即死无效",
     "Null Shock": "电击无效",
@@ -1556,231 +1555,6 @@ const elemTranslationData: TranslationMap = {
     'trait': '特',
     'wind': '风'
 }
-const itemTranslationData: TranslationMap = {
-    'Aid Charm': '疗愈吊饰',
-    'Amrita Charm': '甘露吊饰',
-    'Ancient Day': '亙古常在者',
-    'Archangel Bra': '大天使胸罩',
-    "Arsène's Cane": '怪盜绅士手杖',
-    'Assault Belt': '冲锋腰带',
-    'Atom Ring': '核热戒指',
-    'Bear Gloves': '小熊手套',
-    'Big Bear Gloves': '大熊手套',
-    'Black Headband': '漆黑的头带',
-    'Black Headband R': '漆黑的头带R',
-    'Black Jacket': '黑夹克',
-    'Black Moon': '黑月',
-    'Black Moon R': '黑月R',
-    'Black Wing Robe': '黑羽之衣',
-    'Black Wing Robe R': '黑羽之衣R',
-    'Blazing Horns': '雷光角',
-    'Blessing Ring': '祝贺戒指',
-    'Blizzard Ring': '绝对零度戒指',
-    'Blood Red Capote': '血红斗牛士披肩',
-    'Bloodied Capote': '鲜血斗牛士披肩',
-    'Brain Shot': '粉红射手',
-    'Brave Belt': '勇气腰带',
-    'Breeze Ring': '微风戒指',
-    'Cat Buster': '瞌睡破坏者',
-    'Catnap': '瞌睡虫',
-    'Claiomh Solais': '光之剑',
-    'Claiomh Solais R': '光之剑R',
-    'Crystal Skull': '水晶骷髅',
-    'Crystal Skull R': '水晶骷髅R',
-    'Cure Charm': '治愈吊饰',
-    'Curse Ring': '咒缚戒指',
-    'Cursed Ribbon': '被诅咒的白缎带',
-    'Dainaraka Whip': '大深渊之鞭',
-    'Dark Flame Band': '大邪炎项圈',
-    'Dark Jacket': '暗黑夹克',
-    'Darkness Ring': '黑暗之轮',
-    'Darkness Ring R': '黑暗之轮R',
-    'Death Contract': '死亡契约',
-    'Death Promise': '死亡承诺',
-    'Diamond Dust Lily': '碎冰百合',
-    'Divine Ring': '大祝贺戒指',
-    'Doomsday': '毁灭日',
-    "Dragon's Heart": '龙神的念动石',
-    'Ember Ring': '星火戒指',
-    "Emperor's Amulet": '大帝的护符',
-    "Emperor's Charm R": '大帝的护符R',
-    'Energy Charm': '能量吊饰',
-    'Fairy Hero Armor': '幻魔的护胸',
-    'Fairy Knight Armor': '妖精骑士的护胸',
-    'Fine Ruyi Jingu Bang': '破天如意棒',
-    'Fine Silk Dress': '顶级丝绸礼服',
-    'Fine Tapsuan': '顶级荒霸吐项链',
-    'Fire Dragon Horn': '灼热龙角',
-    'Fleurs du Mal': '恶之华战斧',
-    'Fleurs du Mal R': '恶之华战斧R',
-    'Frost Ace Hood': '王牌霜精头巾',
-    'Frost Hood': '霜精头巾',
-    'Frost Ring': '细雪戒指',
-    'Gatling Belt': '加特林腰带',
-    'Giant Slice Belt': '大斩断腰带',
-    'Gigantomachia Belt': '巨人腰带',
-    "God's Hand Belt": '神手腰带',
-    'Goddess Horn': '女神的大雷角',
-    'Godsent Dress': '尊贵不凡的显灵礼服',
-    'Gordios': '戈耳狄俄斯',
-    'Graceful Harp': '优美的竖琴',
-    'Graceful Harp R': '优美的竖琴R',
-    'Grudge Ring': '诅咒戒指',
-    'Gungnir': '永恒之枪',
-    'Hades Harp': '优美的竖琴',
-    'Hades Harp R': '优美的竖琴R',
-    'Hallowed Ring': '超升天戒指',
-    'Headhunter Ladle': '猎头勺',
-    'Headhunter Ladle EX': '猎头巨勺',
-    "Heaven's Gate": '天堂之门',
-    'Heavensent Dress': '显灵礼服',
-    'Hex Ring': '大咒缚戒指',
-    'High Archangel Bra': '超天使胸罩',
-    'Hinokagutsuchi': '火之迦具土',
-    'Hinokagutsuchi II': '火之迦具土·改',
-    'Hope Diamond': '希望钻石',
-    'Hope Diamond R': '希望钻石R',
-    'Imprisoned Mjolnir': '扼杀的妙尔尼尔',
-    'Inferno Horns': '雷光角R',
-    'Inferno Ring': '大红莲戒指',
-    'Judge End': '审判终结',
-    'Judge of Hell': '地狱审判',
-    'Judgement Cross': '审判十字架',
-    'Kuzuryu Gouhou EX': '九头龙大豪砲',
-    'Karma Ring': '业念戒指',
-    'King Frost Cape': '霜精之王斗篷',
-    'King Frost Cape EX': '超级霜精之王斗篷',
-    'Koh-i-Noor': '光之山',
-    'Koh-i-Noor R': '光之山R',
-    'Kugelbein': '',
-    'Kugelbein R': '',
-    'Kuzuryu Gouhou': '九头龙豪砲',
-    'Lucky Robe': '幸运长袍',
-    'Masquerade Ribbon': '虚幻缎带',
-    'Masquerade Ribbon R': '虚幻缎带R',
-    'Megaton Raid Belt': '百万吨腰带',
-    'Megido Blaster': '米吉多爆能枪',
-    'Megido Fire': '米吉多之火',
-    'Mirrirmina': '米利亚那',
-    'Mirrirmina EX': '极·米利亚那',
-    'Mjolnir': '妙尔尼尔',
-    'Moonlight Robe': '月光之衣',
-    'Moonlight Robe R': '月光之衣R',
-    'Myriad Slash Belt': '刹那五月雨腰带',
-    'Mystic Ring': '大业念戒指',
-    'Naraka Whip': '深渊之鞭',
-    'Nataraja': '破坏神皇',
-    'Nataraja EX': '极·破坏神皇',
-    'Nuclear Ring': '极热戒指',
-    "Official's Robe": '国造之衣',
-    "Official's Robe R": '国造之衣R',
-    'Orichalcum': '王者金属',
-    'Orichalcum R': '王者金属R',
-    'Orlov': '奥尔洛夫',
-    'Orlov R': '奥尔洛夫R',
-    'Paradise Lost': '失乐园',
-    'Paradise Lost R': '失乐园R',
-    'Paw-omber': '猫拳炸弹',
-    'Pawzooka': '猫拳火箭砲',
-    'Picaresque Crown': '',
-    'Picaresque Hat': '',
-    'Pink Buster': '粉红炸弹客',
-    'Prayer Ring': '祝福戒指',
-    'Providence': '天帝',
-    'Psy Ring': '念力戒指',
-    'Pumpkin Bomb': '南瓜炸弹',
-    'Pumpkin Buster': '南瓜炸裂弹',
-    "Queen's Necklace": '王后的项链',
-    "Queen's Necklace R": '王后的项链R',
-    'Reactor Ring': '大极热戒指',
-    'Rebellion Anklet': '反叛脚环',
-    'Red String R': '红丝线球R',
-    'Red String': '红丝线球',
-    'Regent': '摄政王',
-    'Regent R': '摄政王R',
-    'Rejuvenate Charm': '大复苏吊饰',
-    'Revival Charm': '复苏吊饰',
-    'Revolution Anklet': '大革命脚环',
-    'Rising Slash Belt': '加倍腰带',
-    'Rosary of Purity': '纯洁的玫瑰念珠',
-    'Rush Belt': '突袭腰带',
-    'Ruyi Jingu Bang': '如意棒',
-    'Sabazios': '萨巴兹乌斯',
-    'Sahasrara': '千瓣莲花',
-    'Sahasrara EX': '极·千瓣莲花',
-    'Senryou Yakusha': '豪刀「千两名角」',
-    'Senryou Yakusha R': '「千两名角」·真打',
-    'Shiny Belt': '光明的头带',
-    'Shiny Belt R': '光明的头带R',
-    'Silk Dress': '丝绸礼服',
-    'Sirius Armor': '明星之铠',
-    'Sirius Armor EX': '极·明星之铠',
-    "Snow Queen's Whip": '冰雪女王鞭',
-    "Snow Queen's Whip II": '冰雪女王鞭·改',
-    'Snow Ring': '零度戒指',
-    'Spark Ring': '雷电戒指',
-    'Special Shot Belt': '必杀弹腰带',
-    'Spiral Aid Charm': '疗愈螺旋戒指',
-    'Spiral Amrita Charm': '甘露螺旋吊饰',
-    'Spiral Atom Ring': '核热螺旋戒指',
-    'Spiral Blessing Ring': '祝贺螺旋戒指',
-    'Spiral Blizzard Ring': '绝对零度螺旋戒指',
-    'Spiral Breeze Ring': '微风螺旋戒指',
-    'Spiral Cure Charm': '冶愈螺旋吊饰',
-    'Spiral Curse Ring': '咒缚螺旋戒指',
-    'Spiral Divine Ring': '大祝贺螺旋戒指',
-    'Spiral Ember Ring': '星火螺旋戒指',
-    'Spiral Energy Charm': '能量螺旋吊饰',
-    'Spiral Frost Ring': '细雪螺旋戒指',
-    'Spiral Gale Ring': '大暴风螺旋戒指',
-    'Spiral Grudge Ring': '怨恨螺旋戒指',
-    'Spiral Hallowed Ring': '超升天螺旋戒指',
-    'Spiral Heal Charm': '痊愈螺旋吊饰',
-    'Spiral Hell Ring': '大咒杀螺旋戒指',
-    'Spiral Hex Ring': '大咒缚螺旋戒指',
-    'Spiral Inferno Ring': '大红莲螺旋戒指',
-    'Spiral Karma Ring': '业念螺旋戒指',
-    'Spiral Mystic Ring': '大业念螺旋戒指',
-    'Spiral Nuclear Ring': '极热螺旋戒指',
-    'Spiral Prayer Ring': '祝福螺旋戒指',
-    'Spiral Psy Ring': '念力螺旋戒指',
-    'Spiral Reactor Ring': '大极热螺旋戒指',
-    'Spiral Snow Ring': '零度螺旋戒指',
-    'Spiral Spark Ring': '雷电螺旋戒指',
-    'Spiral Static Ring': '带电螺旋戒指',
-    'Spiral Thunder Ring': '大雷电螺旋戒指',
-    'Spiral Wind Ring': '暴风螺旋戒指',
-    'Static Ring': '带电戒指',
-    'Stone of Scone': '命运之石',
-    'Stone of Scone R': '命运之石R',
-    'Storm Sculpture': '暴风邪神像',
-    'Sudarshana': '善见神轮',
-    'Sudarshana EX': '极·善见神轮',
-    'Super Lucky Robe': '超幸运长袍',
-    'Swift Strike Belt': '电光火石腰带',
-    'Sword Dance Belt': '剑舞腰带',
-    'Sword of Sinai': '西奈神剑',
-    'Sword of Sinai II': '西奈神剑·改',
-    'Tantric Oath': '弘誓之铠',
-    'Tantric Oath R': '弘誓之铠R',
-    'Tapsuan': '荒霸吐项链',
-    'The Great Thief Stick': '大怪盜手杖',
-    'Thunder Ring': '大雷电戒指',
-    'Triple Shot Belt': '三连弹腰带',
-    'Tyrant Pistol': '万魔枪',
-    'Tyrant Pistol EX': '极·万魔枪',
-    'Unparalleled Vajra': '无双金刚杵',
-    'Usumidori': '薄绿',
-    'Usumidori R': '薄绿·真打',
-    'Vajra': '金刚杵',
-    'Vorpal Blade Belt': '空间杀法腰带',
-    'White Headband': '纯白的头带',
-    'White Headband R': '纯白的头带R',
-    'Wild Hunt': '狂野狩猎',
-    'Wind Ring': '暴风戒指',
-    'Yagrush': '巴力雷棍',
-    'Yagrush EX': '极·巴力雷棍'
-}
 const areaTranslationData: TranslationMap = {
     "Adyeshach": "感动剥夺之路",
     "Aiyatsbus": "和谐剥夺之路",
@@ -1795,20 +1569,11 @@ const areaTranslationData: TranslationMap = {
     "Sheriruth / Da'at": "宽容剥夺之路／认知者们之路"
 }
 
-const itemTypeTranslationFunc = (key: string):string => {
-    let res: string;
-    if (key.includes("Weapon")) res = "武器";
-    else if (key.includes("Accessory")) res = "饰品";
-    else if (key.includes("Skill")) res = "技能卡";
-    else if (key.includes("Gun")) res = "枪械";
-    else if (key.includes("Protector")) res = "防具";
-    else res = "未知"
-
-    return res;
-}
-
 export default (key: string | undefined, translation_type: string): string => {
     let translation_data: TranslationMap;
+
+    const NOT_OWN_TRANSLATION_TYPE = ['PersonaImg', 'ItemDescription', 'ItemSource', 'ItemSourceDetail', 'SkillEfc'];
+
     if (!key) {
         return "";
     }
@@ -1835,11 +1600,6 @@ export default (key: string | undefined, translation_type: string): string => {
         case "ElemEfc":
             translation_data = elemEfcTranslationData;
             break;
-        case "Item":
-            translation_data = itemTranslationData;
-            break;
-        case "ItemType":
-            return itemTypeTranslationFunc(key);
         case "Area":
             translation_data = areaTranslationData;
             break;
@@ -1848,7 +1608,7 @@ export default (key: string | undefined, translation_type: string): string => {
     }
 
     if (!translation_data[key]) {
-        if (translation_type === "PersonaImg") {
+        if (NOT_OWN_TRANSLATION_TYPE.includes(translation_type)) {
             return "";
         }
         return key;

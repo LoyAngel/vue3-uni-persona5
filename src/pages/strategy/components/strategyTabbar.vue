@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { StrategyMainData } from '@/types/strategy';
+import type { StrategyMainData } from '@/types/strategy';
 import { defineProps } from 'vue';
 const props = defineProps<{
     navIndex: number;

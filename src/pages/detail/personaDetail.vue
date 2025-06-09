@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { pictorialStore, ecolorStore } from '@/stores'
-import { ELEM_COLOR, INHERIT_COLOR } from '@/contants'
-import type { PersonaData } from '@/types/data'
-import DetailContainer from './components/detailContainer.vue'
-import DetailCard from './components/detailCard.vue'
+import { ref, computed } from 'vue';
+import { pictorialStore } from '@/stores';
+import { SKILL_ELEM_MAP, SKILL_INHERIT_MAP } from '@/constants/skill';
+import type { PersonaData } from '@/types/data';
+import DetailContainer from './components/detailContainer.vue';
+import DetailCard from './components/detailCard.vue';
 
 const props = defineProps<{
-    persona_name: string
-}>()
+    persona_name: string;
+}>();
 
-const persona = ref<PersonaData>(pictorialStore().persona_map[props.persona_name])
+const persona = ref<PersonaData>(pictorialStore().persona_map[props.persona_name]);
 
 // 为DetailContainer组件准备数据
 const badges = computed(() => [
     { text: persona.value.arcana, color: '#c0392b' },
     { text: `Lv.${persona.value.level}`, color: '#2c3e50' }
-])
+]);
 
 const tabs = {
     0: '基本信息',
@@ -24,12 +24,12 @@ const tabs = {
     2: '属性克制',
     3: '技能列表',
     4: '技能继承'
-}
+};
 
 const getStatLabel = (index: number) => {
-    const labels = ['力量', '魔力', '耐力', '敏捷', '幸运']
-    return labels[index]
-}
+    const labels = ['力量', '魔力', '耐力', '敏捷', '幸运'];
+    return labels[index];
+};
 </script>
 
 <template>
@@ -71,32 +71,24 @@ const getStatLabel = (index: number) => {
                         class="stat-bar-container"
                         :style="{ animationDelay: `${index * 0.15}s` }"
                     >
-                        <view
-                            class="stat-icon"
-                            :class="`stat-icon-${index}`"
-                        >
-                            <text class="stat-symbol">{{
-                                getStatLabel(index)[0]
-                            }}</text>
+                        <view class="stat-icon" :class="`stat-icon-${index}`">
+                            <text class="stat-symbol">{{ getStatLabel(index)[0] }}</text>
                         </view>
-                        <text class="stat-label">{{
-                            getStatLabel(index) }}</text>
+                        <text class="stat-label">{{ getStatLabel(index) }}</text>
                         <view class="stat-bar">
                             <view
                                 class="stat-fill"
                                 :style="{
                                     '--width': `${(stat / 70) * 100}%`,
-                                    'animationDelay': `${0.3 + index * 0.15}s`
+                                    animationDelay: `${0.3 + index * 0.15}s`
                                 }"
                             >
-                                <view
-                                    class="stat-glow"
-                                    v-if="stat > 50"
-                                ></view>
+                                <view class="stat-glow" v-if="stat > 50"></view>
                             </view>
-                            <text class="stat-value">{{ stat
-                                }}<span
-                                    class="max-value">/70</span></text>
+                            <text class="stat-value">
+                                {{ stat }}
+                                <span class="max-value">/70</span>
+                            </text>
                         </view>
                     </view>
                 </view>
@@ -108,11 +100,9 @@ const getStatLabel = (index: number) => {
             <view class="elemental-container">
                 <view class="table-wrapper">
                     <view class="table-grid">
-                        <view
-                            class="table-header elemental-grid"
-                        >
+                        <view class="table-header elemental-grid">
                             <view
-                                v-for="{id, elem_name, color} in ELEM_COLOR"
+                                v-for="{ id, elem_name, color } in SKILL_ELEM_MAP"
                                 :key="id"
                                 class="elem-cell"
                                 :style="{ color }"
@@ -120,9 +110,7 @@ const getStatLabel = (index: number) => {
                                 {{ elem_name }}
                             </view>
                         </view>
-                        <view
-                            class="table-row elemental-grid"
-                        >
+                        <view class="table-row elemental-grid">
                             <view
                                 v-for="(resistance, index) in persona.elems"
                                 :key="index"
@@ -137,8 +125,7 @@ const getStatLabel = (index: number) => {
                 <view class="elemental-legend">
                     <view class="legend-item">
                         <text class="legend-symbol">弱</text>
-                        <text class="legend-text">弱点
-                            (造成额外伤害)</text>
+                        <text class="legend-text">弱点 (造成额外伤害)</text>
                     </view>
                     <view class="legend-item">
                         <text class="legend-symbol">-</text>
@@ -146,18 +133,15 @@ const getStatLabel = (index: number) => {
                     </view>
                     <view class="legend-item">
                         <text class="legend-symbol">耐</text>
-                        <text class="legend-text">耐性
-                            (减少伤害)</text>
+                        <text class="legend-text">耐性 (减少伤害)</text>
                     </view>
                     <view class="legend-item">
                         <text class="legend-symbol">反</text>
-                        <text
-                            class="legend-text">反射攻击</text>
+                        <text class="legend-text">反射攻击</text>
                     </view>
                     <view class="legend-item">
                         <text class="legend-symbol">吸</text>
-                        <text
-                            class="legend-text">吸收为HP</text>
+                        <text class="legend-text">吸收为HP</text>
                     </view>
                     <view class="legend-item">
                         <text class="legend-symbol">无</text>
@@ -171,18 +155,9 @@ const getStatLabel = (index: number) => {
         <template #tab-3>
             <view class="skills-scroll">
                 <view class="skills-grid">
-                    <view
-                        v-for="(level, skill) in persona.skills"
-                        :key="skill"
-                        class="skill-row"
-                    >
-                        <text class="skill-name">{{
-                            skill
-                            }}</text>
-                        <text class="skill-level">{{
-                            level >
-                                0 ? `Lv.${level}` : '天生'
-                        }}</text>
+                    <view v-for="(level, skill) in persona.skills" :key="skill" class="skill-row">
+                        <text class="skill-name">{{ skill }}</text>
+                        <text class="skill-level">{{ level > 0 ? `Lv.${level}` : '天生' }}</text>
                     </view>
                 </view>
             </view>
@@ -193,11 +168,9 @@ const getStatLabel = (index: number) => {
             <view class="inherit-container">
                 <view class="table-wrapper">
                     <view class="table-grid">
-                        <view
-                            class="table-header inherit-grid"
-                        >
+                        <view class="table-header inherit-grid">
                             <view
-                                v-for="{id, elem_name, color} in INHERIT_COLOR"
+                                v-for="{ id, elem_name, color } in SKILL_INHERIT_MAP"
                                 :key="id"
                                 class="elem-cell"
                                 :style="{ color }"
@@ -205,8 +178,7 @@ const getStatLabel = (index: number) => {
                                 {{ elem_name }}
                             </view>
                         </view>
-                        <view
-                            class="table-row inherit-grid">
+                        <view class="table-row inherit-grid">
                             <view
                                 v-for="(is_inherit, index) in persona.inherit_elems"
                                 :key="index"
@@ -225,8 +197,7 @@ const getStatLabel = (index: number) => {
                     </view>
                     <view class="legend-item">
                         <text class="legend-symbol">×</text>
-                        <text
-                            class="legend-text">不可继承</text>
+                        <text class="legend-text">不可继承</text>
                     </view>
                 </view>
             </view>
@@ -399,7 +370,12 @@ const getStatLabel = (index: number) => {
                     left: -100%;
                     width: 40%;
                     height: 100%;
-                    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
+                    background: linear-gradient(
+                        90deg,
+                        transparent,
+                        rgba(255, 215, 0, 0.4),
+                        transparent
+                    );
                     animation: glowEffect 8s infinite;
                 }
             }
@@ -424,7 +400,6 @@ const getStatLabel = (index: number) => {
     }
 }
 
-
 // 属性克制与技能继承表公共样式
 .table-wrapper {
     overflow-x: auto;
@@ -435,7 +410,6 @@ const getStatLabel = (index: number) => {
         border-radius: 10rpx;
         overflow: hidden;
         border: 1rpx solid rgba(255, 0, 0, 0.3);
-
 
         .table-header,
         .table-row {
@@ -504,7 +478,6 @@ const getStatLabel = (index: number) => {
         grid-template-columns: repeat(2, 1fr);
         gap: 20rpx;
         max-height: 400rpx;
-
 
         .skill-row {
             display: flex;

@@ -8,7 +8,7 @@ export default {
 
 <script setup lang="ts">
 import strategyTable from './strategyTable.vue';
-import { StrategyMainData } from '@/types/strategy';
+import type { StrategyMainData } from '@/types/strategy';
 import { defineProps, ref } from 'vue';
 const props = defineProps<{
     navIndex: number;

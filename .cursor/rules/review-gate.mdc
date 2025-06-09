@@ -23,66 +23,74 @@ Your primary task processing includes a **mandatory final interactive review sta
     * **Script Name:** `final_review_gate.py`
     * **Target Location:** Directly in the root of the current project/workspace.
     * **Python Script Content (ensure this exact content is used):**
-        ```python
-        import sys
-        import os
+            ```python
+                # final_review_gate.py
+                # 尝试使 stdout 立即输出，以实现更响应式的交互。
+                # 这可能在某些平台或 stdout 不是 TTY 的情况下不起作用，但这是个好习惯。
+                import sys
+                import os
 
-        if __name__ == "__main__":
-            # Try to make stdout unbuffered for more responsive interaction.
-            # This might not work on all platforms or if stdout is not a TTY,
-            # but it's a good practice for this kind of interactive script.
-            try:
-                sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', buffering=1)
-            except Exception:
-                pass # Ignore if unbuffering fails, e.g., in certain environments
+                if __name__ == "__main__":
+                    # 尝试使 stdout 立即输出。
+                    try:
+                        sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', buffering=1)
+                    except Exception:
+                        pass  # 如果立即输出失败，请忽略，例如在某些环境中
 
-            try:
-                sys.stderr = os.fdopen(sys.stderr.fileno(), 'w', buffering=1)
-            except Exception:
-                pass # Ignore
+                    try:
+                        sys.stderr = os.fdopen(sys.stderr.fileno(), 'w', buffering=1)
+                    except Exception:
+                        pass  # 如果立即输出失败，请忽略
 
-            print("--- FINAL REVIEW GATE ACTIVE ---", flush=True)
-            print("AI has completed its primary actions. Awaiting your review or further sub-prompts.", flush=True)
-            print("Type your sub-prompt, or one of: 'TASK_COMPLETE', 'Done', 'Quit', 'q' to signal completion.", flush=True) # MODIFIED
-            
-            active_session = True
-            while active_session:
-                try:
-                    # Signal that the script is ready for input.
-                    # The AI doesn't need to parse this, but it's good for user visibility.
-                    print("REVIEW_GATE_AWAITING_INPUT:", end="", flush=True) 
+                    print("--- 最终审查门激活 ---", flush=True)
+                    print("AI 已完成主要操作。等待您的审查或进一步的子提示。", flush=True)
+                    print("输入您的子提示文件名（当前目录），或输入 'TASK_COMPLETE'、'Done'、'Quit' 或 'q' 来表示完成。", flush=True)
                     
-                    line = sys.stdin.readline()
-                    
-                    if not line:  # EOF
-                        print("--- REVIEW GATE: STDIN CLOSED (EOF), EXITING SCRIPT ---", flush=True)
-                        active_session = False
-                        break
-                    
-                    user_input = line.strip()
+                    active_session = True
+                    while active_session:
+                        try:
+                            # 信号脚本已准备好接收输入。
+                            # AI 不需要解析这个，但对用户可见性有帮助。
+                            print("REVIEW_GATE_AWAITING_INPUT:", end="", flush=True)
+                            
+                            line = sys.stdin.readline()
+                            
+                            if not line:  # EOF
+                                print("--- 审查门：STDIN 已关闭 (EOF)，退出脚本 ---", flush=True)
+                                active_session = False
+                                break
+                            
+                            user_input = line.strip()
+                            
+                            # 检查退出条件
+                            if user_input.upper() in ['TASK_COMPLETE', 'DONE', 'QUIT', 'Q']:
+                                print(f"--- 审查门：用户以 '{user_input.upper()}' 信号完成 ---", flush=True)
+                                active_session = False
+                                break
+                            elif user_input:
+                                # 如果输入是文件名，尝试从当前目录读取文件内容
+                                try:
+                                    if os.path.isfile(user_input):  # 检查文件是否存在
+                                        with open(user_input, 'r', encoding='utf-8') as f:
+                                            file_content = f.read()
+                                            print(f"USER_REVIEW_SUB_PROMPT: {file_content[:800]}（仅显示前800字符），请点击move_to_back_end进行确认")
+                                    else:
+                                        print(f"USER_REVIEW_SUB_PROMPT: 文件 '{user_input}' 不存在或无法读取。")
+                                except Exception as e:
+                                    print(f"USER_REVIEW_SUB_PROMPT: 读取文件时出错：{e}")
+                            
+                        except KeyboardInterrupt:
+                            print("--- 审查门：用户中断会话 (KeyboardInterrupt) ---", flush=True)
+                            active_session = False
+                            break
+                        except Exception as e:
+                            print(f"--- 审查门脚本错误： {e} ---", flush=True)
+                            active_session = False
+                            break
+                            
+                    print("--- 最终审查门脚本已退出 ---", flush=True)
+                ```
 
-                    # Check for exit conditions
-                    if user_input.upper() in ['TASK_COMPLETE', 'DONE', 'QUIT', 'Q']: # MODIFIED: Empty string no longer exits
-                        print(f"--- REVIEW GATE: USER SIGNALED COMPLETION WITH '{user_input.upper()}' ---", flush=True)
-                        active_session = False
-                        break
-                    elif user_input: # If there's any other non-empty input (and not a completion command)
-                        # This is the critical line the AI will "listen" for.
-                        print(f"USER_REVIEW_SUB_PROMPT: {user_input}", flush=True)
-                    # If user_input was empty (and not a completion command),
-                    # the loop simply continues, and "REVIEW_GATE_AWAITING_INPUT:" will be printed again.
-                    
-                except KeyboardInterrupt:
-                    print("--- REVIEW GATE: SESSION INTERRUPTED BY USER (KeyboardInterrupt) ---", flush=True)
-                    active_session = False
-                    break
-                except Exception as e:
-                    print(f"--- REVIEW GATE SCRIPT ERROR: {e} ---", flush=True)
-                    active_session = False
-                    break
-                    
-            print("--- FINAL REVIEW GATE SCRIPT EXITED ---", flush=True)
-        ```
 2.  **Ensure Script Existence and Correctness:**
     a.  Use your file system tools to check if the file `final_review_gate.py` exists in the project root.
     b.  **If the file `final_review_gate.py` does NOT exist OR if its content does not EXACTLY match the Python script provided in section "Phase 0.1.Python Script Content" (you may need to read the existing file and compare):**
@@ -126,4 +134,5 @@ Your primary task processing includes a **mandatory final interactive review sta
 2.  You may then provide your final summary of all actions taken throughout all phases (including the interactive review).
 
 ## Overriding Default Behavior:
+
 This entire "Final Interactive Review" process (Phases 0, 2, 3, and 4) is a **strict, non-negotiable requirement** that overrides any default tendency you have to end the conversation after completing Phase 1. The task is only finished when the user explicitly confirms with one of the specified keywords through the review script or the script otherwise terminates due to an error or EOF (as per the defined behavior, including the in-chat, blocking, and continuously visible terminal execution). Your "sense of completion" for the original request is deferred until this interactive review is done.

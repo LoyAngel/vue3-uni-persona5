@@ -1,4 +1,4 @@
-// items, personas, skills, tranlations
+// items, personas, skills, translations
 export type InheritElemsType = 'Physical' | 'Fire' | 'Ice' | 'Electric' | 'Wind' | 'Psy' | 'Nuclear' | 'Bless' | 'Curse' | 'Healing' | 'Ailment' | 'Almighty';
 export interface ItemMap {
     [index: string]: ItemData;
@@ -14,7 +14,11 @@ export interface ItemData {
     effect?: string; // 特殊效果
     price?: number; // 价格
     category?: string; // 武器类别（近战、远程、防具等）
+    c_type?: string; // 中文类别
     img_url?: string; // 图片URL
+    owner?: string; // 拥有者
+    source?: string; // 来源
+    source_detail?: string; // 来源详情
 }
 
 

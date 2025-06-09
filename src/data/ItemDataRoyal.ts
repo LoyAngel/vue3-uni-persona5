@@ -52,11 +52,11 @@ export const itemMapRoyal: ItemMap = {
     "Black Moon": {
         "type": "Accessory",
         "description": "+Critical rate up (high)"
-        
+
     },
     "Black Moon R": {
         "type": "Accessory",
-        "description": "+Apt Pupil (Increases Critical rate) / St +8" 
+        "description": "+Apt Pupil (Increases Critical rate) / St +8"
     },
     "Black Wing Robe": {
         "type": "Protector - Unisex",
@@ -88,7 +88,7 @@ export const itemMapRoyal: ItemMap = {
     },
     "Brain Shot": {
         "type": "Gun - Ann only",
-        "description" : "Atk 140 / Acc 84 / Rounds 12 / +Brainwash (med)"
+        "description": "Atk 140 / Acc 84 / Rounds 12 / +Brainwash (med)"
     },
     "Brave Belt": {
         "type": "Accessory",
@@ -100,11 +100,11 @@ export const itemMapRoyal: ItemMap = {
     },
     "Cat Buster": {
         "type": "Gun - Morgana only",
-        "description": "Atk 170 / Acc 90 / Rounds 5 / +Sleep (med)" 
+        "description": "Atk 170 / Acc 90 / Rounds 5 / +Sleep (med)"
     },
     "Catnap": {
         "type": "Gun - Morgana only",
-        "description": "Atk 150 / Acc 90 / Rounds 5 / +Sleep (med)" 
+        "description": "Atk 150 / Acc 90 / Rounds 5 / +Sleep (med)"
     },
     "Claiomh Solais": {
         "type": "Weapon - Morgana only",

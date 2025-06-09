@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { defineProps, defineEmits, ref, computed } from 'vue';
-import { arcanaStore } from '@/stores';
-import { EXTRA_COLOR } from '@/contants';
-import type { ArcanaMapItem, CategoryItem, ElemMapItem } from '@/types/pictorial';
+import { SKILL_EXTRA_MAP } from '@/constants/skill';
+import { PERSONA_ARCANA_MAP } from '@/constants/persona';
+import { ITEM_CATEGORY_MAP } from '@/constants/item';
+import type { ArcanaMapEntry, ItemTypeEntry, ElemMapEntry } from '@/types/pictorial';
 
 const props = defineProps<{
-    selected_category: string,
-    current_tab_type: string
+    selected_category: string;
+    current_tab_type: string;
 }>();
 const emit = defineEmits<{
     (e: 'update:selected_category', value: string): void;
@@ -14,31 +15,22 @@ const emit = defineEmits<{
 
 const menuEntries = computed(() => {
     if (props.current_tab_type === 'persona') {
-        return arcanaStore().arcana_map;
+        return PERSONA_ARCANA_MAP;
     } else if (props.current_tab_type === 'skill') {
-        const all_skill_type: ElemMapItem = {id: 0, elem_name: '全部', color: '#ffffff'};
-        return [all_skill_type, ...EXTRA_COLOR];
+        return SKILL_EXTRA_MAP;
     } else if (props.current_tab_type === 'item') {
-        const all_item_type: CategoryItem = {id: 0, category_name: '全部', color: '#ffffff'};
-        const item_categories = [
-            {id: 1, category_name: '近战武器', color: '#ff4444'},
-            {id: 2, category_name: '远程武器', color: '#4444ff'},
-            {id: 3, category_name: '防具', color: '#44ff44'},
-            {id: 4, category_name: '配件', color: '#ffff44'},
-            {id: 5, category_name: '消耗品', color: '#ff44ff'},
-        ];
-        return [all_item_type, ...item_categories];
+        return ITEM_CATEGORY_MAP;
     }
     return [];
 });
 
-const getName = (entry: ArcanaMapItem | ElemMapItem | CategoryItem) => {
+const getName = (entry: ArcanaMapEntry | ElemMapEntry | ItemTypeEntry) => {
     if (props.current_tab_type === 'persona') {
-        return (entry as ArcanaMapItem).arcana_name;
+        return (entry as ArcanaMapEntry).arcana_name;
     } else if (props.current_tab_type === 'skill') {
-        return (entry as ElemMapItem).elem_name;
+        return (entry as ElemMapEntry).elem_name;
     } else if (props.current_tab_type === 'item') {
-        return (entry as CategoryItem).category_name;
+        return (entry as ItemTypeEntry).type_name;
     }
 
     return '';
@@ -53,25 +45,18 @@ const handleFilter = (category: string) => {
 </script>
 
 <template>
-    <scroll-view
-        class="sidebar"
-        scroll-y
-    >
+    <scroll-view class="sidebar" scroll-y>
         <view
             v-for="entry in menuEntries"
             :key="entry.id"
             class="menu-entry"
-            :class="{ 'selected': selected_category_ref === getName(entry) }"
+            :class="{ selected: selected_category_ref === getName(entry) }"
             @click="handleFilter(getName(entry))"
         >
-            <text
-                class="icon"
-                v-if="'icon' in entry"
-            >{{ entry.icon }}</text>
-            <text
-                class="text"
-                :style="'color' in entry ? { 'color': entry.color, 'font-size': '36rpx'} : undefined"
-            >{{ getName(entry) }}</text>
+            <text class="icon" v-if="'icon' in entry">{{ entry.icon }}</text>
+            <text class="text" :style="'color' in entry ? { color: entry.color } : undefined">
+                {{ getName(entry) }}
+            </text>
         </view>
     </scroll-view>
 </template>
@@ -80,7 +65,7 @@ const handleFilter = (category: string) => {
 .sidebar {
     width: 25vw;
     background-color: #000000;
-    border-right: 2rpx solid #FF0000;
+    border-right: 2rpx solid #ff0000;
     height: 100%;
 
     .menu-entry {
@@ -93,7 +78,7 @@ const handleFilter = (category: string) => {
         transition: all 0.3s ease;
 
         &.selected {
-            background-color: #FF0000;
+            background-color: #ff0000;
         }
 
         .icon {

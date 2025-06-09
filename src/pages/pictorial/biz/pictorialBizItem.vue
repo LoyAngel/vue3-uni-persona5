@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { ItemData } from '@/types/data';
-import ItemCard from './components/ItemCard.vue';
-import PictorialSideBar from './components/pictorialSideBar.vue';
+import PictorialSideBar from '../components/pictorialSideBar.vue';
+import PictorialEntry from '../components/pictorialEntry.vue';
 
 const props = defineProps<{
     filtered_items: ItemData[];
@@ -18,21 +18,23 @@ const selected_category_computed = computed({
 </script>
 
 <template>
-    <PictorialSideBar
-        current_tab_type="skill"
-        v-model:selected_category="selected_category_computed"
-    />
-    <scroll-view class="content" scroll-y :show-scrollbar="false">
-        <view v-if="filtered_items.length === 0" class="empty-view">无搜索结果</view>
-        <PictorialEntry
-            v-else
-            v-for="item_entry in filtered_items"
-            :key="item_entry.name"
+    <view>
+        <PictorialSideBar
             current_tab_type="item"
-            :data="item_entry"
-            :img="''"
+            v-model:selected_category="selected_category_computed"
         />
-    </scroll-view>
+        <scroll-view class="content" scroll-y :show-scrollbar="false">
+            <view v-if="filtered_items.length === 0" class="empty-view">无搜索结果</view>
+            <PictorialEntry
+                v-else
+                v-for="item_entry in filtered_items"
+                :key="item_entry.name"
+                current_tab_type="item"
+                :data="item_entry"
+                :img="''"
+            />
+        </scroll-view>
+    </view>
 </template>
 
 <style scoped lang="scss">

@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     print("--- 最终审查门激活 ---", flush=True)
     print("AI 已完成主要操作。等待您的审查或进一步的子提示。", flush=True)
-    print("输入您的子提示，或输入 'TASK_COMPLETE'、'Done'、'Quit' 或 'q' 来表示完成。", flush=True)
+    print("输入您的子提示文件名（当前目录），或输入 'TASK_COMPLETE'、'Done'、'Quit' 或 'q' 来表示完成。", flush=True)
     
     active_session = True
     while active_session:
@@ -47,7 +47,7 @@ if __name__ == "__main__":
                     if os.path.isfile(user_input):  # 检查文件是否存在
                         with open(user_input, 'r', encoding='utf-8') as f:
                             file_content = f.read()
-                            print(f"USER_REVIEW_SUB_PROMPT: {file_content[:500]}...（如果内容过长，仅显示前500字符）")
+                            print(f"USER_REVIEW_SUB_PROMPT: {file_content[:800]}（仅显示前800字符），请点击move_to_back_end进行确认")
                     else:
                         print(f"USER_REVIEW_SUB_PROMPT: 文件 '{user_input}' 不存在或无法读取。")
                 except Exception as e:

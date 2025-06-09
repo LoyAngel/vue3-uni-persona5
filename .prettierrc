@@ -23,6 +23,21 @@
         "parser": "json",
         "tabWidth": 4
       }
+    },
+    {
+      "files": [
+        "src/data/**/*.ts"
+      ],
+      "options": {
+        "singleQuote": false,
+        "quoteProps": "consistent",
+        "tabWidth": 4,
+        "printWidth": 100,
+        "trailingComma": "none",
+        "bracketSpacing": true,
+        "semi": true,
+        "arrowParens": "always"
+      }
     }
   ]
 }

@@ -20,8 +20,8 @@ const selected_category_computed = computed({
 <template>
     <view>
         <PictorialSideBar
-            v-model:selected_category="selected_category_computed"
             current_tab_type="persona"
+            v-model:selected_category="selected_category_computed"
         />
         <scroll-view class="content" scroll-y :show-scrollbar="false">
             <view v-if="filtered_personas.length === 0" class="empty-view">无搜索结果</view>

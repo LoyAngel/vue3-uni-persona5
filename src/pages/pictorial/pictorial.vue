@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PictorialSearchbar from './components/pictorialSearchbar.vue';
+import PictorialSearchBar from './components/pictorialSearchBar.vue';
 import PictorialTabBar from './components/pictorialTabBar.vue';
 import BizPersona from './biz/pictorialBizPersona.vue';
 import BizSkill from './biz/pictorialBizSkill.vue';
@@ -7,20 +7,24 @@ import BizItem from './biz/pictorialBizItem.vue';
 
 import { ref, computed } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
-import { pictorialStore } from '@/stores';
-import { arcanaStore } from '@/stores';
+import { pictorialStore, characterStore } from '@/stores';
+
 import type { PersonaMap, SkillMap, ItemMap, PersonaData, SkillData, ItemData } from '@/types/data';
 import type { PortraitTabBarType } from '@/types/portrait';
+
 import { getPersonaMap } from '@/services/persona';
 import { getSkillMap } from '@/services/skill';
 import { getItemMap } from '@/services/item';
-import { EXTRA_COLOR } from '@/contants';
+import { getCharacterList } from '@/services/character';
+
+import { SKILL_EXTRA_MAP } from '@/constants/skill';
+import { PERSONA_ARCANA_MAP } from '@/constants/persona';
+import { ITEM_OWNER_MAP, ITEM_CATEGORY_MAP } from '@/constants/item';
 
 // 使用示例数据
 const pictorial_store = pictorialStore();
+const character_store = characterStore();
 const persona_map = ref<PersonaMap>({});
-const arcana_store = arcanaStore();
-const arcana_map = arcana_store.arcana_map;
 const skill_map = ref<SkillMap>({});
 const item_map = ref<ItemMap>({});
 // 为测试添加，可替换为实际数据获取
@@ -48,11 +52,11 @@ const filtered_skills = computed(() => {
 });
 
 const filtered_items = computed(() => {
-    return Object.values(item_map.value).filter(item => {
-        const matches_search = item?.c_name?.includes(search_value.value);
-        const matches_category = 
-            selected_category.value === '全部' || 
-            item?.category === selected_category.value;
+    return Object.values(item_map.value).filter((item) => {
+        const matches_search = item?.c_name?.includes(search_value.value) || item?.owner?.toLowerCase().includes(search_value.value.toLowerCase());
+        const matches_category =
+            selected_category.value === '全部' ||
+            item?.c_type === selected_category.value;
         return matches_search && matches_category;
     });
 });
@@ -67,8 +71,8 @@ const getPersonaMapData = async () => {
 
     // 再按arcana_map顺序排序
     personaList.sort((a: PersonaData, b: PersonaData) => {
-        const arcanaA = arcana_map.findIndex((entry) => entry.arcana_name === a.arcana);
-        const arcanaB = arcana_map.findIndex((entry) => entry.arcana_name === b.arcana);
+        const arcanaA = PERSONA_ARCANA_MAP.findIndex((entry) => entry.arcana_name === a.arcana);
+        const arcanaB = PERSONA_ARCANA_MAP.findIndex((entry) => entry.arcana_name === b.arcana);
         return arcanaA - arcanaB;
     });
 
@@ -91,8 +95,8 @@ const getSkillMapData = async () => {
 
     // 再按element排序
     skillList.sort((a: SkillData, b: SkillData) => {
-        const elementA = EXTRA_COLOR.findIndex((entry) => entry.elem_name === a.c_element);
-        const elementB = EXTRA_COLOR.findIndex((entry) => entry.elem_name === b.c_element);
+        const elementA = SKILL_EXTRA_MAP.findIndex((entry) => entry.elem_name === a.c_element);
+        const elementB = SKILL_EXTRA_MAP.findIndex((entry) => entry.elem_name === b.c_element);
         return elementA - elementB;
     });
 
@@ -106,37 +110,40 @@ const getSkillMapData = async () => {
     pictorial_store.setSkillMap(sortedSkillMap);
 };
 
-
 const getItemMapData = async () => {
-    // const { result } = await getItemMap();
-    // item_map.value = result;
-    // pictorial_store.setItemMap(result);
-    item_map.value = {
-        'Aid Charm': {
-            type: 'Accessory',
-            description: '+Dia (Small HP recovery for 1 ally)'
-        },
-        'Amrita Charm': {
-            type: 'Accessory',
-            description: '+Amrita Drop (Cure all non-special ailments of 1 ally)'
-        },
-        'Ancient Day': {
-            type: 'Gun - Akechi only',
-            description: 'Atk 350 / Acc 85 / Rounds 5 / All stats +6'
-        },
-        'Archangel Bra': {
-            type: 'Protector - Women only',
-            description: 'Def 300 / Ev 18 / +Reduce Elec dmg (high)'
-        },
-        "Arsène's Cane": {
-            type: 'Weapon - Joker only',
-            description: 'Atk 130 / Acc 92 / +Random ailment (low)'
-        },
-        'Assault Belt': {
-            type: 'Accessory',
-            description: '+Assault Dive (Heavy Phys dmg to 1 foe)'
-        }
-    };
+    const { result } = await getItemMap();
+
+    const itemList = Object.values(result) as ItemData[]; // 明确类型
+
+    // 先按owner排序
+    itemList.sort((a: ItemData, b: ItemData) => {
+        const ownerA = ITEM_OWNER_MAP.findIndex((entry) => entry.owner_name === a.owner);
+        const ownerB = ITEM_OWNER_MAP.findIndex((entry) => entry.owner_name === b.owner);
+        return ownerA - ownerB;
+    });
+
+    // 再按category排序
+    itemList.sort((a: ItemData, b: ItemData) => {
+        const categoryA = ITEM_CATEGORY_MAP.findIndex((entry) => entry.type_name === a.c_type);
+        const categoryB = ITEM_CATEGORY_MAP.findIndex((entry) => entry.type_name === b.c_type);
+        return categoryA - categoryB;
+    });
+
+    // 回归到ItemMap格式
+    const sortedItemMap: ItemMap = {};
+    itemList.forEach((i: ItemData) => {
+        sortedItemMap[i.name || ''] = i;
+    });
+
+    console.log(sortedItemMap)
+    item_map.value = sortedItemMap;
+    pictorial_store.setItemMap(sortedItemMap);
+};
+
+const getCharacterData = async () => {
+    const { result } = await getCharacterList();
+
+    character_store.setCharacterList(result);
 };
 
 // 清空与重制
@@ -174,9 +181,21 @@ const search_placeholder = computed(() => {
 });
 
 onLoad(async () => {
-    await getPersonaMapData();
-    await getSkillMapData();
-    await getItemMapData();
+    try {
+        await Promise.all([
+            getPersonaMapData(),
+            getSkillMapData(),
+            getItemMapData(),
+            getCharacterData()
+        ]);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        uni.showToast({
+            title: '数据加载失败',
+            icon: 'error',
+            mask: true
+        })
+    }
 });
 </script>
 
@@ -188,7 +207,7 @@ onLoad(async () => {
         :tab_bars="test_tab_bars"
         @checkIndex="checkTabBarsIndex"
     />
-    <PictorialSearchbar
+    <PictorialSearchBar
         v-model:search_query="search_value"
         :search_placeholder="search_placeholder"
     />
