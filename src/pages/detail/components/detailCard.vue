@@ -1,24 +1,39 @@
 <script setup lang="ts">
+
 defineProps<{
   title: string;
   accent?: string;
   data: Array<{
     label: string;
     value: string;
+    clickable?: boolean;
   }>;
 }>();
+
+const emit = defineEmits<{
+    (e: 'item-click', item: { label: string; value: string; clickable?: boolean }, index: number): void
+}>();
+
+const handleItemClick = (item: { label: string; value: string; clickable?: boolean }, index: number) => {
+  if (item.clickable && item.value) {
+    emit('item-click', item, index);
+  }
+};
 </script>
 
 <template>
   <view class="info-block" :style="{ borderLeftColor: accent || '#ff0000' }">
     <view class="block-title" :style="{ color: accent || '#ff0000' }">{{ title }}</view>
     <view 
-      v-for="(item, index) in data" 
+      v-for="(entry, index) in data" 
       :key="index" 
       class="info-row"
     >
-      <text class="info-label">{{ item.label }}：</text>
-      <text class="info-value">{{ item.value }}</text>
+      <text class="info-label">{{ entry.label }}：</text>
+      <text 
+        :class="['info-value', { 'clickable-link': entry.clickable && entry.value }]"
+        @click="handleItemClick(entry, index)"
+      >{{ entry.value }}</text>
     </view>
     <slot></slot>
   </view>
@@ -52,6 +67,23 @@ defineProps<{
     .info-value {
       color: #ffffff;
       flex: 1;
+      
+      &.clickable-link {
+        text-decoration: underline;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        
+        &:hover {
+          color: #ff5050 !important;
+          text-shadow: 0 0 8rpx rgba(255, 80, 80, 0.6);
+          transform: scale(1.02);
+        }
+        
+        &:active {
+          color: #ff0000 !important;
+          transform: scale(0.98);
+        }
+      }
     }
   }
 }

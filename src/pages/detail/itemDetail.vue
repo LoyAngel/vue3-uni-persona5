@@ -1,31 +1,23 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { pictorialStore } from '@/stores/module/pictorial';
-import { characterStore } from '@/stores';
 import type { ItemData } from '@/types/data';
-import type { CharacterData } from '@/types/character';
 import DetailContainer from './components/detailContainer.vue';
 import DetailCard from './components/detailCard.vue';
+import { onLoad } from '@dcloudio/uni-app';
 
 const props = defineProps<{
     item_name: string;
 }>();
 
 const item = computed<ItemData>(() => {
-    console.log('item', pictorialStore().item_map[props.item_name])
     return pictorialStore().item_map[props.item_name];
-});
-
-const owner = computed<CharacterData | undefined>(() => {
-    return characterStore().character_list.find((character) => {
-        return character.owner_name === item.value.owner;
-    });
 });
 
 // 为DetailContainer组件准备数据
 const badges = computed(() => [
     { text: item.value.c_type || '未知', color: '#c0392b' },
-    { text: item.value.owner || '未知', color: '#2c3e50' },
+    { text: item.value.owner || '未知', color: '#2c3e50' }
 ]);
 
 const tabs = {
@@ -33,14 +25,14 @@ const tabs = {
     1: '拥有者信息',
     2: '获取来源'
 };
+
+onLoad(() => {
+   if(!props.item_name) uni.reLaunch({ url: '/pages/404/404' })
+})
 </script>
 
 <template>
-    <DetailContainer
-        :title="item.c_name || '' "
-        :badges="badges"
-        :tabs="tabs"
-    >
+    <DetailContainer :title="item.c_name || ''" :badges="badges" :tabs="tabs">
         <!-- 物品信息选项卡 -->
         <template #tab-0>
             <view class="item-info-container">
@@ -61,7 +53,10 @@ const tabs = {
                     v-if="item.owner"
                     title="拥有者详情"
                     :data="[
-                        { label: '拥有者', value: item.owner || '' },
+                        {
+                            label: '拥有者',
+                            value: item.owner || ''
+                        }
                     ]"
                 />
                 <view v-else class="no-owner-message">

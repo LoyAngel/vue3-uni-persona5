@@ -15,10 +15,10 @@ export const getSkillMap = (): Promise<Data<SkillMap>> => {
             key,
             <SkillData>{
                 ...value,
-                name: key,
+                name: translationFunc(key, 'Skill'),
                 c_name: translationFunc(key, 'Skill'),
                 c_element: translationFunc(value.element, 'Elem'),
-                effect: translationFunc(key, 'SkillEfc'),
+                effect: translationFunc(key, 'SkillEfc', value.effect),
                 personas: value?.personas
                     ? Object.fromEntries(
                           Object.entries(value.personas).map(([key, value]) => [translationFunc(key, 'Persona'), value])

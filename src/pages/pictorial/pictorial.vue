@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import PictorialSearchBar from './components/pictorialSearchBar.vue';
 import PictorialTabBar from './components/pictorialTabBar.vue';
-import BizPersona from './biz/pictorialBizPersona.vue';
-import BizSkill from './biz/pictorialBizSkill.vue';
-import BizItem from './biz/pictorialBizItem.vue';
+import PictorialContentView from './components/pictorialContentView.vue';
 
 import { ref, computed } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
@@ -135,7 +133,6 @@ const getItemMapData = async () => {
         sortedItemMap[i.name || ''] = i;
     });
 
-    console.log(sortedItemMap)
     item_map.value = sortedItemMap;
     pictorial_store.setItemMap(sortedItemMap);
 };
@@ -159,7 +156,7 @@ const checkTabBarsIndex = (index: number) => {
     tab_bars_index.value = index;
 };
 
-const test_tab_bars: PortraitTabBarType[] = [
+const tab_bars: PortraitTabBarType[] = [
     { type: 'persona', title: '面具' },
     { type: 'skill', title: '技能' },
     { type: 'item', title: '道具' }
@@ -167,7 +164,7 @@ const test_tab_bars: PortraitTabBarType[] = [
 
 // 动态计算当前选中的标签类型
 const current_tab_type = computed(() => {
-    return test_tab_bars[tab_bars_index.value].type;
+    return tab_bars[tab_bars_index.value].type;
 });
 
 // 动态计算搜索框的提示文本
@@ -204,7 +201,7 @@ onLoad(async () => {
     <!-- tabbar选项能够切换searchbar后的组件，包括persona, skill, item -->
     <PictorialTabBar
         :nav_index="tab_bars_index"
-        :tab_bars="test_tab_bars"
+        :tab_bars="tab_bars"
         @checkIndex="checkTabBarsIndex"
     />
     <PictorialSearchBar
@@ -212,30 +209,15 @@ onLoad(async () => {
         :search_placeholder="search_placeholder"
     />
 
-    <!-- 根据当前选中的标签类型动态显示对应组件 -->
-    <template v-if="current_tab_type === 'persona'">
-        <BizPersona
-            :filtered_personas="filtered_personas"
-            v-model:selected_category="selected_category"
-            class="main-content"
-        />
-    </template>
-
-    <template v-else-if="current_tab_type === 'skill'">
-        <BizSkill
-            :filtered_skills="filtered_skills"
-            v-model:selected_category="selected_category"
-            class="main-content"
-        />
-    </template>
-
-    <template v-else-if="current_tab_type === 'item'">
-        <BizItem
-            :filtered_items="filtered_items"
-            v-model:selected_category="selected_category"
-            class="main-content"
-        />
-    </template>
+    <!-- 使用统一的内容视图组件 -->
+    <PictorialContentView
+        :filtered_data="current_tab_type === 'persona' ? filtered_personas : 
+                       current_tab_type === 'skill' ? filtered_skills : 
+                       filtered_items"
+        v-model:selected_category="selected_category"
+        :current_tab_type="current_tab_type"
+        class="main-content"
+    />
 </template>
 
 <style>

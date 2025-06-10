@@ -17,10 +17,10 @@ export const getPersonaMap = (): Promise<Data<PersonaMap>> => {
             <PersonaData>{
                 ...value,
                 area: translationFunc(value.area, "Area"),
-                name: key,
+                name: translationFunc(key, "Persona"),
                 c_name: translationFunc(key, "Persona"),
                 arcana: translationFunc(value.arcana, "Arcana"),
-                img_url: translationFunc(key, "PersonaImg"),
+                img_url: translationFunc(key, "PersonaImg", "None"),
                 elems: value.elems.map((elem) => translationFunc(elem, "ElemEfc")),
                 inherit_elems: value.inherits ? inheritanceChartRoyal[value.inherits] : [],
                 skills: Object.fromEntries(

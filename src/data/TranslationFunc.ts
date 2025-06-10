@@ -1569,10 +1569,8 @@ const areaTranslationData: TranslationMap = {
     "Sheriruth / Da'at": "宽容剥夺之路／认知者们之路"
 }
 
-export default (key: string | undefined, translation_type: string): string => {
+export default (key: string | undefined, translation_type: string, default_value: string = ""): string => {
     let translation_data: TranslationMap;
-
-    const NOT_OWN_TRANSLATION_TYPE = ['PersonaImg', 'ItemDescription', 'ItemSource', 'ItemSourceDetail', 'SkillEfc'];
 
     if (!key) {
         return "";
@@ -1608,10 +1606,8 @@ export default (key: string | undefined, translation_type: string): string => {
     }
 
     if (!translation_data[key]) {
-        if (NOT_OWN_TRANSLATION_TYPE.includes(translation_type)) {
-            return "";
-        }
-        return key;
+        if (default_value) return default_value;
+        else return key;
     }
     return translation_data[key];
 }

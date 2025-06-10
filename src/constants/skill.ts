@@ -1,7 +1,6 @@
 import type { ElemMapEntry } from "@/types/pictorial";
 
 const SKILL_ELEM_MAP: ElemMapEntry[] = [
-    { id: 1, elem_name: "全部", color: "#ffffff", icon: "✨" },
     { id: 2, elem_name: "物", color: "#EF9710", icon: "👊" },
     { id: 3, elem_name: "枪", color: "#EF9710", icon: "🔫" },
     { id: 4, elem_name: "火", color: "#ED1F21", icon: "🔥" },
@@ -22,6 +21,7 @@ const SKILL_INHERIT_MAP: ElemMapEntry[] = [
 
 const SKILL_EXTRA_MAP: ElemMapEntry[] = [
     ...SKILL_INHERIT_MAP,
+    { id: 1, elem_name: "全部", color: "#ffffff", icon: "✨" },
     { id: 14, elem_name: "万能", color: "#8A2BE2", icon: "🌟" },    // 新颜色
     { id: 15, elem_name: "被", color: "#808080", icon: "🛡️" },      // 灰色表示被动
     { id: 16, elem_name: "辅", color: "#FFA500", icon: "⚕️" },      // 橙色

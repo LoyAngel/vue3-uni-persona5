@@ -67,10 +67,17 @@
             "style": {
                 "navigationBarTitleText": "测试2"
             }
+        },
+        {
+            "path": "pages/404/404",
+            "style": {
+                "navigationBarTitleText": "未找到页面"
+            }
         }
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
+		"404": "pages/404/404",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#9f2011",
 		"backgroundColor": "#000000"

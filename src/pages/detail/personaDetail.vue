@@ -5,6 +5,7 @@ import { SKILL_ELEM_MAP, SKILL_INHERIT_MAP } from '@/constants/skill';
 import type { PersonaData } from '@/types/data';
 import DetailContainer from './components/detailContainer.vue';
 import DetailCard from './components/detailCard.vue';
+import { onLoad } from '@dcloudio/uni-app';
 
 const props = defineProps<{
     persona_name: string;
@@ -30,11 +31,60 @@ const getStatLabel = (index: number) => {
     const labels = ['力量', '魔力', '耐力', '敏捷', '幸运'];
     return labels[index];
 };
+
+// 导航函数
+const navigateToSkill = (skillName: string) => {
+    console.log(skillName);
+    if (skillName) {
+        uni.navigateTo({
+            url: `/pages/detail/skillDetail?skill_name=${skillName}`
+        });
+    }
+};
+
+const navigateToItem = (itemName: string) => {
+    if (itemName) {
+        uni.navigateTo({
+            url: `/pages/detail/itemDetail?item_name=${encodeURIComponent(itemName)}`
+        });
+    }
+};
+
+// 处理DetailCard的点击事件
+const handleItemClick = (
+    entry: { label: string; value: string; clickable?: boolean },
+    index: number
+) => {
+    if (entry.label === '普通' && persona.value.item) {
+        if (persona.value.item_type === '技能卡') {
+            navigateToSkill(persona.value.item);
+        } else {
+            navigateToItem(persona.value.item);
+        }
+    } else if (entry.label === '特殊' && persona.value.itemr) {
+        if (persona.value.item_type === '技能卡') {
+            navigateToSkill(persona.value.itemr);
+        } else {
+            navigateToItem(persona.value.itemr);
+        }
+    }
+};
+const handleTraitClick = () => {
+    if (persona.value.trait) {
+        uni.navigateTo({
+            url: `/pages/detail/skillDetail?skill_name=${persona.value.trait}`
+        });
+    }
+};
+
+onLoad(() => {
+    if (!props.persona_name) uni.reLaunch({ url: '/pages/404/404' });
+});
 </script>
 
 <template>
     <DetailContainer
-        :title="persona.c_name + '\n（' + persona.name + '）'"
+        :title="persona.name || '未知角色'"
         :badges="badges"
         :tabs="tabs"
         :avatar="persona.img_url"
@@ -45,18 +95,32 @@ const getStatLabel = (index: number) => {
                 <DetailCard
                     title="特性信息"
                     :data="[
-                        { label: '特性', value: persona.trait || '' },
+                        {
+                            label: '特性',
+                            value: persona.trait || '',
+                            clickable: !!persona.trait,
+                        },
                         ...(persona.area ? [{ label: '位置', value: persona.area }] : [])
                     ]"
+                    @item-click="handleTraitClick"
                 />
 
                 <DetailCard
                     title="道具化"
                     :data="[
                         { label: '道具类型', value: persona.item_type || '' },
-                        { label: '普通', value: persona.item || '' },
-                        { label: '特殊', value: persona.itemr || '' }
+                        {
+                            label: '普通',
+                            value: persona.item || '',
+                            clickable: !!persona.item
+                        },
+                        {
+                            label: '特殊',
+                            value: persona.itemr || '',
+                            clickable: !!persona.itemr
+                        }
                     ]"
+                    @item-click="handleItemClick"
                 />
             </view>
         </template>
@@ -156,7 +220,12 @@ const getStatLabel = (index: number) => {
             <view class="skills-scroll">
                 <view class="skills-grid">
                     <view v-for="(level, skill) in persona.skills" :key="skill" class="skill-row">
-                        <text class="skill-name">{{ skill }}</text>
+                        <text
+                            class="skill-name clickable-link"
+                            @click="navigateToSkill(skill.toString())"
+                        >
+                            {{ skill }}
+                        </text>
                         <text class="skill-level">{{ level > 0 ? `Lv.${level}` : '天生' }}</text>
                     </view>
                 </view>
@@ -402,7 +471,7 @@ const getStatLabel = (index: number) => {
 
 // 属性克制与技能继承表公共样式
 .table-wrapper {
-    overflow-x: auto;
+    overflow-x: hidden;
     margin-bottom: 30rpx;
 
     .table-grid {
@@ -511,6 +580,24 @@ const getStatLabel = (index: number) => {
                 border-radius: 20rpx;
             }
         }
+    }
+}
+
+// 可点击链接样式
+.clickable-link {
+    text-decoration: underline;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        color: #ff5050 !important;
+        text-shadow: 0 0 8rpx rgba(255, 80, 80, 0.6);
+        transform: scale(1.02);
+    }
+
+    &:active {
+        color: #ff0000 !important;
+        transform: scale(0.98);
     }
 }
 </style>

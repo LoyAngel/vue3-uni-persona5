@@ -17,7 +17,6 @@ export const getItemMap = (): Promise<Data<ItemMap>> => {
             }
         ])
     );
-    console.log(res);
     return new Promise<Data<ItemMap>>((resolve) => {
         resolve({
             code: '200',

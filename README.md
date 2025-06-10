@@ -6,6 +6,7 @@ This is a project that imitates the style of the game Persona5. It contains the 
 ```
 > src
   > components (Contains the common components of the project)
+  > constants (Contains the constants of the project)
   > pages (Contains the pages of the project)
     > detail (Folder for the persona, item, skill detail page)
     > index (Folder for the home page)
@@ -13,8 +14,8 @@ This is a project that imitates the style of the game Persona5. It contains the 
     > my (Folder for the personal center page)
     > persona (Folder for the Persona page)
     > strategy (Folder for the strategy page)
-  > services (Contains the services of the project)
-  > stores (Contains the state management of the project)
+  > services (Contains the services of the project, including some API requests)
+  > stores (Contains the state management of the project, pinia is used)
     > module (Contains specific state modules)
   > static (Contains static resources)
   > types (Contains the type declarations of the project)
@@ -32,6 +33,8 @@ This is a project that imitates the style of the game Persona5. It contains the 
 ### 2025.2.12
 - Item list page, detail page (2025.5.25)
 - Skill list page, detail page (2025.6.12)
+### 2025.6.10
+- Detail page: Click text to jump to the corresponding section
 
 
 ## Credits

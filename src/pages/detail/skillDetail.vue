@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import DetailContainer from './components/detailContainer.vue';
+import DetailCard from './components/detailCard.vue';
 import type { SkillData } from '@/types/data';
 import { pictorialStore } from '@/stores';
 import { SKILL_EXTRA_MAP } from '@/constants/skill';
 import type { ElemMapEntry } from '@/types/pictorial';
+import { onLoad } from '@dcloudio/uni-app';
 
 const props = defineProps<{
     skill_name: string; // 技能名称
@@ -39,14 +41,76 @@ const badges = [
         color: '#ff0000'
     }
 ];
+
+// 导航函数
+const navigateToPersona = (personaName: string) => {
+    if (personaName) {
+        uni.navigateTo({
+            url: `/pages/detail/personaDetail?persona_name=${encodeURIComponent(personaName)}`
+        });
+    }
+};
+
+// 为技能效果准备数据
+const effectData = computed(() => [
+    { label: '技能效果', value: skill.value?.effect || '无描述' }
+]);
+
+// 为获取方式准备数据
+const acquisitionData = computed(() => {
+    const methods = [];
+    
+    if (skill.value?.talk) {
+        methods.push({
+            title: '交涉获得',
+            accent: '#3498db',
+            data: [
+                { label: '获取方式', value: '对话交涉' },
+                { label: '获取来源', value: skill.value.talkPersonas || '未知' }
+            ]
+        });
+    }
+    
+    if (skill.value?.fuse) {
+        methods.push({
+            title: '道具化获得',
+            accent: '#9b59b6',
+            data: [
+                { label: '获取方式', value: '电刑道具化' },
+                { label: '获取来源', value: Array.isArray(skill.value.fuse) ? skill.value.fuse.join(', ') : skill.value.fuse }
+            ]
+        });
+    }
+    
+    if (skill.value?.card) {
+        methods.push({
+            title: '其它获得方式',
+            accent: '#2ecc71',
+            data: [
+                { label: '获取方式', value: '其它方式' },
+                { label: '获取来源', value: skill.value.card }
+            ]
+        });
+    }
+    
+    return methods;
+});
+
+onLoad(() => {
+    if(!props.skill_name) uni.reLaunch({ url: '/pages/404/404' })
+})
 </script>
 
 <template>
     <DetailContainer :title="skill.c_name || ''" :badges="badges" :tabs="tabs">
         <!-- 效果选项卡 -->
         <template #tab-0>
-            <view class="effect-card">
-                <text class="effect-description">{{ skill.effect }}</text>
+            <view class="effect-container">
+                <DetailCard
+                    title="技能详情"
+                    :accent="elementColor"
+                    :data="effectData"
+                />
             </view>
         </template>
 
@@ -59,7 +123,10 @@ const badges = [
                     class="persona-item"
                 >
                     <view class="persona-details">
-                        <view class="persona-name">{{ persona }}</view>
+                        <view 
+                            class="persona-name clickable-link" 
+                            @click="navigateToPersona(persona.toString())"
+                        >{{ persona }}</view>
                         <view class="persona-level" v-if="level > 0">Lv.{{ level }}</view>
                         <view class="persona-level special" v-else>天生</view>
                     </view>
@@ -70,40 +137,17 @@ const badges = [
 
         <!-- 获取方式选项卡 -->
         <template #tab-2>
-            <view class="acquisition-methods">
-                <view :class="['method-card', skill.unique ? 'special' : '']" v-if="skill.talk">
-                    <view class="method-icon talk">对话</view>
-                    <view class="method-details">
-                        <view class="method-title">交涉获得</view>
-                        <view class="method-value">
-                            {{ skill.talkPersonas }}
-                        </view>
-                    </view>
-                </view>
-
-                <view :class="['method-card', skill.unique ? 'special' : '']" v-if="skill.fuse">
-                    <view class="method-icon fuse">电刑</view>
-                    <view class="method-details">
-                        <view class="method-title">道具化获得</view>
-                        <view class="method-value">
-                            {{ Array.isArray(skill.fuse) ? skill.fuse.join(',') : skill.fuse }}
-                        </view>
-                    </view>
-                </view>
-
-                <view :class="['method-card', skill.unique ? 'special' : '']" v-if="skill.card">
-                    <view class="method-icon card">其它</view>
-                    <view class="method-details">
-                        <view class="method-title">其它获得方式</view>
-                        <view class="method-value">
-                            {{ skill.card }}
-                        </view>
-                    </view>
-                </view>
-
+            <view class="acquisition-container">
+                <DetailCard
+                    v-for="(method, index) in acquisitionData"
+                    :key="index"
+                    :title="method.title"
+                    :accent="method.accent"
+                    :data="method.data"
+                />
                 <view
                     class="empty-state"
-                    v-if="!skill.talk && !skill.fuse && !skill.card && !skill.unique"
+                    v-if="acquisitionData.length === 0"
                 >
                     无特殊获取方式
                 </view>
@@ -121,19 +165,10 @@ page {
 
 <style lang="scss" scoped>
 // 效果选项卡
-.effect-card {
-    background-color: rgba(40, 40, 40, 0.6);
-    border-radius: 24rpx;
-    padding: 40rpx;
-    margin-bottom: 48rpx;
-    border-left: 6rpx solid #ff0000;
-
-    .effect-description {
-        color: #f0f0f0;
-        font-size: 1em;
-        line-height: 1.6;
-        margin: 0;
-    }
+.effect-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30rpx;
 }
 
 // Persona选项卡
@@ -181,65 +216,10 @@ page {
 }
 
 // 获取方式选项卡
-.acquisition-methods {
+.acquisition-container {
     display: flex;
     flex-direction: column;
     gap: 32rpx;
-
-    .method-card {
-        background-color: rgba(40, 40, 40, 0.6);
-        border-radius: 20rpx;
-        padding: 32rpx;
-        display: flex;
-        gap: 32rpx;
-        align-items: center;
-        transition: transform 0.2s;
-
-        &.special {
-            background: linear-gradient(135deg, rgba(40, 40, 40, 0.6), rgba(80, 10, 10, 0.6));
-            border: 2rpx solid rgba(255, 0, 0, 0.3);
-        }
-
-        .method-icon {
-            width: 100rpx;
-            height: 100rpx;
-            border-radius: 20rpx;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-            font-size: 0.875em;
-
-            &.talk {
-                background-color: #3498db;
-            }
-
-            &.fuse {
-                background-color: #9b59b6;
-            }
-
-            &.card {
-                background-color: #2ecc71;
-            }
-        }
-
-        .method-details {
-            flex: 1;
-
-            .method-title {
-                color: #ff0000;
-                font-weight: 500;
-                font-size: 1em;
-                margin-bottom: 10rpx;
-            }
-
-            .method-value {
-                color: #e0e0e0;
-                font-size: 0.875em;
-            }
-        }
-    }
 }
 
 .empty-state {
@@ -250,5 +230,23 @@ page {
     border-radius: 16rpx;
     font-style: italic;
     font-size: 1em;
+}
+
+// 可点击链接样式
+.clickable-link {
+    text-decoration: underline;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+        color: #ff5050 !important;
+        text-shadow: 0 0 8rpx rgba(255, 80, 80, 0.6);
+        transform: scale(1.02);
+    }
+    
+    &:active {
+        color: #ff0000 !important;
+        transform: scale(0.98);
+    }
 }
 </style>

@@ -115,20 +115,17 @@ const getItemIcon = (type: string | undefined) => {
                 />
             </view>
             <view class="entry-info">
-                <view class="entry-category" :style="{ color: show_color }">
-                    {{ persona_data.arcana }}
+                <view class="entry-name">
+                    {{ persona_data.c_name }}
                 </view>
-                <view class="entry-content">
+                <view class="entry-details">
                     <view class="entry-level-badge">
                         <text class="level-text">Lv.{{ persona_data.level }}</text>
                     </view>
-                    <view class="entry-name">
-                        {{ persona_data.c_name }}
+                    <view class="entry-category" :style="{ color: show_color }">
+                        {{ persona_data.arcana }}
                     </view>
                 </view>
-            </view>
-            <view class="entry-arrow">
-                <text class="arrow-icon">›</text>
             </view>
         </template>
 
@@ -145,9 +142,6 @@ const getItemIcon = (type: string | undefined) => {
                     </view>
                     <view class="entry-cost">{{ cost_show }}</view>
                 </view>
-            </view>
-            <view class="entry-arrow">
-                <text class="arrow-icon">›</text>
             </view>
         </template>
 
@@ -166,9 +160,6 @@ const getItemIcon = (type: string | undefined) => {
                         {{ item_data.owner || '未知' }}
                     </view>
                 </view>
-            </view>
-            <view class="entry-arrow">
-                <text class="arrow-icon">›</text>
             </view>
         </template>
 
@@ -218,6 +209,7 @@ $shadow-accent: 0 8rpx 32rpx rgba(220, 20, 60, 0.3);
     cursor: pointer;
     backdrop-filter: blur(10rpx);
     border: 1rpx solid rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
 
     // 悬停遮罩层
     .hover-overlay {
@@ -232,20 +224,6 @@ $shadow-accent: 0 8rpx 32rpx rgba(220, 20, 60, 0.3);
         pointer-events: none;
     }
 
-    // 通用箭头图标
-    .entry-arrow {
-        margin-left: auto;
-        padding-left: 20rpx;
-        opacity: 0.6;
-        transition: all 0.3s ease;
-
-        .arrow-icon {
-            font-size: 36rpx;
-            color: var(--accent-color, $text-secondary);
-            font-weight: bold;
-        }
-    }
-
     // 悬停效果
     &:hover {
         transform: translateY(-8rpx) scale(1.02);
@@ -255,10 +233,6 @@ $shadow-accent: 0 8rpx 32rpx rgba(220, 20, 60, 0.3);
             opacity: 1;
         }
 
-        .entry-arrow {
-            opacity: 1;
-            transform: translateX(8rpx);
-        }
     }
 
     &:active {
@@ -323,21 +297,6 @@ $shadow-accent: 0 8rpx 32rpx rgba(220, 20, 60, 0.3);
             }
         }
 
-        .entry-category {
-            font-size: 24rpx;
-            font-weight: 600;
-            margin-bottom: 8rpx;
-            text-transform: uppercase;
-            letter-spacing: 1rpx;
-            opacity: 0.9;
-        }
-
-        .entry-content {
-            display: flex;
-            flex-direction: column;
-            gap: 8rpx;
-        }
-
         .entry-level-badge {
             display: inline-flex;
             align-items: center;
@@ -353,6 +312,15 @@ $shadow-accent: 0 8rpx 32rpx rgba(220, 20, 60, 0.3);
                 font-weight: 700;
                 line-height: 1;
             }
+        }
+
+        .entry-category {
+            font-size: 24rpx;
+            font-weight: 600;
+            margin-bottom: 8rpx;
+            text-transform: uppercase;
+            letter-spacing: 1rpx;
+            opacity: 0.9;
         }
 
         &:hover {
@@ -389,23 +357,14 @@ $shadow-accent: 0 8rpx 32rpx rgba(220, 20, 60, 0.3);
             letter-spacing: 0.5rpx;
         }
 
-        .entry-details {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16rpx;
-            margin-top: 8rpx;
-
-            .entry-cost {
-                font-size: 22rpx;
-                color: $text-secondary;
-                font-weight: 500;
-                padding: 6rpx 16rpx;
-                border-radius: 16rpx;
-                background: rgba(255, 255, 255, 0.1);
-                border: 1rpx solid rgba(255, 255, 255, 0.1);
-            }
+        .entry-cost {
+            font-size: 22rpx;
+            color: $text-secondary;
+            font-weight: 500;
+            padding: 6rpx 16rpx;
+            border-radius: 16rpx;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1rpx solid rgba(255, 255, 255, 0.1);
         }
 
         &:hover {
@@ -432,28 +391,16 @@ $shadow-accent: 0 8rpx 32rpx rgba(220, 20, 60, 0.3);
             }
         }
 
-        .entry-labels {
-            display: flex;
-            flex-direction: row;
-            gap: 12rpx;
-            margin-top: 8rpx;
-            flex-wrap: wrap;
-
-            .entry-type,
-            .entry-owner {
-                font-size: 24rpx;
-                font-weight: 600;
-                padding: 8rpx 20rpx;
-                border-radius: 24rpx;
-                background: linear-gradient(
-                    135deg,
-                    rgba(220, 20, 60, 0.15),
-                    rgba(220, 20, 60, 0.05)
-                );
-                border: 1rpx solid rgba(220, 20, 60, 0.3);
-                letter-spacing: 0.5rpx;
-                align-self: flex-start;
-            }
+        .entry-type,
+        .entry-owner {
+            font-size: 24rpx;
+            font-weight: 600;
+            padding: 8rpx 20rpx;
+            border-radius: 24rpx;
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.15), rgba(220, 20, 60, 0.05));
+            border: 1rpx solid rgba(220, 20, 60, 0.3);
+            letter-spacing: 0.5rpx;
+            align-self: flex-start;
         }
 
         &:hover {
@@ -482,6 +429,26 @@ $shadow-accent: 0 8rpx 32rpx rgba(220, 20, 60, 0.3);
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
+        // 通用详情样式, 两侧对齐
+        .entry-details {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16rpx;
+            margin-top: 8rpx;
+        }
+
+        // 通用标签样式, 按行从左到右排列
+        .entry-labels {
+            display: flex;
+            flex-direction: row;
+            gap: 12rpx;
+            margin-top: 8rpx;
+            flex-wrap: wrap;
+        }
+
     }
 }
 </style>

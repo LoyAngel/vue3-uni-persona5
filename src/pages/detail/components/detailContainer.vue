@@ -311,6 +311,7 @@ const changeTab = (index: number) => {
         display: flex;
         background-color: rgba(20, 20, 20, 0.8);
         overflow-x: auto;
+        overflow-y: hidden;
         scrollbar-width: none;
         position: relative;
 
