@@ -5,8 +5,8 @@
  *
  */
 
-import { testStore } from "@/stores";
-import { Data } from "@/types/http";
+import type { testStore } from "@/stores";
+import type { RequestData } from "@/types/http";
 
 const baseURL = "https://apifoxmock.com/m1/5747273-5430083-default/api";
 
@@ -53,7 +53,7 @@ uni.addInterceptor("uploadFile", httpInterceptor);
  */
 export const http = <T>(options: UniApp.RequestOptions) => {
     // 1. 返回Promise对象
-    return new Promise<Data<T>>((resolve, reject) => {
+    return new Promise<RequestData<T>>((resolve, reject) => {
         uni.request({
             ...options,
             // 2. 请求成功
@@ -61,7 +61,7 @@ export const http = <T>(options: UniApp.RequestOptions) => {
                 console.log(res);
                 const { data, statusCode } = res;
                 if (statusCode >= 200 && statusCode < 300) {
-                    resolve(data as Data<T>);
+                    resolve(data as RequestData<T>);
                 } else if (res.statusCode === 401) {
                     // 401 -> 清除token
                     const store = testStore();
@@ -74,7 +74,7 @@ export const http = <T>(options: UniApp.RequestOptions) => {
                     // 其他错误 -> 轻提示
                     uni.showToast({
                         icon: "none",
-                        title: (data as Data<T>).msg || "请求失败",
+                        title: (data as RequestData<T>).msg || "请求失败",
                     });
                 }
             },

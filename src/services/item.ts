@@ -1,10 +1,10 @@
 import { http } from '@/utils/http';
-import type { Data } from '@/types/http';
+import type { RequestData } from '@/types/http';
 import type { ItemMap, ItemData } from '@/types/data';
 // import { itemMapRoyal } from '@/data/ItemDataRoyal';
 import { itemMapTranslation } from '@/data/ItemDataTranslation';
 
-export const getItemMap = (): Promise<Data<ItemMap>> => {
+export const getItemMap = (): Promise<RequestData<ItemMap>> => {
     let res = Object.fromEntries(
         Object.entries(itemMapTranslation).map(([key, value]: [string, ItemData]) => [
             key,
@@ -17,7 +17,7 @@ export const getItemMap = (): Promise<Data<ItemMap>> => {
             }
         ])
     );
-    return new Promise<Data<ItemMap>>((resolve) => {
+    return new Promise<RequestData<ItemMap>>((resolve) => {
         resolve({
             code: '200',
             msg: 'success',

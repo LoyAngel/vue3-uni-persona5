@@ -1,6 +1,6 @@
 import { http } from "@/utils/http";
 import type { IndexBannerData, IndexTitleData } from "@/types";
-import type { Data } from "@/types/http";
+import type { RequestData } from "@/types/http";
 /**
  * @Description: 获取首页banner
  * @param {number} distributionSite - banner位置（投放位置，1为首页） 默认为1
@@ -15,7 +15,7 @@ export const getIndexBannerAPI = (distributionSite = 1) => {
     //         distributionSite,
     //     },
     // })
-    return new Promise<Data<IndexBannerData[]>>((resolve) => {
+    return new Promise<RequestData<IndexBannerData[]>>((resolve) => {
         resolve({
             code: "200",
             msg: "success",
@@ -41,7 +41,7 @@ export const getIndexBannerAPI = (distributionSite = 1) => {
 };
 
 export const getIndexTitleListAPI = () => {
-    return new Promise<Data<IndexTitleData[]>>((resolve) => {
+    return new Promise<RequestData<IndexTitleData[]>>((resolve) => {
         resolve({
             code: "200",
             msg: "success",

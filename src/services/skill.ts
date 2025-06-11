@@ -1,5 +1,5 @@
 import { http } from '@/utils/http';
-import type { Data } from '@/types/http';
+import type { RequestData } from '@/types/http';
 import type { SkillMap, SkillData, TranslationMap } from '@/types/data';
 import { skillMapRoyal } from '@/data/SkillDataRoyal';
 import { itemMapRoyal } from '@/data/ItemDataRoyal';
@@ -9,7 +9,7 @@ import translationFunc from '@/data/TranslationFunc';
  * @Description: 获得技能图鉴
  * @return {Promise}
  */
-export const getSkillMap = (): Promise<Data<SkillMap>> => {
+export const getSkillMap = (): Promise<RequestData<SkillMap>> => {
     let res = Object.fromEntries(
         Object.entries(skillMapRoyal).map(([key, value]: [string, SkillData]) => [
             key,
@@ -38,7 +38,7 @@ export const getSkillMap = (): Promise<Data<SkillMap>> => {
             }
         ])
     );
-    return new Promise<Data<SkillMap>>((resolve) => {
+    return new Promise<RequestData<SkillMap>>((resolve) => {
         resolve({
             code: '200',
             msg: 'success',

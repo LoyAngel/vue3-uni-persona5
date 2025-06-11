@@ -1,5 +1,5 @@
 import { http } from "@/utils/http";
-import type { Data } from "@/types/http";
+import type { RequestData } from "@/types/http";
 import type { PersonaData, PersonaMap, TranslationMap } from "@/types/data";
 import { personaMapRoyal } from "@/data/PersonaDataRoyal";
 import { inheritanceChartRoyal } from "@/data/Data5Royal";
@@ -10,7 +10,7 @@ import translationFunc from "@/data/TranslationFunc";
  * @Description: 获得人格面具图鉴
  * @return {Promise}
  */
-export const getPersonaMap = (): Promise<Data<PersonaMap>> => {
+export const getPersonaMap = (): Promise<RequestData<PersonaMap>> => {
     let res = Object.fromEntries(
         Object.entries(personaMapRoyal).map(([key, value]: [string, PersonaData]) => [
             key,
@@ -36,7 +36,7 @@ export const getPersonaMap = (): Promise<Data<PersonaMap>> => {
             },
         ])
     );
-    return new Promise<Data<PersonaMap>>((resolve) => {
+    return new Promise<RequestData<PersonaMap>>((resolve) => {
         resolve({
             code: "200",
             msg: "success",

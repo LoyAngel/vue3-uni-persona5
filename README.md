@@ -32,9 +32,10 @@ This is a project that imitates the style of the game Persona5. It contains the 
 - Persona calculator page
 ### 2025.2.12
 - Item list page, detail page (2025.5.25)
-- Skill list page, detail page (2025.6.12)
+- Skill list page, detail page (2025.6.10)
 ### 2025.6.10
-- Detail page: Click text to jump to the corresponding section
+- Detail page: Click text to jump to the corresponding section(2025.6.10)
+- Persona calculator page: Check one persona's combination source, check two persona's combination result. 
 
 
 ## Credits

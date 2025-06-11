@@ -1,5 +1,5 @@
 import { http } from '@/utils/http';
-import type { Data } from '@/types/http';
+import type { RequestData } from '@/types/http';
 import type { StrategyMainData } from '@/types/strategy';
 import { resAnswer, resArea, resConfidant, resCoop } from '@/data/Stragedy';
 /**
@@ -19,7 +19,7 @@ export const getStrategyMainDataAPI = (type: string) => {
         default: res = []; break;
     }
 
-    return new Promise<Data<StrategyMainData[]>>((resolve) => {
+    return new Promise<RequestData<StrategyMainData[]>>((resolve) => {
         resolve({
             code: '200',
             msg: 'success',
