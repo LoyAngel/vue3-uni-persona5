@@ -34,12 +34,12 @@ const getImageUrl = (data: ContentData): string => {
 </script>
 
 <template>
-    <view>
+    <view class="main-content">
         <PictorialSideBar
             :current_tab_type="current_tab_type"
             v-model:selected_category="selected_category_computed"
         />
-        <scroll-view class="content" scroll-y :show-scrollbar="false">
+        <scroll-view class="content" scroll-y :show-scrollbar="false" enable-flex>
             <view v-if="filtered_data.length === 0" class="empty-view">无搜索结果</view>
             <PictorialEntry
                 v-else
@@ -48,29 +48,50 @@ const getImageUrl = (data: ContentData): string => {
                 :current_tab_type="current_tab_type"
                 :data="data_entry"
                 :img="getImageUrl(data_entry)"
+                class="pictorial-entry"
             />
         </scroll-view>
     </view>
 </template>
 
 <style scoped lang="scss">
-.content {
-    flex: 1;
-    padding: 32rpx;
-    box-sizing: border-box;
-    color: #ffffff;
-    background-color: #000000;
+.main-content {
     display: flex;
-    align-content: flex-start;
-    flex-wrap: wrap;
-    flex-direction: row;
-    width: 100%;
+    flex: 1;
+    overflow: hidden;
+    width: 100vw;
+    height: 100%;
 
-    .empty-view {
-        text-align: center;
-        color: #ffffff;
-        font-size: 32rpx;
+    ::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+
+    .content {
+        flex: 1;
         padding: 32rpx;
+        box-sizing: border-box;
+        color: #ffffff;
+        background-color: #000000;
+        display: flex;
+        justify-content: center;
+        align-content: flex-start;
+        flex-wrap: wrap;
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+
+        .empty-view {
+            text-align: center;
+            color: #ffffff;
+            font-size: 32rpx;
+            padding: 32rpx;
+        }
+
+        .pictorial-entry {
+            width: 100%;
+        }
     }
 }
-</style> 
+</style>

@@ -11,7 +11,6 @@ const props = defineProps<{
 }>();
 
 // 图片加载状态
-const imageLoading = ref(true);
 const imageError = ref(false);
 
 // 类型缩窄
@@ -51,13 +50,7 @@ const gradient_bg = computed(() => {
     return `linear-gradient(135deg, rgba(26, 26, 26, 0.95), ${baseColor}${alpha.replace('0.', '')})`;
 });
 
-// 图片加载处理
-const handleImageLoad = () => {
-    imageLoading.value = false;
-};
-
 const handleImageError = () => {
-    imageLoading.value = false;
     imageError.value = true;
 };
 
@@ -96,12 +89,8 @@ const getItemIcon = (type: string | undefined) => {
         <!-- Persona卡片内容 -->
         <template v-if="current_tab_type === 'persona'">
             <view class="entry-image-container">
-                <!-- 加载状态 -->
-                <view v-if="imageLoading" class="image-placeholder">
-                    <view class="loading-spinner"></view>
-                </view>
                 <!-- 错误状态 -->
-                <view v-else-if="imageError" class="image-error">
+                <view v-if="imageError" class="image-error">
                     <text class="error-icon">?</text>
                 </view>
                 <!-- 正常图片 -->
@@ -109,7 +98,6 @@ const getItemIcon = (type: string | undefined) => {
                     v-else
                     :src="img"
                     mode="aspectFit"
-                    @load="handleImageLoad"
                     @error="handleImageError"
                     class="persona-avatar"
                 />

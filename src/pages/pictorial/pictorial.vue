@@ -216,7 +216,7 @@ onLoad(async () => {
                        filtered_items"
         v-model:selected_category="selected_category"
         :current_tab_type="current_tab_type"
-        class="main-content"
+        class="content-view"
     />
 </template>
 
@@ -233,16 +233,9 @@ page {
 </style>
 
 <style scoped lang="scss">
-.main-content {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
-    width: 100vw;
-
-    ::-webkit-scrollbar {
-        display: none;
-        width: 0;
-        height: 0;
-    }
+.content-view {
+    width: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 </style>
