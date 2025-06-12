@@ -20,8 +20,8 @@ const SKILL_INHERIT_MAP: ElemMapEntry[] = [
 ];
 
 const SKILL_EXTRA_MAP: ElemMapEntry[] = [
-    ...SKILL_INHERIT_MAP,
     { id: 1, elem_name: "全部", color: "#ffffff", icon: "✨" },
+    ...SKILL_INHERIT_MAP,
     { id: 14, elem_name: "万能", color: "#8A2BE2", icon: "🌟" },    // 新颜色
     { id: 15, elem_name: "被", color: "#808080", icon: "🛡️" },      // 灰色表示被动
     { id: 16, elem_name: "辅", color: "#FFA500", icon: "⚕️" },      // 橙色

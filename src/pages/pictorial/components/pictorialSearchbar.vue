@@ -29,7 +29,7 @@ const handleSearch = computed({
     </view>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 /* 自定义导航条 */
 .navbar {
     background-color: red;
@@ -37,7 +37,7 @@ const handleSearch = computed({
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 100vw;
     z-index: 10; /* 确保搜索框在最上层 */
 
     /* 防止点击事件穿透 */

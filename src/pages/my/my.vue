@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import mySection from './components/mySection.vue'
-import testCom from './components/testComponent.vue'
+// import testCom from './components/testComponent.vue'
 import { updatedContent, noProfitContent, otherContent } from '@/constants/my'
 
 const onSupport = () => {

@@ -365,6 +365,9 @@ $shadow-accent: 0 8rpx 32rpx rgba(220, 20, 60, 0.3);
 
     // Item卡片特定样式
     &.item {
+        min-height: 140rpx;
+        box-shadow: $shadow-accent;
+
         .item-icon {
             width: 80rpx;
             height: 80rpx;

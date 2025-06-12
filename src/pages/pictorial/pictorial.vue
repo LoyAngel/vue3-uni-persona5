@@ -251,9 +251,10 @@ page {
 
 <style scoped lang="scss">
 .content-view {
-    width: 100%;
-    flex: 1; /* 占用剩余空间 */
+    width: 100vw;
+    flex: 1;
+    justify-content: center;
     box-sizing: border-box;
-    overflow: hidden; /* 移除页面级别的滚动，交给内部scroll-view处理 */
+    overflow-y: auto;
 }
 </style>

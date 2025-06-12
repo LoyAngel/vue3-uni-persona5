@@ -10,7 +10,6 @@ import strategyContent from './components/strategyContent.vue';
 const props = defineProps<{
     type: string;
 }>();
-console.log(props.type);
 
 // 标记当前选中的标签索引
 const navIndex = ref(0);

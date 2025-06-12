@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, computed } from 'vue';
+import { defineProps, defineEmits, computed } from 'vue';
 import { SKILL_EXTRA_MAP } from '@/constants/skill';
 import { PERSONA_ARCANA_MAP } from '@/constants/persona';
 import { ITEM_CATEGORY_MAP } from '@/constants/item';
@@ -36,10 +36,9 @@ const getName = (entry: ArcanaMapEntry | ElemMapEntry | ItemTypeEntry) => {
     return '';
 };
 
-const selected_category_ref = ref(props.selected_category);
+const selected_category_computed = computed(() => props.selected_category);
 
 const handleFilter = (category: string) => {
-    selected_category_ref.value = category;
     emit('update:selected_category', category);
 };
 </script>
@@ -50,7 +49,7 @@ const handleFilter = (category: string) => {
             v-for="entry in menuEntries"
             :key="entry.id"
             class="menu-entry"
-            :class="{ selected: selected_category_ref === getName(entry) }"
+            :class="{ selected: selected_category_computed === getName(entry) }"
             @click="handleFilter(getName(entry))"
         >
             <text class="icon" v-if="'icon' in entry">{{ entry.icon }}</text>
