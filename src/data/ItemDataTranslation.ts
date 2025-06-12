@@ -119,7 +119,7 @@ export const itemMapTranslation: ItemMap = {
         'type': '防具',
         'source': '警报电刑',
         'source_detail': '弥赛亚',
-        'owner': '男女'
+        'owner': '人类'
     },
     '超天使胸罩': {
         'description': '防325 避20 电击伤害大幅减轻',
@@ -154,7 +154,7 @@ export const itemMapTranslation: ItemMap = {
         'type': '防具',
         'source': '警报电刑',
         'source_detail': '霜精之王',
-        'owner': '男女'
+        'owner': '人类'
     },
     '国造之衣': {
         'description': '防280 避15 咒怨回避大幅上升',
@@ -168,21 +168,21 @@ export const itemMapTranslation: ItemMap = {
         'type': '防具',
         'source': '警报电刑',
         'source_detail': '八咫乌',
-        'owner': '男女'
+        'owner': '人类'
     },
     '霜精之王斗篷': {
         'description': '防260 避16 冰冻伤害大幅减轻',
         'type': '防具',
         'source': '电刑',
         'source_detail': '霜精之王',
-        'owner': '男女'
+        'owner': '人类'
     },
     '黑羽之衣': {
         'description': '防250 避20 核热伤害中幅减轻',
         'type': '防具',
         'source': '电刑',
         'source_detail': '八咫乌',
-        'owner': '男女'
+        'owner': '人类'
     },
     '暗黑夹克': {
         'description': '防225 避18 咒怨造成的即死无效',

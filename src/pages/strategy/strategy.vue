@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, defineProps } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
-import { StrategyMainData } from '@/types/strategy';
 import { getStrategyMainDataAPI } from '@/services/strategy';
+import type { StrategyMainData } from '@/types/strategy';
 import strategyTabBar from './components/strategyTabBar.vue';
 import strategyContent from './components/strategyContent.vue';
 

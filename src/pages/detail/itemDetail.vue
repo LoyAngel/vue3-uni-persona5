@@ -26,9 +26,16 @@ const tabs = {
     2: '获取来源'
 };
 
+// 处理来源详情点击
+const handleSourceDetailClick = (entry: { label: string; value: string; clickable?: boolean }, index: number) => {
+    uni.navigateTo({
+        url: `/pages/detail/personaDetail?persona_name=${entry.value}`
+    });
+};
+
 onLoad(() => {
-   if(!props.item_name) uni.reLaunch({ url: '/pages/404/404' })
-})
+    if (!props.item_name) uni.reLaunch({ url: '/pages/404/404' });
+});
 </script>
 
 <template>
@@ -72,8 +79,13 @@ onLoad(() => {
                     title="获取信息"
                     :data="[
                         { label: '获取来源', value: item.source || '未知来源' },
-                        { label: '来源详情', value: item.source_detail || '无备注信息' }
+                        {
+                            label: '来源详情',
+                            value: item.source_detail || '无备注信息',
+                            clickable: item.source?.includes('电刑') && !!item.source_detail
+                        }
                     ]"
+                    @entry-click="handleSourceDetailClick"
                 />
             </view>
         </template>

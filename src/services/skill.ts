@@ -1,8 +1,7 @@
 import { http } from '@/utils/http';
 import type { Data } from '@/types/http';
-import type { SkillMap, SkillData, TranslationMap } from '@/types/data';
+import type { SkillMap, SkillData } from '@/types/data';
 import { skillMapRoyal } from '@/data/SkillDataRoyal';
-import { itemMapRoyal } from '@/data/ItemDataRoyal';
 import translationFunc from '@/data/TranslationFunc';
 
 /**
@@ -21,18 +20,26 @@ export const getSkillMap = (): Promise<Data<SkillMap>> => {
                 effect: translationFunc(key, 'SkillEfc', value.effect),
                 personas: value?.personas
                     ? Object.fromEntries(
-                          Object.entries(value.personas).map(([key, value]) => [translationFunc(key, 'Persona'), value])
+                          Object.entries(value.personas).map(([key, value]) => [
+                              translationFunc(key, 'Persona'),
+                              value
+                          ])
                       )
                     : {},
                 // 展开语法，避免无对象情况还会添加空对象
-                ...(value.talk ? {
-                    talk:  value.talk.match(/\(.*?\)/) ? value.talk.match(/\((.*?)\)/)![1] : '',
-                } : {}),
+                ...(value.talk
+                    ? {
+                          talk: value.talk.match(/\(.*?\)/)
+                              ? translationFunc(value.talk.match(/\((.*?)\)/)![1], 'Persona')
+                              : ''
+                      }
+                    : {}),
                 ...(value.fuse
                     ? {
-                          fuse: (Array.isArray(value.fuse) ? value.fuse : value.fuse.split(',')).map((item) =>
-                              translationFunc(item, 'Persona')
-                          )
+                          fuse: (Array.isArray(value.fuse)
+                              ? value.fuse
+                              : value.fuse.split(',')
+                          ).map((item) => translationFunc(item, 'Persona'))
                       }
                     : {})
             }

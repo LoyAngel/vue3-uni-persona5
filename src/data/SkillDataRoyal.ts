@@ -778,7 +778,7 @@ export const skillMapRoyal: SkillMap = {
         "element": "support",
         "personas": { "Angel": 12, "Anubis": 37, "Mitra": 35, "Mokoi": 14, "Suzaku": 18, "Unicorn": 0, "Yatagarasu": 0 }
     },
-    "Demon's Bite": { "effect": "Doubles own HP recovery", "element": "trait", "personas": { "Ongyo-Ki": 0 } },
+    "/emon's Bite": { "effect": "Doubles own HP recovery", "element": "trait", "personas": { "Ongyo-Ki": 0 } },
     "Demonic Decree": {
         "effect": "Half remaining HP of 1 foe.",
         "cost": 3800,

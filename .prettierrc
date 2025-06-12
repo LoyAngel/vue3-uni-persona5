@@ -32,7 +32,7 @@
         "singleQuote": false,
         "quoteProps": "consistent",
         "tabWidth": 4,
-        "printWidth": 100,
+        "printWidth": 80,
         "trailingComma": "none",
         "bracketSpacing": true,
         "semi": true,

@@ -106,6 +106,9 @@ const getItemIcon = (type: string | undefined) => {
                 <view class="entry-name">
                     {{ persona_data.c_name }}
                 </view>
+                <view class="entry-nick-name">
+                    {{ persona_data.nick_name }}
+                </view>
                 <view class="entry-details">
                     <view class="entry-level-badge">
                         <text class="level-text">Lv.{{ persona_data.level }}</text>
@@ -416,6 +419,14 @@ $shadow-accent: 0 8rpx 32rpx rgba(220, 20, 60, 0.3);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+        }
+
+        .entry-nick-name {
+            font-size: 24rpx;
+            color: $text-muted;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 4rpx;
         }
 
         // 通用详情样式, 两侧对齐

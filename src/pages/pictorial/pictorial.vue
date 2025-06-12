@@ -19,21 +19,30 @@ import { SKILL_EXTRA_MAP } from '@/constants/skill';
 import { PERSONA_ARCANA_MAP } from '@/constants/persona';
 import { ITEM_OWNER_MAP, ITEM_CATEGORY_MAP } from '@/constants/item';
 
-// 使用示例数据
+// store 存储请求数据，用于跳转后访问
 const pictorial_store = pictorialStore();
 const character_store = characterStore();
+
+// map存储请求数据
 const persona_map = ref<PersonaMap>({});
 const skill_map = ref<SkillMap>({});
 const item_map = ref<ItemMap>({});
-// 为测试添加，可替换为实际数据获取
-// const item_map = ref<ItemMap>({});
 
+// tab 的索引
+const tab_bars_index = ref(0);
+
+// 搜索框初始化
 const search_value = ref('');
 const selected_category = ref('全部');
 
+// 显示数据相关逻辑，涉及搜索与分类
 const filtered_personas = computed(() => {
     return Object.values(persona_map.value).filter((persona) => {
-        const matches_search = persona?.c_name?.includes(search_value.value);
+        const matches_search =
+            persona?.c_name?.includes(search_value.value) ||
+            persona?.nick_name?.includes(search_value.value) ||
+            persona?.arcana?.includes(search_value.value) ||
+            persona?.level?.toString().includes(search_value.value);
         const matches_category =
             selected_category.value === '全部' || persona?.arcana === selected_category.value;
         return matches_search && matches_category;
@@ -42,7 +51,10 @@ const filtered_personas = computed(() => {
 
 const filtered_skills = computed(() => {
     return Object.values(skill_map.value).filter((skill) => {
-        const matches_search = skill?.c_name?.includes(search_value.value);
+        const matches_search =
+            skill?.c_name?.includes(search_value.value) ||
+            skill?.c_element?.includes(search_value.value) ||
+            skill?.cost?.toString().includes(search_value.value);
         const matches_category =
             selected_category.value === '全部' || skill?.c_element === selected_category.value;
         return matches_search && matches_category;
@@ -51,10 +63,12 @@ const filtered_skills = computed(() => {
 
 const filtered_items = computed(() => {
     return Object.values(item_map.value).filter((item) => {
-        const matches_search = item?.c_name?.includes(search_value.value) || item?.owner?.toLowerCase().includes(search_value.value.toLowerCase());
+        const matches_search =
+            item?.c_name?.includes(search_value.value) ||
+            item?.c_type?.includes(search_value.value) ||
+            item?.owner?.toLowerCase().includes(search_value.value.toLowerCase());
         const matches_category =
-            selected_category.value === '全部' ||
-            item?.c_type === selected_category.value;
+            selected_category.value === '全部' || item?.c_type === selected_category.value;
         return matches_search && matches_category;
     });
 });
@@ -64,15 +78,15 @@ const getPersonaMapData = async () => {
     const { result } = await getPersonaMap();
     const personaList = Object.values(result) as PersonaData[]; // 明确类型
 
-    // 先按level排序
-    personaList.sort((a: PersonaData, b: PersonaData) => a.level - b.level);
-
-    // 再按arcana_map顺序排序
+    // 先按arcana_map顺序排序
     personaList.sort((a: PersonaData, b: PersonaData) => {
         const arcanaA = PERSONA_ARCANA_MAP.findIndex((entry) => entry.arcana_name === a.arcana);
         const arcanaB = PERSONA_ARCANA_MAP.findIndex((entry) => entry.arcana_name === b.arcana);
         return arcanaA - arcanaB;
     });
+
+    // 再按level排序
+    personaList.sort((a: PersonaData, b: PersonaData) => a.level - b.level);
 
     // 回归到PersonaMap格式
     const sortedPersonaMap: PersonaMap = {};
@@ -88,15 +102,15 @@ const getSkillMapData = async () => {
     const { result } = await getSkillMap();
     const skillList = Object.values(result) as SkillData[]; // 明确类型
 
-    // 先按cost排序
-    skillList.sort((a: SkillData, b: SkillData) => (a.cost ? a.cost : 0) - (b.cost ? b.cost : 0));
-
-    // 再按element排序
+    // 先按element排序
     skillList.sort((a: SkillData, b: SkillData) => {
         const elementA = SKILL_EXTRA_MAP.findIndex((entry) => entry.elem_name === a.c_element);
         const elementB = SKILL_EXTRA_MAP.findIndex((entry) => entry.elem_name === b.c_element);
         return elementA - elementB;
     });
+
+    // 再按cost排序
+    skillList.sort((a: SkillData, b: SkillData) => (a.cost ? a.cost : 0) - (b.cost ? b.cost : 0));
 
     // 回归到SkillMap格式
     const sortedSkillMap: SkillMap = {};
@@ -113,18 +127,18 @@ const getItemMapData = async () => {
 
     const itemList = Object.values(result) as ItemData[]; // 明确类型
 
-    // 先按owner排序
-    itemList.sort((a: ItemData, b: ItemData) => {
-        const ownerA = ITEM_OWNER_MAP.findIndex((entry) => entry.owner_name === a.owner);
-        const ownerB = ITEM_OWNER_MAP.findIndex((entry) => entry.owner_name === b.owner);
-        return ownerA - ownerB;
-    });
-
     // 再按category排序
     itemList.sort((a: ItemData, b: ItemData) => {
         const categoryA = ITEM_CATEGORY_MAP.findIndex((entry) => entry.type_name === a.c_type);
         const categoryB = ITEM_CATEGORY_MAP.findIndex((entry) => entry.type_name === b.c_type);
         return categoryA - categoryB;
+    });
+
+    // 先按owner排序
+    itemList.sort((a: ItemData, b: ItemData) => {
+        const ownerA = ITEM_OWNER_MAP.findIndex((entry) => entry.owner_name === a.owner);
+        const ownerB = ITEM_OWNER_MAP.findIndex((entry) => entry.owner_name === b.owner);
+        return ownerA - ownerB;
     });
 
     // 回归到ItemMap格式
@@ -143,15 +157,13 @@ const getCharacterData = async () => {
     character_store.setCharacterList(result);
 };
 
-// 清空与重制
-const tab_bars_index = ref(0);
+// tab 的切换与重置
 const checkTabBarsIndex = (index: number) => {
     // 切换标签时清空搜索值
     if (tab_bars_index.value !== index) {
         // 清空搜索值, 并且重置选择的分类
         search_value.value = '';
         selected_category.value = '全部';
-        console.log(search_value.value);
     }
     tab_bars_index.value = index;
 };
@@ -191,7 +203,7 @@ onLoad(async () => {
             title: '数据加载失败',
             icon: 'error',
             mask: true
-        })
+        });
     }
 });
 </script>
@@ -211,9 +223,13 @@ onLoad(async () => {
 
     <!-- 使用统一的内容视图组件 -->
     <PictorialContentView
-        :filtered_data="current_tab_type === 'persona' ? filtered_personas : 
-                       current_tab_type === 'skill' ? filtered_skills : 
-                       filtered_items"
+        :filtered_data="
+            current_tab_type === 'persona'
+                ? filtered_personas
+                : current_tab_type === 'skill'
+                  ? filtered_skills
+                  : filtered_items
+        "
         v-model:selected_category="selected_category"
         :current_tab_type="current_tab_type"
         class="content-view"
@@ -229,13 +245,15 @@ page {
     height: 100vh;
     width: 100vw;
     position: relative;
+    overflow: hidden; /* 防止页面级别的滚动 */
 }
 </style>
 
 <style scoped lang="scss">
 .content-view {
     width: 100%;
-    overflow-y: auto;
+    flex: 1; /* 占用剩余空间 */
     box-sizing: border-box;
+    overflow: hidden; /* 移除页面级别的滚动，交给内部scroll-view处理 */
 }
 </style>

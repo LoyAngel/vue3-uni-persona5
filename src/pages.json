@@ -35,7 +35,7 @@
 			"style": {
 				"navigationStyle": "custom",
 				"navigationBarTextStyle": "white",
-				"navigationBarTitleText": "人格面具"
+				"navigationBarTitleText": "图鉴"
 			}
 		},
 		{
@@ -96,9 +96,9 @@
 			},
 			{
 				"pagePath": "pages/pictorial/pictorial",
-				"iconPath": "static/icon/icon_persona.png",
-				"selectedIconPath": "static/icon/icon_persona_active.png",
-				"text": "人格面具"
+				"iconPath": "static/icon/icon_pictorial.png",
+				"selectedIconPath": "static/icon/icon_pictorial_active.png",
+				"text": "图鉴"
 			},
 			{
 				"pagePath": "pages/my/my",

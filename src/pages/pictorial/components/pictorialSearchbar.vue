@@ -37,6 +37,9 @@ const handleSearch = computed({
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 100vw;
+    width: 100%;
+    z-index: 10; /* 确保搜索框在最上层 */
+
+    /* 防止点击事件穿透 */
 }
 </style>

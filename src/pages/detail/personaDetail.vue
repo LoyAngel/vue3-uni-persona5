@@ -34,7 +34,6 @@ const getStatLabel = (index: number) => {
 
 // 导航函数
 const navigateToSkill = (skillName: string) => {
-    console.log(skillName);
     if (skillName) {
         uni.navigateTo({
             url: `/pages/detail/skillDetail?skill_name=${skillName}`
@@ -45,13 +44,13 @@ const navigateToSkill = (skillName: string) => {
 const navigateToItem = (itemName: string) => {
     if (itemName) {
         uni.navigateTo({
-            url: `/pages/detail/itemDetail?item_name=${encodeURIComponent(itemName)}`
+            url: `/pages/detail/itemDetail?item_name=${itemName}`
         });
     }
 };
 
 // 处理DetailCard的点击事件
-const handleItemClick = (
+const handleEntryClick = (
     entry: { label: string; value: string; clickable?: boolean },
     index: number
 ) => {
@@ -68,6 +67,7 @@ const handleItemClick = (
             navigateToItem(persona.value.itemr);
         }
     }
+    else uni.showToast({ title: '无法找到相关内容', icon: 'error' });
 };
 const handleTraitClick = () => {
     if (persona.value.trait) {
@@ -95,18 +95,21 @@ onLoad(() => {
                 <DetailCard
                     title="特性信息"
                     :data="[
+                        ...(persona.nick_name ? [{ label: '别名', value: persona.nick_name }] : []),
                         {
                             label: '特性',
                             value: persona.trait || '',
                             clickable: !!persona.trait,
                         },
-                        ...(persona.area ? [{ label: '位置', value: persona.area }] : [])
+                        ...(persona.personality ? [{ label: '性格', value: persona.personality }] : []),
+                        ...(persona.area ? [{ label: '位置', value: persona.area }] : []),
                     ]"
-                    @item-click="handleTraitClick"
+                    @entry-click="handleTraitClick"
                 />
 
                 <DetailCard
                     title="道具化"
+                    v-if="persona?.item_type"
                     :data="[
                         { label: '道具类型', value: persona.item_type || '' },
                         {
@@ -120,7 +123,7 @@ onLoad(() => {
                             clickable: !!persona.itemr
                         }
                     ]"
-                    @item-click="handleItemClick"
+                    @entry-click="handleEntryClick"
                 />
             </view>
         </template>

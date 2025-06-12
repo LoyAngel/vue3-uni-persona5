@@ -1,10 +1,10 @@
-import { http } from "@/utils/http";
-import type { Data } from "@/types/http";
-import type { PersonaData, PersonaMap, TranslationMap } from "@/types/data";
-import { personaMapRoyal } from "@/data/PersonaDataRoyal";
-import { inheritanceChartRoyal } from "@/data/Data5Royal";
-import { itemMapRoyal } from "@/data/ItemDataRoyal";
-import translationFunc from "@/data/TranslationFunc";
+import { http } from '@/utils/http';
+import type { Data } from '@/types/http';
+import type { PersonaData, PersonaMap, TranslationMap } from '@/types/data';
+import { personaMapRoyal } from '@/data/PersonaDataRoyal';
+import { inheritanceChartRoyal } from '@/data/Data5Royal';
+import { itemMapRoyal } from '@/data/ItemDataRoyal';
+import translationFunc from '@/data/TranslationFunc';
 
 /**
  * @Description: 获得人格面具图鉴
@@ -16,31 +16,48 @@ export const getPersonaMap = (): Promise<Data<PersonaMap>> => {
             key,
             <PersonaData>{
                 ...value,
-                area: translationFunc(value.area, "Area"),
-                name: translationFunc(key, "Persona"),
-                c_name: translationFunc(key, "Persona"),
-                arcana: translationFunc(value.arcana, "Arcana"),
-                img_url: translationFunc(key, "PersonaImg", "None"),
-                elems: value.elems.map((elem) => translationFunc(elem, "ElemEfc")),
+                area: translationFunc(value.area, 'Area'),
+                name: translationFunc(key, 'Persona'),
+                e_name: key,
+                c_name: translationFunc(key, 'Persona'),
+                arcana: translationFunc(value.arcana, 'Arcana'),
+                img_url: translationFunc(key, 'PersonaImg', 'None'),
+                elems: value.elems.map((elem) => translationFunc(elem, 'ElemEfc')),
                 inherit_elems: value.inherits ? inheritanceChartRoyal[value.inherits] : [],
                 skills: Object.fromEntries(
                     Object.entries(value.skills).map(([key, value]) => [
-                        translationFunc(key, "Skill"),
-                        value,
+                        translationFunc(key, 'Skill'),
+                        value
                     ])
                 ),
-                item: translationFunc(value.item, value.skillCard ? "Skill" : "Item"),
-                itemr: translationFunc(value.itemr, value.skillCard ? "Skill" : "Item"),
-                item_type: value.skillCard ? "技能卡" : translationFunc(itemMapRoyal[value.item as keyof typeof itemMapRoyal].type, "ItemType"),
-                trait: translationFunc(value.trait, "Skill"),
-            },
+                item: translationFunc(value.item, value.skillCard ? 'Skill' : 'Item'),
+                itemr: translationFunc(value.itemr, value.skillCard ? 'Skill' : 'Item'),
+                item_type: value.skillCard
+                    ? '技能卡'
+                    : translationFunc(
+                          itemMapRoyal[value.item as keyof typeof itemMapRoyal].type,
+                          'ItemType'
+                      ),
+                trait: translationFunc(value.trait, 'Skill'),
+
+                ...(translationFunc(key, 'PersonaNickName', 'None') !== 'None'
+                    ? {
+                          nick_name: translationFunc(key, 'PersonaNickName', '')
+                      }
+                    : {}),
+                ...(translationFunc(key, 'PersonaPersonality', 'None') !== 'None'
+                    ? {
+                          personality: translationFunc(key, 'PersonaPersonality', '')
+                      }
+                    : {})
+            }
         ])
     );
     return new Promise<Data<PersonaMap>>((resolve) => {
         resolve({
-            code: "200",
-            msg: "success",
-            result: res,
+            code: '200',
+            msg: 'success',
+            result: res
         });
     });
 };

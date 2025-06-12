@@ -15,15 +15,15 @@ const skill = ref<SkillData>(pictorialStore().skill_map[props.skill_name]);
 
 const elementColor = computed<string>(() => {
     return (
-        SKILL_EXTRA_MAP.find((entry: ElemMapEntry) => entry.elem_name === skill.value?.c_element)?.color ||
-        '#FFFFFF'
+        SKILL_EXTRA_MAP.find((entry: ElemMapEntry) => entry.elem_name === skill.value?.c_element)
+            ?.color || '#FFFFFF'
     );
 });
 
 const skillCost = computed(() => {
     if (!skill.value?.cost) return '无消耗';
-    return skill.value.cost > 100? `${skill.value.cost / 100} SP` : `${skill.value.cost}% HP`; 
-})
+    return skill.value.cost > 100 ? `${skill.value.cost / 100} SP` : `${skill.value.cost}% HP`;
+});
 
 // 准备组件数据
 const tabs = {
@@ -34,7 +34,7 @@ const tabs = {
 const badges = [
     {
         text: skill.value?.c_element ? skill.value.c_element : skill.value.element,
-        color: elementColor.value,
+        color: elementColor.value
     },
     {
         text: skillCost.value,
@@ -51,37 +51,60 @@ const navigateToPersona = (personaName: string) => {
     }
 };
 
+// 处理DetailCard的点击事件
+const handleEntryClick = (
+    entry: { label: string; value: string; clickable?: boolean },
+    index: number
+) => {
+    if (entry.clickable && entry.value) {
+        navigateToPersona(entry.value);
+    }
+};
+
 // 为技能效果准备数据
-const effectData = computed(() => [
-    { label: '技能效果', value: skill.value?.effect || '无描述' }
-]);
+const effectData = computed(() => [{ label: '技能效果', value: skill.value?.effect || '无描述' }]);
 
 // 为获取方式准备数据
 const acquisitionData = computed(() => {
     const methods = [];
-    
+
     if (skill.value?.talk) {
         methods.push({
             title: '交涉获得',
             accent: '#3498db',
             data: [
                 { label: '获取方式', value: '对话交涉' },
-                { label: '获取来源', value: skill.value.talkPersonas || '未知' }
+                {
+                    label: '获取来源',
+                    value: skill.value.talk || '未知',
+                    clickable: !!skill.value.talk
+                }
             ]
         });
     }
-    
+
     if (skill.value?.fuse) {
+        const source_data = Array.isArray(skill.value.fuse)
+            ? skill.value.fuse.map((entry) => ({
+                  label: '获取来源',
+                  value: entry,
+                  clickable: true
+              }))
+            : [
+                  {
+                      label: '获取来源',
+                      value: skill.value.fuse,
+                      clickable: true
+                  }
+              ];
+
         methods.push({
             title: '道具化获得',
             accent: '#9b59b6',
-            data: [
-                { label: '获取方式', value: '电刑道具化' },
-                { label: '获取来源', value: Array.isArray(skill.value.fuse) ? skill.value.fuse.join(', ') : skill.value.fuse }
-            ]
+            data: [{ label: '获取方式', value: '电刑道具化' }, ...source_data]
         });
     }
-    
+
     if (skill.value?.card) {
         methods.push({
             title: '其它获得方式',
@@ -92,13 +115,13 @@ const acquisitionData = computed(() => {
             ]
         });
     }
-    
+
     return methods;
 });
 
 onLoad(() => {
-    if(!props.skill_name) uni.reLaunch({ url: '/pages/404/404' })
-})
+    if (!props.skill_name) uni.reLaunch({ url: '/pages/404/404' });
+});
 </script>
 
 <template>
@@ -106,11 +129,7 @@ onLoad(() => {
         <!-- 效果选项卡 -->
         <template #tab-0>
             <view class="effect-container">
-                <DetailCard
-                    title="技能详情"
-                    :accent="elementColor"
-                    :data="effectData"
-                />
+                <DetailCard title="技能详情" :accent="elementColor" :data="effectData" />
             </view>
         </template>
 
@@ -123,10 +142,12 @@ onLoad(() => {
                     class="persona-item"
                 >
                     <view class="persona-details">
-                        <view 
-                            class="persona-name clickable-link" 
+                        <view
+                            class="persona-name clickable-link"
                             @click="navigateToPersona(persona.toString())"
-                        >{{ persona }}</view>
+                        >
+                            {{ persona }}
+                        </view>
                         <view class="persona-level" v-if="level > 0">Lv.{{ level }}</view>
                         <view class="persona-level special" v-else>天生</view>
                     </view>
@@ -144,13 +165,9 @@ onLoad(() => {
                     :title="method.title"
                     :accent="method.accent"
                     :data="method.data"
+                    @entry-click="handleEntryClick"
                 />
-                <view
-                    class="empty-state"
-                    v-if="acquisitionData.length === 0"
-                >
-                    无特殊获取方式
-                </view>
+                <view class="empty-state" v-if="acquisitionData.length === 0">无特殊获取方式</view>
             </view>
         </template>
     </DetailContainer>
@@ -237,13 +254,13 @@ page {
     text-decoration: underline;
     cursor: pointer;
     transition: all 0.2s ease;
-    
+
     &:hover {
         color: #ff5050 !important;
         text-shadow: 0 0 8rpx rgba(255, 80, 80, 0.6);
         transform: scale(1.02);
     }
-    
+
     &:active {
         color: #ff0000 !important;
         transform: scale(0.98);

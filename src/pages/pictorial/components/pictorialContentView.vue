@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import type { PersonaData, SkillData, ItemData } from '@/types/data';
 import type { PortraitTabBarType } from '@/types/portrait';
 import PictorialSideBar from './pictorialSideBar.vue';
@@ -23,6 +23,18 @@ const selected_category_computed = computed({
     }
 });
 
+// 控制滚动位置
+const scrollTop = ref(0);
+
+// 监听 filtered_data 变化，重置滚动位置到顶部
+watch(
+    () => props.filtered_data,
+    () => {
+        scrollTop.value = scrollTop.value === 0 ? 1 : 0;
+    },
+    { deep: true }
+);
+
 // 根据不同的tab类型获取图片URL
 const getImageUrl = (data: ContentData): string => {
     if (props.current_tab_type === 'persona' && 'img_url' in data) {
@@ -39,7 +51,13 @@ const getImageUrl = (data: ContentData): string => {
             :current_tab_type="current_tab_type"
             v-model:selected_category="selected_category_computed"
         />
-        <scroll-view class="content" scroll-y :show-scrollbar="false" enable-flex>
+        <scroll-view
+            class="content"
+            scroll-y
+            :show-scrollbar="false"
+            enable-flex
+            :scroll-top="scrollTop"
+        >
             <view v-if="filtered_data.length === 0" class="empty-view">无搜索结果</view>
             <PictorialEntry
                 v-else
@@ -59,7 +77,7 @@ const getImageUrl = (data: ContentData): string => {
     display: flex;
     flex: 1;
     overflow: hidden;
-    width: 100vw;
+    width: 100%;
     height: 100%;
 
     ::-webkit-scrollbar {
@@ -80,7 +98,7 @@ const getImageUrl = (data: ContentData): string => {
         flex-wrap: wrap;
         flex-direction: row;
         width: 100%;
-        height: 100%;
+        /* 移除固定高度，让scroll-view自己控制滚动区域 */
 
         .empty-view {
             text-align: center;
@@ -91,6 +109,9 @@ const getImageUrl = (data: ContentData): string => {
 
         .pictorial-entry {
             width: 100%;
+            /* 确保点击事件不会穿透 */
+            position: relative;
+            z-index: 1;
         }
     }
 }

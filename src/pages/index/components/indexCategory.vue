@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IndexTitleData } from '@/types';
+import type { IndexTitleData } from '@/types';
 
 const props = defineProps<{ list: IndexTitleData[] }>();
 const navigate = (url: string) => {

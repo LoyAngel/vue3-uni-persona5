@@ -11,12 +11,12 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-    (e: 'item-click', item: { label: string; value: string; clickable?: boolean }, index: number): void
+    (e: 'entry-click', entry: { label: string; value: string; clickable?: boolean }, index: number): void
 }>();
 
-const handleItemClick = (item: { label: string; value: string; clickable?: boolean }, index: number) => {
-  if (item.clickable && item.value) {
-    emit('item-click', item, index);
+const handleEntryClick = (entry: { label: string; value: string; clickable?: boolean }, index: number) => {
+  if (entry.clickable && entry.value) {
+    emit('entry-click', entry, index);
   }
 };
 </script>
@@ -32,7 +32,7 @@ const handleItemClick = (item: { label: string; value: string; clickable?: boole
       <text class="info-label">{{ entry.label }}：</text>
       <text 
         :class="['info-value', { 'clickable-link': entry.clickable && entry.value }]"
-        @click="handleItemClick(entry, index)"
+        @click="handleEntryClick(entry, index)"
       >{{ entry.value }}</text>
     </view>
     <slot></slot>
